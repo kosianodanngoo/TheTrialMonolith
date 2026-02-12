@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "COC",
+    "ONO",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:trial_monolith_spawn_egg"
+  }
+}

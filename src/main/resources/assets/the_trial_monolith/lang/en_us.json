@@ -1,0 +1,26 @@
+{
+  "entity.the_trial_monolith.trial_monolith": "The Trial Monolith",
+  "entity.the_trial_monolith.small_beam": "Small Beam",
+  "entity.the_trial_monolith.huge_beam": "Huge Beam",
+
+  "death.attack.the_trial_monolith.laser": "%s was vaporized by the laser.",
+  "death.attack.the_trial_monolith.laser.player": "%1$s was vaporized by %2$s's laser.",
+  "death.attack.the_trial_monolith.laser.item": "%1$s was vaporized by %2$s's laser using %3$s",
+
+  "death.attack.the_trial_monolith.soul_damage": "%s died from excessive soul damage.",
+  "death.attack.the_trial_monolith.soul_damage.player": "%1$s died from excessive soul damage from %2$s.",
+  "death.attack.the_trial_monolith.soul_damage.item": "%1$s died from excessive soul damage from %2$s laser using %3$s",
+
+  "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
+
+
+  "item.the_trial_monolith.monolith_fragment": "Monolith Fragment",
+
+  "item.the_trial_monolith.trial_monolith_spawn_egg": "Trial Monolith Spawn Egg",
+
+  "item.the_trial_monolith.beam_summoner": "Beam Summoner",
+
+  "item.the_trial_monolith.soul_protector": "Soul Protector",
+  "item.the_trial_monolith.soul_protector.enabled": "Soul Protection is Enabled",
+  "item.the_trial_monolith.soul_protector.disabled": "Soul Protection is Disabled"
+}

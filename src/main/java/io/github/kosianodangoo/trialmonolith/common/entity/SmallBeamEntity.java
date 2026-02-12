@@ -1,0 +1,62 @@
+package io.github.kosianodangoo.trialmonolith.common.entity;
+
+import io.github.kosianodangoo.trialmonolith.TrialMonolithConfig;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
+import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+
+public class SmallBeamEntity extends AbstractDelayedTraceableEntity {
+    public SmallBeamEntity(EntityType<?> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+    }
+
+    @Override
+    public @NotNull Vec3 getDeltaMovement() {
+        return Vec3.ZERO;
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBoxForCulling() {
+        return super.getBoundingBoxForCulling().inflate(128);
+    }
+
+    @Override
+    public void activate() {
+        Level level = this.level();
+
+        if (level.isClientSide()) {
+            return;
+        }
+
+        level.playSound(null, this.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.HOSTILE, 8, 1);
+
+        EntityHelper.rayTraceEntities(this, 128, 1, DEFAULT_PREDICATE, (entity) -> {
+            float damage = 1.5f;
+            if (entity instanceof LivingEntity livingEntity) {
+                EntityHelper.addSoulDamage(livingEntity, TrialMonolithConfig.smallBeamSoulDamage);
+                damage = Math.max(damage, livingEntity.getMaxHealth() * 0.05f);
+            }
+
+            entity.hurt(TrialMonolithDamageTypes.laserAttack(level, this.getOwner()), damage);
+
+            entity.setDeltaMovement(0, 0, 0);
+        });
+    }
+
+    @Override
+    public int getDelay() {
+        return 10;
+    }
+
+    @Override
+    public int getDuration() {
+        return 10;
+    }
+}

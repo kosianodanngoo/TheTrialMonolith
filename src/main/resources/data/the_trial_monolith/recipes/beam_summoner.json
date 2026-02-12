@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OMO",
+    "MBM",
+    "OMO"
+  ],
+  "key": {
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    },
+    "B": {
+      "item": "minecraft:bow"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:beam_summoner"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "MSM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    },
+    "S": {
+      "item": "minecraft:shield"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:soul_protector"
+  }
+}
