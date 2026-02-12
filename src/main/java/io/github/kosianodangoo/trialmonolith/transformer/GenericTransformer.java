@@ -15,7 +15,6 @@ import java.util.Map;
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
     static boolean initialized = false;
-    public static boolean failedToAttach = false;
 
     public enum Phase {
         ITransformationService, ILaunchPluginService, ClassFileTransformer
@@ -54,24 +53,26 @@ public class GenericTransformer {
         for (MethodNode method : classNode.methods) {
             for (AbstractInsnNode insn : method.instructions) {
                 if (insn instanceof MethodInsnNode methodInsn) {
-                    if (methodInsn.name == "getRemovalReason") {
-                        classNode.superName.startsWith("");
-                    }
                     if (insn.getOpcode() == Opcodes.INVOKEVIRTUAL || insn.getOpcode() == Opcodes.INVOKEINTERFACE) {
                         if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21223_", "getHealth", "()F", false)) {
-                            method.instructions.set(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getHealth", "(Lnet/minecraft/world/entity/LivingEntity;)F"));
+                            method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getHealth", "(Lnet/minecraft/world/entity/LivingEntity;F)F"));
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21224_", "isDeadOrDying", "()Z", false)) {
-                            method.instructions.set(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isDeadOrDying", "(Lnet/minecraft/world/entity/LivingEntity;)Z"));
+                            method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isDeadOrDying", "(Lnet/minecraft/world/entity/LivingEntity;Z)Z"));
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_6084_", "isAlive", "()Z", false)) {
-                            method.instructions.set(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isAlive", "(Lnet/minecraft/world/entity/Entity;)Z"));
+                            method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isAlive", "(Lnet/minecraft/world/entity/Entity;Z)Z"));
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_240725_", "isRemoved", "()Z", false)) {
-                            method.instructions.set(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isRemoved", "(Lnet/minecraft/world/entity/Entity;)Z"));
+                            method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isRemoved", "(Lnet/minecraft/world/entity/Entity;Z)Z"));
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_146911_", "getRemovalReason", "()Lnet/minecraft/world/entity/Entity$RemovalReason;", false)) {
-                            method.instructions.set(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getRemovalReason", "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/Entity$RemovalReason;"));
+                            method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getRemovalReason", "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/world/entity/Entity$RemovalReason;"));
                             modified = true;
                         }
                     }
