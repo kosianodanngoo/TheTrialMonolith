@@ -1,11 +1,9 @@
 package io.github.kosianodangoo.trialmonolith.common.helper;
 
-import com.google.common.base.Predicates;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,21 +18,6 @@ import java.util.function.Predicate;
 public class EntityHelper {
     public static final String SOUL_PROTECTION_TAG = TheTrialMonolith.MOD_ID + ":SoulProtection";
     public static final String SOUL_DAMAGE_TAG = TheTrialMonolith.MOD_ID + ":SoulDamage";
-
-    public static IntOpenHashSet rayTraceEntities(Entity entity, double reach, double width) {
-        return rayTraceEntities(entity, reach, width, Predicates.alwaysTrue());
-    }
-
-    public static IntOpenHashSet rayTraceEntities(Entity sourceEntity, double reach, double width, Predicate<Entity> predicate) {
-        IntOpenHashSet entities = new IntOpenHashSet();
-        rayTraceEntities(sourceEntity, reach, width, predicate, (entity) -> entities.add(entity.getId()));
-
-        return entities;
-    }
-
-    public static void rayTraceEntities(Entity entity, double reach, double width, Consumer<Entity> consumer) {
-        rayTraceEntities(entity, reach, width, Predicates.alwaysTrue(), consumer);
-    }
 
     public static void rayTraceEntities(Entity sourceEntity, double reach, double width, Predicate<Entity> predicate, Consumer<Entity> consumer) {
         Vec3 view = sourceEntity.getViewVector(0);
