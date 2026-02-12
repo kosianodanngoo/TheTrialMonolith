@@ -65,6 +65,9 @@ public class EntityHelper {
 
     public static void setSoulDamage(Entity entity, float damage) {
         if (entity instanceof ISoulDamage soulDamage) {
+            if (isSoulProtected(entity)) {
+                return;
+            }
             float currentDamage = soulDamage.the_trial_monolith$getSoulDamage();
             soulDamage.the_trial_monolith$setSoulDamage(damage);
             if (currentDamage < 1 && soulDamage.the_trial_monolith$getSoulDamage() >= 1) {
@@ -72,9 +75,7 @@ public class EntityHelper {
                     DamageSource damageSource = TrialMonolithDamageTypes.soulDamage(entity.level());
                     livingEntity.setHealth(Float.NEGATIVE_INFINITY);
                     livingEntity.getCombatTracker().recordDamage(damageSource, Float.MAX_VALUE);
-                    if (livingEntity.isDeadOrDying()) {
-                        livingEntity.die(damageSource);
-                    }
+                    livingEntity.die(damageSource);
                 }
                 entity.kill();
             }
