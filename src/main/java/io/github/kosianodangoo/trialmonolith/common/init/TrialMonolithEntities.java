@@ -1,6 +1,7 @@
 package io.github.kosianodangoo.trialmonolith.common.init;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
+import io.github.kosianodangoo.trialmonolith.common.entity.DamageCubeEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
@@ -32,6 +33,12 @@ public class TrialMonolithEntities {
 
     public static final RegistryObject<EntityType<HugeBeamEntity>> HUGE_BEAM = register("huge_beam", () ->
             EntityType.Builder.of(HugeBeamEntity::new, MobCategory.MISC)
+                    .sized(1F, 1F)
+                    .clientTrackingRange(10)
+    );
+
+    public static final RegistryObject<EntityType<DamageCubeEntity>> DAMAGE_CUBE = register("damage_cube", () ->
+            EntityType.Builder.of(DamageCubeEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
                     .clientTrackingRange(10)
     );

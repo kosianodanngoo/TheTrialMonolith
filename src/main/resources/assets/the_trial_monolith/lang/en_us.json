@@ -7,6 +7,10 @@
   "death.attack.the_trial_monolith.laser.player": "%1$s was vaporized by %2$s's laser.",
   "death.attack.the_trial_monolith.laser.item": "%1$s was vaporized by %2$s's laser using %3$s",
 
+  "death.attack.the_trial_monolith.cube": "%s was vaporized by the cube.",
+  "death.attack.the_trial_monolith.cube.player": "%1$s was vaporized by %2$s's cube.",
+  "death.attack.the_trial_monolith.cube.item": "%1$s was vaporized by %2$s's cube using %3$s",
+
   "death.attack.the_trial_monolith.soul_damage": "%s died from excessive soul damage.",
   "death.attack.the_trial_monolith.soul_damage.player": "%1$s died from excessive soul damage from %2$s.",
   "death.attack.the_trial_monolith.soul_damage.item": "%1$s died from excessive soul damage from %2$s laser using %3$s",

@@ -1,10 +1,7 @@
 package io.github.kosianodangoo.trialmonolith.client.handler;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
-import io.github.kosianodangoo.trialmonolith.client.entity.HugeBeamRenderer;
-import io.github.kosianodangoo.trialmonolith.client.entity.SmallBeamRenderer;
-import io.github.kosianodangoo.trialmonolith.client.entity.TrialMonolithModel;
-import io.github.kosianodangoo.trialmonolith.client.entity.TrialMonolithRenderer;
+import io.github.kosianodangoo.trialmonolith.client.entity.*;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,8 +16,8 @@ public class TTMClientModEventHandler {
     public static void onClientSetup(FMLClientSetupEvent event) {
         EntityRenderers.register(TrialMonolithEntities.TRIAL_MONOLITH.get(), TrialMonolithRenderer::new);
         EntityRenderers.register(TrialMonolithEntities.SMALL_BEAM.get(), SmallBeamRenderer::new);
-        ;
         EntityRenderers.register(TrialMonolithEntities.HUGE_BEAM.get(), HugeBeamRenderer::new);
+        EntityRenderers.register(TrialMonolithEntities.DAMAGE_CUBE.get(), DamageCubeRenderer::new);
     }
 
     @SubscribeEvent

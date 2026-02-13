@@ -4,6 +4,7 @@ import io.github.kosianodangoo.trialmonolith.TrialMonolithConfig;
 import io.github.kosianodangoo.trialmonolith.common.entity.ai.ShootHugeBeamGoal;
 import io.github.kosianodangoo.trialmonolith.common.entity.ai.ShootSmallBeamAroundTargetGoal;
 import io.github.kosianodangoo.trialmonolith.common.entity.ai.ShootSmallBeamGoal;
+import io.github.kosianodangoo.trialmonolith.common.entity.ai.SummonDamageCubeGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -48,7 +49,8 @@ public class TrialMonolithEntity extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new ShootHugeBeamGoal(this));
+        this.goalSelector.addGoal(3, new ShootHugeBeamGoal(this));
+        this.goalSelector.addGoal(2, new SummonDamageCubeGoal(this));
         this.goalSelector.addGoal(1, new ShootSmallBeamAroundTargetGoal(this));
         this.goalSelector.addGoal(0, new ShootSmallBeamGoal(this));
 

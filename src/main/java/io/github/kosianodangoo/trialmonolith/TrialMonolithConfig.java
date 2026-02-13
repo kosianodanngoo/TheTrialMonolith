@@ -16,6 +16,8 @@ public class TrialMonolithConfig {
     private static final ForgeConfigSpec.DoubleValue SMALL_BEAM_SOUL_DAMAGE;
     private static final ForgeConfigSpec.DoubleValue HUGE_BEAM_SOUL_DAMAGE;
 
+    private static final ForgeConfigSpec.DoubleValue DAMAGE_CUBE_SOUL_DAMAGE;
+
     static {
         BUILDER.push("trialMonolith");
 
@@ -25,10 +27,12 @@ public class TrialMonolithConfig {
 
         BUILDER.pop();
 
-        BUILDER.push("beams");
+        BUILDER.push("attacks");
 
         SMALL_BEAM_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Small Beams").defineInRange("smallBeamSoulDamage", 0.01, 0, Double.POSITIVE_INFINITY);
         HUGE_BEAM_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Huge Beams").defineInRange("hugeBeamSoulDamage", 0.10, 0, Double.POSITIVE_INFINITY);
+
+        DAMAGE_CUBE_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Damage Cube").defineInRange("damageCubeSoulDamage", 0.05, 0, Double.POSITIVE_INFINITY);
 
         BUILDER.pop();
     }
@@ -41,6 +45,8 @@ public class TrialMonolithConfig {
     public static float smallBeamSoulDamage = 0.01f;
     public static float hugeBeamSoulDamage = 0.10f;
 
+    public static float damageCubeSoulDamage = 0.05f;
+
     @SubscribeEvent
     public static void onConfigLoad(ModConfigEvent event) {
         trialMonolithHealth = TRIAL_MONOLITH_HEALTH.get().floatValue();
@@ -48,5 +54,7 @@ public class TrialMonolithConfig {
 
         smallBeamSoulDamage = SMALL_BEAM_SOUL_DAMAGE.get().floatValue();
         hugeBeamSoulDamage = HUGE_BEAM_SOUL_DAMAGE.get().floatValue();
+
+        damageCubeSoulDamage = DAMAGE_CUBE_SOUL_DAMAGE.get().floatValue();
     }
 }
