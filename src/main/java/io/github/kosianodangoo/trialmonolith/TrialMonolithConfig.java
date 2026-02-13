@@ -32,7 +32,7 @@ public class TrialMonolithConfig {
         SMALL_BEAM_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Small Beams").defineInRange("smallBeamSoulDamage", 0.01, 0, Double.POSITIVE_INFINITY);
         HUGE_BEAM_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Huge Beams").defineInRange("hugeBeamSoulDamage", 0.10, 0, Double.POSITIVE_INFINITY);
 
-        DAMAGE_CUBE_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Damage Cube").defineInRange("damageCubeSoulDamage", 0.05, 0, Double.POSITIVE_INFINITY);
+        DAMAGE_CUBE_SOUL_DAMAGE = BUILDER.comment("SoulDamage of Damage Cube").defineInRange("damageCubeSoulDamage", 0.03, 0, Double.POSITIVE_INFINITY);
 
         BUILDER.pop();
     }
@@ -45,7 +45,7 @@ public class TrialMonolithConfig {
     public static float smallBeamSoulDamage = 0.01f;
     public static float hugeBeamSoulDamage = 0.10f;
 
-    public static float damageCubeSoulDamage = 0.05f;
+    public static float damageCubeSoulDamage = 0.03f;
 
     @SubscribeEvent
     public static void onConfigLoad(ModConfigEvent event) {

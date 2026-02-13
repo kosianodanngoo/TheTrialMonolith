@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "MEM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    },
+    "E": {
+      "item": "minecraft:end_crystal"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:damage_cube_summoner"
+  }
+}

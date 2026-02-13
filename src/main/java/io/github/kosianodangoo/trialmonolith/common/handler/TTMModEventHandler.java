@@ -21,6 +21,7 @@ public class TTMModEventHandler {
     public void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(TrialMonolithItems.BEAM_SUMMONER.get());
+            event.accept(TrialMonolithItems.DAMAGE_CUBE_SUMMONER.get());
             event.accept(TrialMonolithItems.SOUL_PROTECTOR.get());
         }
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {

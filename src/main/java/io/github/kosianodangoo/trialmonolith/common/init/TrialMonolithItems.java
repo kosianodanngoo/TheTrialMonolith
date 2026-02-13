@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.init;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.common.item.BeamSummonerItem;
+import io.github.kosianodangoo.trialmonolith.common.item.DamageCubeSummonerItem;
 import io.github.kosianodangoo.trialmonolith.common.item.SoulProtectorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -19,6 +20,7 @@ public class TrialMonolithItems {
     public static final RegistryObject<Item> MONOLITH_FRAGMENT = register("monolith_fragment", () -> new Item(new Item.Properties()), true);
     public static final RegistryObject<Item> MONOLITH_SPAWN_EGG = register("trial_monolith_spawn_egg", () -> new ForgeSpawnEggItem(TrialMonolithEntities.TRIAL_MONOLITH, 0x000000, 0x440044, new Item.Properties()), true);
     public static final RegistryObject<BeamSummonerItem> BEAM_SUMMONER = register("beam_summoner", BeamSummonerItem::new, true);
+    public static final RegistryObject<DamageCubeSummonerItem> DAMAGE_CUBE_SUMMONER = register("damage_cube_summoner", DamageCubeSummonerItem::new, true);
     public static final RegistryObject<SoulProtectorItem> SOUL_PROTECTOR = register("soul_protector", SoulProtectorItem::new, true);
 
     private static <T extends Item> RegistryObject<T> register(String name, Supplier<T> itemSupplier, boolean isCreativeTab) {
