@@ -47,6 +47,6 @@ public class TrialMonolithConfig {
         trialMonolithDamageCap = TRIAL_MONOLITH_DAMAGE_CAP.get().floatValue();
 
         smallBeamSoulDamage = SMALL_BEAM_SOUL_DAMAGE.get().floatValue();
-        hugeBeamSoulDamage = SMALL_BEAM_SOUL_DAMAGE.get().floatValue();
+        hugeBeamSoulDamage = HUGE_BEAM_SOUL_DAMAGE.get().floatValue();
     }
 }
