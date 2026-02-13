@@ -89,7 +89,7 @@ public class SummonDamageCubeGoal extends Goal {
     }
 
     public int getCoolTime() {
-        return 1;
+        return 2;
     }
 
     public int getInterval() {
