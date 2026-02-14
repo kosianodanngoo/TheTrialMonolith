@@ -6,6 +6,7 @@
   "refmap": "the_trial_monolith.refmap.json",
   "mixins": [
     "EntityMixin",
+    "LivingEntityInvoker",
     "LivingEntityMixin"
   ],
   "client": [

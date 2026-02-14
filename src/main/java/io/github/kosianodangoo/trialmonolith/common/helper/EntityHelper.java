@@ -4,10 +4,10 @@ import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
+import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -54,21 +54,35 @@ public class EntityHelper {
             float currentDamage = soulDamage.the_trial_monolith$getSoulDamage();
             soulDamage.the_trial_monolith$setSoulDamage(damage);
             if (currentDamage < 1 && soulDamage.the_trial_monolith$getSoulDamage() >= 1) {
-                if (entity instanceof LivingEntity livingEntity) {
-                    DamageSource damageSource = TrialMonolithDamageTypes.soulDamage(entity.level());
-                    livingEntity.setHealth(Float.NEGATIVE_INFINITY);
-                    livingEntity.getCombatTracker().recordDamage(damageSource, Float.MAX_VALUE);
-                    livingEntity.die(damageSource);
-                }
-                entity.kill();
+                onSoulDeath(entity);
             }
-            if (currentDamage < 10 && soulDamage.the_trial_monolith$getSoulDamage() >= 10 && !(entity instanceof Player)) {
-                entity.stopRiding();
-
-                entity.getPassengers().forEach(Entity::stopRiding);
-                entity.levelCallback.onRemove(Entity.RemovalReason.KILLED);
+            if (currentDamage < 10 && soulDamage.the_trial_monolith$getSoulDamage() >= 10) {
+                onSoulRemove(entity);
             }
         }
+    }
+
+    public static void onSoulDeath(Entity entity) {
+        DamageSource damageSource = TrialMonolithDamageTypes.soulDamage(entity.level());
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.setHealth(Float.NEGATIVE_INFINITY);
+            livingEntity.getCombatTracker().recordDamage(damageSource, Float.MAX_VALUE);
+            livingEntity.die(damageSource);
+        }
+        entity.kill();
+        if (entity instanceof LivingEntityInvoker livingEntityInvoker) {
+            livingEntityInvoker.the_trial_monolith$dropAllDeathLoot(damageSource);
+        }
+    }
+
+    public static void onSoulRemove(Entity entity) {
+        if (entity instanceof LivingEntity) {
+            return;
+        }
+        entity.stopRiding();
+
+        entity.getPassengers().forEach(Entity::stopRiding);
+        entity.levelCallback.onRemove(Entity.RemovalReason.KILLED);
     }
 
     public static void addSoulDamage(Entity entity, float damage) {
