@@ -26,7 +26,7 @@ public class TheTrialMonolithPlugin implements ILaunchPluginService {
         if (classNode.name.startsWith("io/github/kosianodangoo/trialmonolith/transformer"))
             return false;
         if (reason.equals(ITransformerActivity.CLASSLOADING_REASON)) {
-            return GenericTransformer.transform(GenericTransformer.Phase.ILaunchPluginService, classNode);
+            return GenericTransformer.transform(phase == Phase.AFTER ? GenericTransformer.Phase.ILaunchPluginService : GenericTransformer.Phase.ILaunchPluginServiceBefore, classNode);
         }
         return false;
     }

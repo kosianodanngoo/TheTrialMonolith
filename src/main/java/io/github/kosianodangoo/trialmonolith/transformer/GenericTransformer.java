@@ -17,7 +17,7 @@ public class GenericTransformer {
     static boolean initialized = false;
 
     public enum Phase {
-        ITransformationService, ILaunchPluginService, ClassFileTransformer
+        ITransformationService, ILaunchPluginServiceBefore, ILaunchPluginService, ClassFileTransformer
     }
 
     static {
