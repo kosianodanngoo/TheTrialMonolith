@@ -20,7 +20,7 @@ public class TTMForgeEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLivingDeath(LivingDeathEvent event) {
         if (EntityHelper.isSoulProtected(event.getEntity())) {
-            event.cancel();
+            event.setCanceled(true);
         }
     }
 }
