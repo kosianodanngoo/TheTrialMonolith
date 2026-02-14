@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.init;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.common.item.BeamSummonerItem;
+import io.github.kosianodangoo.trialmonolith.common.item.BottleOfTheSoulItem;
 import io.github.kosianodangoo.trialmonolith.common.item.DamageCubeSummonerItem;
 import io.github.kosianodangoo.trialmonolith.common.item.SoulProtectorItem;
 import net.minecraft.world.item.Item;
@@ -22,6 +23,7 @@ public class TrialMonolithItems {
     public static final RegistryObject<BeamSummonerItem> BEAM_SUMMONER = register("beam_summoner", BeamSummonerItem::new, true);
     public static final RegistryObject<DamageCubeSummonerItem> DAMAGE_CUBE_SUMMONER = register("damage_cube_summoner", DamageCubeSummonerItem::new, true);
     public static final RegistryObject<SoulProtectorItem> SOUL_PROTECTOR = register("soul_protector", SoulProtectorItem::new, true);
+    public static final RegistryObject<BottleOfTheSoulItem> BOTTLE_OF_THE_SOUL = register("bottle_of_the_soul", BottleOfTheSoulItem::new, true);
 
     private static <T extends Item> RegistryObject<T> register(String name, Supplier<T> itemSupplier, boolean isCreativeTab) {
         RegistryObject<T> registryObject = ITEMS.register(name, itemSupplier);

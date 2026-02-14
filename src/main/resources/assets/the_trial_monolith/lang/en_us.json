@@ -28,5 +28,7 @@
 
   "item.the_trial_monolith.soul_protector": "Soul Protector",
   "item.the_trial_monolith.soul_protector.enabled": "Soul Protection is Enabled",
-  "item.the_trial_monolith.soul_protector.disabled": "Soul Protection is Disabled"
+  "item.the_trial_monolith.soul_protector.disabled": "Soul Protection is Disabled",
+
+  "item.the_trial_monolith.bottle_of_the_soul": "Bottle of The Soul"
 }
