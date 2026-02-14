@@ -68,11 +68,11 @@ public class EntityHelper {
             livingEntity.setHealth(Float.NEGATIVE_INFINITY);
             livingEntity.getCombatTracker().recordDamage(damageSource, Float.MAX_VALUE);
             livingEntity.die(damageSource);
+            if (!livingEntity.dead && entity instanceof LivingEntityInvoker livingEntityInvoker) {
+                livingEntityInvoker.the_trial_monolith$dropAllDeathLoot(damageSource);
+            }
         }
         entity.kill();
-        if (entity instanceof LivingEntityInvoker livingEntityInvoker) {
-            livingEntityInvoker.the_trial_monolith$dropAllDeathLoot(damageSource);
-        }
     }
 
     public static void onSoulRemove(Entity entity) {
