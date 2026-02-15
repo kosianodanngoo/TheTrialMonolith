@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.helper;
 
 import com.google.common.base.Predicates;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
+import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulBypass;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
@@ -124,14 +125,14 @@ public class EntityHelper {
     }
 
     public static boolean shouldBypassProtection(Entity entity) {
-        if (entity instanceof ISoulProtection soulProtection) {
+        if (entity instanceof ISoulBypass soulProtection) {
             return soulProtection.the_trial_monolith$shouldBypass();
         }
         return false;
     }
 
     public static void setBypassProtection(Entity entity, boolean shouldBypass) {
-        if (entity instanceof ISoulProtection soulProtection) {
+        if (entity instanceof ISoulBypass soulProtection) {
             if (entity.isRemoved() && !shouldBypass) {
                 return;
             }

@@ -1,17 +1,13 @@
-package io.github.kosianodangoo.trialmonolith.common.entity.ai;
+package io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.DamageCubeEntity;
-import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
-import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class SummonDamageCubeGoal extends Goal {

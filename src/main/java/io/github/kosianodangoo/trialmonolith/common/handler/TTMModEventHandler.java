@@ -1,7 +1,8 @@
 package io.github.kosianodangoo.trialmonolith.common.handler;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
-import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithItems;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -15,6 +16,7 @@ public class TTMModEventHandler {
     @SubscribeEvent
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(TrialMonolithEntities.TRIAL_MONOLITH.get(), TrialMonolithEntity.createAttributes());
+        event.put(TrialMonolithEntities.INVADER_MONOLITH.get(), InvaderMonolithEntity.createAttributes());
     }
 
     @SubscribeEvent

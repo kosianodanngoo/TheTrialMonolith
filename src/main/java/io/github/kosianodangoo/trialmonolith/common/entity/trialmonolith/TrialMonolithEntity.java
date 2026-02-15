@@ -1,7 +1,7 @@
-package io.github.kosianodangoo.trialmonolith.common.entity;
+package io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith;
 
 import io.github.kosianodangoo.trialmonolith.TrialMonolithConfig;
-import io.github.kosianodangoo.trialmonolith.common.entity.ai.*;
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.ai.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

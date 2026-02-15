@@ -1,7 +1,7 @@
-package io.github.kosianodangoo.trialmonolith.common.entity.ai;
+package io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
-import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.RandomSource;

@@ -13,6 +13,8 @@ public class TrialMonolithConfig {
     private static final ForgeConfigSpec.DoubleValue TRIAL_MONOLITH_DAMAGE_CAP;
     public static final ForgeConfigSpec.BooleanValue TRIAL_MONOLITH_SHOULD_DIE_FROM_KILL;
 
+    public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_SHOULD_DIE_FROM_KILL;
+
     private static final ForgeConfigSpec.DoubleValue SMALL_BEAM_SOUL_DAMAGE;
     private static final ForgeConfigSpec.DoubleValue HUGE_BEAM_SOUL_DAMAGE;
 
@@ -24,6 +26,12 @@ public class TrialMonolithConfig {
         TRIAL_MONOLITH_HEALTH = BUILDER.comment("Health of The Trial Monolith").defineInRange("trialMonolithHealth", Integer.MAX_VALUE, 0, Double.POSITIVE_INFINITY);
         TRIAL_MONOLITH_DAMAGE_CAP = BUILDER.comment("Damage Cap of The Trial Monolith").defineInRange("trialMonolithDamageCap", 1_000_000, 0, Double.POSITIVE_INFINITY);
         TRIAL_MONOLITH_SHOULD_DIE_FROM_KILL = BUILDER.comment("Whether The Trial Monolith should die from /kill").define("trialMonolithShouldDieFromKill", false);
+
+        BUILDER.pop();
+
+        BUILDER.push("invaderMonolith");
+
+        INVADER_MONOLITH_SHOULD_DIE_FROM_KILL = BUILDER.comment("Whether The Invaderr Monolith should die from /kill").define("trialMonolithShouldDieFromKill", false);
 
         BUILDER.pop();
 

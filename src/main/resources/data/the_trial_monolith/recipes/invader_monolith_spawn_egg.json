@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "BS",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    },
+    "B": {
+      "item": "the_trial_monolith:beam_summoner"
+    },
+    "S": {
+      "item": "the_trial_monolith:soul_protector"
+    },
+    "C": {
+      "item": "the_trial_monolith:damage_cube_summoner"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:invader_monolith_spawn_egg"
+  }
+}

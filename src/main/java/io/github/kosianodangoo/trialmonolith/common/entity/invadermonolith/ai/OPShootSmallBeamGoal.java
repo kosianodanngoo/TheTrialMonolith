@@ -1,43 +1,31 @@
-package io.github.kosianodangoo.trialmonolith.common.entity.ai;
+package io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
-import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
 
-public class ShootSmallBeamGoal extends Goal {
-    public TrialMonolithEntity monolith;
-    public LivingEntity target = null;
-    public int attackTime = -1;
+public class OPShootSmallBeamGoal extends Goal {
+    public InvaderMonolithEntity monolith;
 
-    public ShootSmallBeamGoal(TrialMonolithEntity monolith) {
+    public OPShootSmallBeamGoal(InvaderMonolithEntity monolith) {
         super();
         this.monolith = monolith;
     }
 
     @Override
-    public void stop() {
-        this.target = null;
-        this.attackTime = -1;
-    }
-
-    @Override
     public boolean canUse() {
-        LivingEntity target = this.monolith.getTarget();
-        if (target != null && target.isAlive()) {
-            this.target = target;
-            return true;
-        } else return false;
+        return true;
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (--attackTime == 0) {
+        for (Entity target : monolith.getTargets()) {
             SmallBeamEntity smallBeam = new SmallBeamEntity(TrialMonolithEntities.SMALL_BEAM.get(), this.monolith.level());
             smallBeam.setOwner(this.monolith);
             RandomSource randomSource = this.monolith.level().getRandom();
@@ -54,19 +42,11 @@ public class ShootSmallBeamGoal extends Goal {
 
             smallBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
             monolith.level().addFreshEntity(smallBeam);
-            attackTime = getCoolTime();
-        }
-        if (attackTime < 0) {
-            attackTime = 20;
         }
     }
 
     @Override
     public boolean requiresUpdateEveryTick() {
         return true;
-    }
-
-    public int getCoolTime() {
-        return 1;
     }
 }

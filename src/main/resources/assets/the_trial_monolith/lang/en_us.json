@@ -1,7 +1,9 @@
 {
   "entity.the_trial_monolith.trial_monolith": "The Trial Monolith",
+  "entity.the_trial_monolith.invader_monolith": "The Invader Monolith",
   "entity.the_trial_monolith.small_beam": "Small Beam",
   "entity.the_trial_monolith.huge_beam": "Huge Beam",
+  "entity.the_trial_monolith.damage_cube": "Damage Cube",
 
   "death.attack.the_trial_monolith.laser": "%s was vaporized by the laser.",
   "death.attack.the_trial_monolith.laser.player": "%1$s was vaporized by %2$s's laser.",
@@ -21,6 +23,8 @@
   "item.the_trial_monolith.monolith_fragment": "Monolith Fragment",
 
   "item.the_trial_monolith.trial_monolith_spawn_egg": "Trial Monolith Spawn Egg",
+  "item.the_trial_monolith.invader_monolith_spawn_egg": "Invader Monolith Spawn Egg",
+  "tooltip.the_trial_monolith.invader_monolith_spawn_egg": "This may ruin your world\nSummon far away from your base",
 
   "item.the_trial_monolith.damage_cube_summoner": "Damage Cube Summoner",
 

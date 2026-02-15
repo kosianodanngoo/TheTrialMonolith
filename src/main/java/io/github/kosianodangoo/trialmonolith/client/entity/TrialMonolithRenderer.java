@@ -1,7 +1,7 @@
 package io.github.kosianodangoo.trialmonolith.client.entity;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
-import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

@@ -4,7 +4,8 @@ import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.common.entity.DamageCubeEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
-import io.github.kosianodangoo.trialmonolith.common.entity.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -20,6 +21,13 @@ public class TrialMonolithEntities {
 
     public static final RegistryObject<EntityType<TrialMonolithEntity>> TRIAL_MONOLITH = register("trial_monolith", () ->
             EntityType.Builder.of(TrialMonolithEntity::new, MobCategory.MONSTER)
+                    .sized(1.5F, 5.4F)
+                    .clientTrackingRange(10)
+                    .canSpawnFarFromPlayer()
+    );
+
+    public static final RegistryObject<EntityType<InvaderMonolithEntity>> INVADER_MONOLITH = register("invader_monolith", () ->
+            EntityType.Builder.of(InvaderMonolithEntity::new, MobCategory.MONSTER)
                     .sized(1.5F, 5.4F)
                     .clientTrackingRange(10)
                     .canSpawnFarFromPlayer()

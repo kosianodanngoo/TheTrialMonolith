@@ -5,13 +5,19 @@ import io.github.kosianodangoo.trialmonolith.common.item.BeamSummonerItem;
 import io.github.kosianodangoo.trialmonolith.common.item.BottleOfTheSoulItem;
 import io.github.kosianodangoo.trialmonolith.common.item.DamageCubeSummonerItem;
 import io.github.kosianodangoo.trialmonolith.common.item.SoulProtectorItem;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class TrialMonolithItems {
@@ -20,6 +26,13 @@ public class TrialMonolithItems {
 
     public static final RegistryObject<Item> MONOLITH_FRAGMENT = register("monolith_fragment", () -> new Item(new Item.Properties()), true);
     public static final RegistryObject<Item> MONOLITH_SPAWN_EGG = register("trial_monolith_spawn_egg", () -> new ForgeSpawnEggItem(TrialMonolithEntities.TRIAL_MONOLITH, 0x000000, 0x440044, new Item.Properties()), true);
+    public static final RegistryObject<Item> INVADER_MONOLITH_SPAWN_EGG = register("invader_monolith_spawn_egg", () -> new ForgeSpawnEggItem(TrialMonolithEntities.INVADER_MONOLITH, 0x660000, 0x992222, new Item.Properties()) {
+        @Override
+        public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+            super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+            pTooltipComponents.add(Component.translatable("tooltip.the_trial_monolith.invader_monolith_spawn_egg"));
+        }
+    }, true);
     public static final RegistryObject<BeamSummonerItem> BEAM_SUMMONER = register("beam_summoner", BeamSummonerItem::new, true);
     public static final RegistryObject<DamageCubeSummonerItem> DAMAGE_CUBE_SUMMONER = register("damage_cube_summoner", DamageCubeSummonerItem::new, true);
     public static final RegistryObject<SoulProtectorItem> SOUL_PROTECTOR = register("soul_protector", SoulProtectorItem::new, true);

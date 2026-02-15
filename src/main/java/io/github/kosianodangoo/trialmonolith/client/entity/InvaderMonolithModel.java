@@ -1,15 +1,15 @@
 package io.github.kosianodangoo.trialmonolith.client.entity;
 
-import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class TrialMonolithModel extends HierarchicalModel<TrialMonolithEntity> {
+public class InvaderMonolithModel extends HierarchicalModel<InvaderMonolithEntity> {
     private final ModelPart root;
 
-    public TrialMonolithModel(ModelPart root) {
+    public InvaderMonolithModel(ModelPart root) {
         this.root = root;
     }
 
@@ -32,7 +32,7 @@ public class TrialMonolithModel extends HierarchicalModel<TrialMonolithEntity> {
     }
 
     @Override
-    public void setupAnim(TrialMonolithEntity trialMonolithEntity, float v, float v1, float v2, float v3, float v4) {
+    public void setupAnim(InvaderMonolithEntity trialMonolithEntity, float v, float v1, float v2, float v3, float v4) {
 
     }
 }

@@ -15,6 +15,7 @@ public class TTMClientModEventHandler {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         EntityRenderers.register(TrialMonolithEntities.TRIAL_MONOLITH.get(), TrialMonolithRenderer::new);
+        EntityRenderers.register(TrialMonolithEntities.INVADER_MONOLITH.get(), InvaderMonolithRenderer::new);
         EntityRenderers.register(TrialMonolithEntities.SMALL_BEAM.get(), SmallBeamRenderer::new);
         EntityRenderers.register(TrialMonolithEntities.HUGE_BEAM.get(), HugeBeamRenderer::new);
         EntityRenderers.register(TrialMonolithEntities.DAMAGE_CUBE.get(), DamageCubeRenderer::new);
@@ -23,5 +24,6 @@ public class TTMClientModEventHandler {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(TrialMonolithRenderer.LAYER_LOCATION, TrialMonolithModel::createBodyLayer);
+        event.registerLayerDefinition(InvaderMonolithRenderer.LAYER_LOCATION, InvaderMonolithModel::createBodyLayer);
     }
 }
