@@ -22,6 +22,6 @@
   "result": "the_trial_monolith:soul_slayer",
   "level": {
     "min": 2,
-    "max": 2147483647
+    "max": 10000
   }
 }
