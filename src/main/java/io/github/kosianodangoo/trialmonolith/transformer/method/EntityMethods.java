@@ -64,11 +64,11 @@ public class EntityMethods {
     }
 
     public static Entity.RemovalReason getRemovalReason(Entity.RemovalReason removalReason, Entity entity) {
+        if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
+            return null;
+        }
         if (entity instanceof Player) {
             return removalReason;
-        }
-        if (EntityHelper.isSoulProtected(entity)) {
-            return null;
         }
         if (EntityHelper.getSoulDamage(entity) >= 10) {
             return Entity.RemovalReason.KILLED;
@@ -81,11 +81,11 @@ public class EntityMethods {
     }
 
     public static boolean isRemoved(boolean removed, Entity entity) {
+        if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
+            return false;
+        }
         if (entity instanceof Player) {
             return removed;
-        }
-        if (EntityHelper.isSoulProtected(entity)) {
-            return false;
         }
         if (EntityHelper.getSoulDamage(entity) >= 10) {
             return true;

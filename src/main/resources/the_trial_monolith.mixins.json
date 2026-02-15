@@ -7,7 +7,9 @@
   "mixins": [
     "EntityMixin",
     "LivingEntityInvoker",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "ServerLevelMixin",
+    "client.ClientboundRespawnPacketMixin"
   ],
   "client": [
     "client.MinecraftMixin"

@@ -115,4 +115,20 @@ public class EntityHelper {
             setSoulProtected(entity, !soulProtection.the_trial_monolith$isSoulProtected());
         }
     }
+
+    public static boolean shouldBypassProtection(Entity entity) {
+        if (entity instanceof ISoulProtection soulProtection) {
+            return soulProtection.the_trial_monolith$shouldBypass();
+        }
+        return false;
+    }
+
+    public static void setBypassProtection(Entity entity, boolean shouldBypass) {
+        if (entity instanceof ISoulProtection soulProtection) {
+            if (entity.isRemoved() && !shouldBypass) {
+                return;
+            }
+            soulProtection.the_trial_monolith$setShouldBypass(shouldBypass);
+        }
+    }
 }
