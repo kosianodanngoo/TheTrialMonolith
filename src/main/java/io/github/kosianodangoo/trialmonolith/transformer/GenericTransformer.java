@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
+    static String ENTITY_HELPER = "io/github/kosianodangoo/trialmonolith/common/helper/EntityHelper";
     static boolean initialized = false;
 
     public enum Phase {
@@ -73,6 +74,23 @@ public class GenericTransformer {
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_146911_", "getRemovalReason", "()Lnet/minecraft/world/entity/Entity$RemovalReason;", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getRemovalReason", "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/world/entity/Entity$RemovalReason;"));
+                            modified = true;
+                        } else if (phase == Phase.ILaunchPluginServiceBefore &&
+                                isSameMethod(classNode.name, method, "net/minecraft/world/level/entity/EntityTickList", "m_156910_", "forEach", "(Ljava/util/function/Consumer;)V", false) &&
+                                isSameMethod(methodInsn.owner, methodInsn, "java/util/function/Consumer", "accept", "accept", "(Ljava/lang/Object;)V", true)) {
+                            LabelNode skipLabelNode = new LabelNode(new Label());
+                            LabelNode endLabelNode = new LabelNode(new Label());
+                            InsnList insnListB = new InsnList();
+                            insnListB.add(new InsnNode(Opcodes.DUP));
+                            insnListB.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_HELPER, "isSoulProtected", "(Lnet/minecraft/world/entity/Entity;)Z"));
+                            insnListB.add(new JumpInsnNode(Opcodes.IFGT, skipLabelNode));
+                            InsnList insnListA = new InsnList();
+                            insnListA.add(new JumpInsnNode(Opcodes.GOTO, endLabelNode));
+                            insnListA.add(skipLabelNode);
+                            insnListA.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "tickOverride", "(Ljava/util/function/Consumer;Lnet/minecraft/world/entity/Entity;)V"));
+                            insnListA.add(endLabelNode);
+                            method.instructions.insertBefore(methodInsn, insnListB);
+                            method.instructions.insert(methodInsn, insnListA);
                             modified = true;
                         }
                     }

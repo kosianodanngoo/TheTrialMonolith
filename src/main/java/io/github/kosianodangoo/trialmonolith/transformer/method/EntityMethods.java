@@ -5,6 +5,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.function.Consumer;
+
 @SuppressWarnings("unused")
 public class EntityMethods {
     public static boolean shouldReplaceHealthMethod(Entity entity) {
@@ -91,5 +93,9 @@ public class EntityMethods {
             return true;
         }
         return removed;
+    }
+
+    public static void tickOverride(Consumer<Entity> consumer, Entity entity) {
+        consumer.accept(entity);
     }
 }

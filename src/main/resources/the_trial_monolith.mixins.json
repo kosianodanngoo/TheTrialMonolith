@@ -9,7 +9,7 @@
     "LivingEntityInvoker",
     "LivingEntityMixin",
     "ServerLevelMixin",
-    "client.ClientboundRespawnPacketMixin"
+    "client.ClientGamePacketListenerMixin"
   ],
   "client": [
     "client.MinecraftMixin"

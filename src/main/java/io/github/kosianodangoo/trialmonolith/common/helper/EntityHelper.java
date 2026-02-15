@@ -1,5 +1,6 @@
 package io.github.kosianodangoo.trialmonolith.common.helper;
 
+import com.google.common.base.Predicates;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
@@ -8,6 +9,7 @@ import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -71,6 +73,11 @@ public class EntityHelper {
             livingEntity.die(damageSource);
             if (!livingEntity.dead && entity instanceof LivingEntityInvoker livingEntityInvoker) {
                 livingEntityInvoker.the_trial_monolith$dropAllDeathLoot(damageSource);
+            }
+            livingEntity.getBrain().clearMemories();
+            if (entity instanceof Mob mob) {
+                mob.goalSelector.removeAllGoals(Predicates.alwaysTrue());
+                mob.targetSelector.removeAllGoals(Predicates.alwaysTrue());
             }
         }
         entity.kill();
