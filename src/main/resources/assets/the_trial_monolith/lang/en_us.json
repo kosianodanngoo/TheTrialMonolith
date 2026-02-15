@@ -30,5 +30,9 @@
   "item.the_trial_monolith.soul_protector.enabled": "Soul Protection is Enabled",
   "item.the_trial_monolith.soul_protector.disabled": "Soul Protection is Disabled",
 
-  "item.the_trial_monolith.bottle_of_the_soul": "Bottle of The Soul"
+  "item.the_trial_monolith.bottle_of_the_soul": "Bottle of The Soul",
+
+  "modifier.the_trial_monolith.soul_slayer": "Soul Slayer",
+  "modifier.the_trial_monolith.soul_slayer.flavor": "Slay the soul.",
+  "modifier.the_trial_monolith.soul_slayer.description": "It deals damage to the soul."
 }

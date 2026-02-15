@@ -8,6 +8,7 @@ import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -76,13 +77,18 @@ public class EntityHelper {
     }
 
     public static void onSoulRemove(Entity entity) {
-        if (entity instanceof LivingEntity) {
+        if (entity instanceof Player) {
             return;
         }
+        entity.remove(Entity.RemovalReason.KILLED);
+        entity.setRemoved(Entity.RemovalReason.KILLED);
+
         entity.stopRiding();
 
         entity.getPassengers().forEach(Entity::stopRiding);
         entity.levelCallback.onRemove(Entity.RemovalReason.KILLED);
+
+        entity.invalidateCaps();
     }
 
     public static void addSoulDamage(Entity entity, float damage) {
