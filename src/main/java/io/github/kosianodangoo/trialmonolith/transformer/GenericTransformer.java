@@ -17,6 +17,7 @@ public class GenericTransformer {
     static String ENTITY_HELPER = "io/github/kosianodangoo/trialmonolith/common/helper/EntityHelper";
     static boolean initialized = false;
 
+    @SuppressWarnings("unused")
     public enum Phase {
         ITransformationService, ILaunchPluginServiceBefore, ILaunchPluginService, ClassFileTransformer
     }
@@ -58,22 +59,27 @@ public class GenericTransformer {
                         if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21223_", "getHealth", "()F", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getHealth", "(Lnet/minecraft/world/entity/LivingEntity;F)F"));
+                            method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21224_", "isDeadOrDying", "()Z", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isDeadOrDying", "(Lnet/minecraft/world/entity/LivingEntity;Z)Z"));
+                            method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_6084_", "isAlive", "()Z", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isAlive", "(Lnet/minecraft/world/entity/Entity;Z)Z"));
+                            method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_240725_", "isRemoved", "()Z", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isRemoved", "(Lnet/minecraft/world/entity/Entity;Z)Z"));
+                            method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_146911_", "getRemovalReason", "()Lnet/minecraft/world/entity/Entity$RemovalReason;", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getRemovalReason", "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/world/entity/Entity$RemovalReason;"));
+                            method.maxStack += 1;
                             modified = true;
                         } else if (phase == Phase.ILaunchPluginServiceBefore &&
                                 isSameMethod(classNode.name, method, "net/minecraft/world/level/entity/EntityTickList", "m_156910_", "forEach", "(Ljava/util/function/Consumer;)V", false) &&
@@ -91,6 +97,7 @@ public class GenericTransformer {
                             insnListA.add(endLabelNode);
                             method.instructions.insertBefore(methodInsn, insnListB);
                             method.instructions.insert(methodInsn, insnListA);
+                            method.maxStack += 1;
                             modified = true;
                         }
                     }
@@ -101,6 +108,7 @@ public class GenericTransformer {
                         insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getHealth", "(FLnet/minecraft/world/entity/LivingEntity;)F"));
                         method.instructions.insertBefore(insn, insnList);
+                        method.maxStack += 1;
                         modified = true;
                     }
                 } else if (insn.getOpcode() == Opcodes.IRETURN) {
@@ -109,18 +117,21 @@ public class GenericTransformer {
                         insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isDeadOrDying", "(ZLnet/minecraft/world/entity/LivingEntity;)Z"));
                         method.instructions.insertBefore(insn, insnList);
+                        method.maxStack += 1;
                         modified = true;
                     } else if (isSameMethod(classNode.name, method, "net/minecraft/world/entity/Entity", "m_6084_", "isAlive", "()Z", false)) {
                         InsnList insnList = new InsnList();
                         insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isAlive", "(ZLnet/minecraft/world/entity/Entity;)Z"));
                         method.instructions.insertBefore(insn, insnList);
+                        method.maxStack += 1;
                         modified = true;
                     } else if (isSameMethod(classNode.name, method, "net/minecraft/world/entity/Entity", "m_213877_", "isRemoved", "()Z", false)) {
                         InsnList insnList = new InsnList();
                         insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isRemoved", "(ZLnet/minecraft/world/entity/Entity;)Z"));
                         method.instructions.insertBefore(insn, insnList);
+                        method.maxStack += 1;
                         modified = true;
                     }
                 } else if (insn.getOpcode() == Opcodes.ARETURN) {
@@ -129,6 +140,7 @@ public class GenericTransformer {
                         insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getRemovalReason", "(Lnet/minecraft/world/entity/Entity$RemovalReason;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/Entity$RemovalReason;"));
                         method.instructions.insertBefore(insn, insnList);
+                        method.maxStack += 1;
                         modified = true;
                     }
                 }
@@ -138,18 +150,21 @@ public class GenericTransformer {
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "shouldReplaceHealthMethod", "(Lnet/minecraft/world/entity/Entity;)Z", false),
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "replaceGetHealth", "(Lnet/minecraft/world/entity/LivingEntity;)F", false),
                         new InsnNode(Opcodes.FRETURN));
+                method.maxStack += 1;
                 modified = true;
             } else if (isSameMethod(classNode.name, method, "net/minecraft/world/entity/LivingEntity", "m_21224_", "isDeadOrDying", "()Z", false)) {
                 injectHead(method,
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "shouldReplaceHealthMethod", "(Lnet/minecraft/world/entity/Entity;)Z", false),
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "replaceIsDeadOrDying", "(Lnet/minecraft/world/entity/Entity;)Z", false),
                         new InsnNode(Opcodes.IRETURN));
+                method.maxStack += 1;
                 modified = true;
             } else if (isSameMethod(classNode.name, method, "net/minecraft/world/entity/Entity", "m_6084_", "isAlive", "()Z", false)) {
                 injectHead(method,
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "shouldReplaceHealthMethod", "(Lnet/minecraft/world/entity/Entity;)Z", false),
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "replaceIsAlive", "(Lnet/minecraft/world/entity/Entity;)Z", false),
                         new InsnNode(Opcodes.IRETURN));
+                method.maxStack += 1;
                 modified = true;
             }
         }
