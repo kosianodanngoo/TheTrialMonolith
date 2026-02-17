@@ -59,7 +59,7 @@ public class TrialMonolithEntity extends Monster {
     public static AttributeSupplier createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 1000)
-                .add(Attributes.FOLLOW_RANGE, 128)
+                .add(Attributes.FOLLOW_RANGE, TrialMonolithConfig.TRIAL_MONOLITH_ATTACK_RANGE.get())
                 .build();
     }
 

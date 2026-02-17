@@ -25,6 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.function.Predicate;
 
+import static io.github.kosianodangoo.trialmonolith.TrialMonolithConfig.invaderMonolithAttackRange;
+
 public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoulProtection {
     private boolean initialized = false;
 
@@ -51,7 +53,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     public static AttributeSupplier createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 1000)
-                .add(Attributes.FOLLOW_RANGE, 128)
+                .add(Attributes.FOLLOW_RANGE, invaderMonolithAttackRange)
                 .build();
     }
 
@@ -165,7 +167,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     }
 
     public Collection<Entity> getTargets() {
-        return level.getEntities(this, AABB.ofSize(this.getPosition(0), 256, 256, 256), DEFAULT_PREDICATE);
+        return level.getEntities(this, AABB.ofSize(this.getPosition(0), invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2), DEFAULT_PREDICATE);
     }
 
     @Override
