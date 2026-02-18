@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -33,6 +34,10 @@ public class TrialMonolithEntity extends Monster {
 
     public TrialMonolithEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        AttributeInstance attributeInstance = attributes.getInstance(Attributes.FOLLOW_RANGE);
+        if (attributeInstance != null) {
+            attributeInstance.setBaseValue(TrialMonolithConfig.TRIAL_MONOLITH_ATTACK_RANGE.get());
+        }
         lastHealth = this.getHealth();
     }
 
@@ -59,7 +64,7 @@ public class TrialMonolithEntity extends Monster {
     public static AttributeSupplier createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 1000)
-                .add(Attributes.FOLLOW_RANGE, TrialMonolithConfig.TRIAL_MONOLITH_ATTACK_RANGE.get())
+                .add(Attributes.FOLLOW_RANGE, 128)
                 .build();
     }
 
