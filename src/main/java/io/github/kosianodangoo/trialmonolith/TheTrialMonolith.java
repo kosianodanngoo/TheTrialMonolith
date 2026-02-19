@@ -5,6 +5,7 @@ import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithCreativeTa
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithItems;
 import io.github.kosianodangoo.trialmonolith.compat.tinker.TheTrialMonolithTinkersCompat;
+import io.github.kosianodangoo.trialmonolith.transformer.agent.TheTrialMonolithAgent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
@@ -39,6 +40,10 @@ public class TheTrialMonolith {
         if (modList.isLoaded("tconstruct")) {
             TheTrialMonolithTinkersCompat.register(context);
         }
+
+        try {
+            TheTrialMonolithAgent.load();
+        } catch (Exception ignored) {}
 
         context.registerConfig(ModConfig.Type.COMMON, TrialMonolithConfig.SPEC);
     }
