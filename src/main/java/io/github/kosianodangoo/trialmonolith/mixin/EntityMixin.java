@@ -44,6 +44,9 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     @Unique
     private boolean the_trial_monolith$removed = false;
 
+    @Unique
+    private boolean the_trial_monolith$initialized = false;
+
     protected EntityMixin(Class<Entity> baseClass) {
         super(baseClass);
     }
@@ -53,33 +56,53 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
         this.entityData.define(the_trial_monolith$DATA_SOUL_DAMAGE_ID, 0f);
         this.entityData.define(the_trial_monolith$DATA_SOUL_PROTECTION_ID, false);
         this.entityData.define(the_trial_monolith$DATA_OVER_CLOCKER_ID, false);
+
+        the_trial_monolith$initialized = true;
     }
 
     public boolean the_trial_monolith$isOverClocked() {
+        if (!the_trial_monolith$initialized) {
+            return false;
+        }
         return this.entityData.get(the_trial_monolith$DATA_OVER_CLOCKER_ID);
     }
 
     public void the_trial_monolith$setOverClocked(boolean overClocked) {
+        if (!the_trial_monolith$initialized) {
+            return;
+        }
         this.entityData.set(the_trial_monolith$DATA_OVER_CLOCKER_ID, overClocked);
     }
 
     @Override
     public float the_trial_monolith$getSoulDamage() {
+        if (!the_trial_monolith$initialized) {
+            return 0;
+        }
         return this.entityData.get(the_trial_monolith$DATA_SOUL_DAMAGE_ID);
     }
 
     @Override
     public void the_trial_monolith$setSoulDamage(float soulDamage) {
+        if (!the_trial_monolith$initialized) {
+            return;
+        }
         this.entityData.set(the_trial_monolith$DATA_SOUL_DAMAGE_ID, soulDamage);
     }
 
     @Override
     public boolean the_trial_monolith$isSoulProtected() {
+        if (!the_trial_monolith$initialized) {
+            return false;
+        }
         return this.entityData.get(the_trial_monolith$DATA_SOUL_PROTECTION_ID);
     }
 
     @Override
     public void the_trial_monolith$setSoulProtected(boolean soulDamage) {
+        if (!the_trial_monolith$initialized) {
+            return;
+        }
         this.entityData.set(the_trial_monolith$DATA_SOUL_PROTECTION_ID, soulDamage);
     }
 
