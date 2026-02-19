@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -40,4 +41,14 @@ public class SoulProtectorItem extends Item {
         return InteractionResultHolder.pass(stack);
     }
 
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+        if (entity instanceof ISoulProtection && player.isShiftKeyDown()) {
+            EntityHelper.setSoulDamage(entity, 0);
+            EntityHelper.setSoulProtected(entity, true);
+            entity.level().playSound(null, entity.blockPosition(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 1, 4);
+            return true;
+        }
+        return super.onLeftClickEntity(stack, player, entity);
+    }
 }
