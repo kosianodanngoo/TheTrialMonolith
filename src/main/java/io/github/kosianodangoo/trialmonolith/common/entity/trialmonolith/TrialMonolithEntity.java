@@ -103,6 +103,25 @@ public class TrialMonolithEntity extends Monster {
         this.entityData.set(DATA_MONOLITH_HEALTH_ID, Mth.clamp(pHealth, 0, getMaxHealth()));
     }
 
+    @Override
+    protected void dropAllDeathLoot(@NotNull DamageSource pDamageSource) {
+        if (this.isDeadOrDying()) {
+            super.dropAllDeathLoot(pDamageSource);
+        }
+    }
+
+    @Override
+    protected void dropFromLootTable(@NotNull DamageSource pDamageSource, boolean pIsByPlayer) {
+        if (this.shouldDropLoot()) {
+            super.dropFromLootTable(pDamageSource, pIsByPlayer);
+        }
+    }
+
+    @Override
+    protected boolean shouldDropLoot() {
+        return this.isDeadOrDying() && super.shouldDropLoot();
+    }
+
     public void setMonolithActiveTime(int activeTime) {
         this.entityData.set(DATA_MONOLITH_ACTIVE_ID, activeTime);
     }

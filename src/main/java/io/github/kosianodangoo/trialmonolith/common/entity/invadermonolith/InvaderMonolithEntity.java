@@ -73,7 +73,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     }
 
     @Override
-    public boolean hurt(DamageSource p_21016_, float p_21017_) {
+    public boolean hurt(@NotNull DamageSource p_21016_, float p_21017_) {
         return false;
     }
 
@@ -98,6 +98,25 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public float getYRot() {
         return 0;
+    }
+
+    @Override
+    protected void dropAllDeathLoot(@NotNull DamageSource pDamageSource) {
+        if (super.isDeadOrDying()) {
+            super.dropAllDeathLoot(pDamageSource);
+        }
+    }
+
+    @Override
+    protected void dropFromLootTable(@NotNull DamageSource pDamageSource, boolean pIsByPlayer) {
+        if (this.shouldDropLoot()) {
+            super.dropFromLootTable(pDamageSource, pIsByPlayer);
+        }
+    }
+
+    @Override
+    protected boolean shouldDropLoot() {
+        return super.isDeadOrDying() && super.shouldDropLoot();
     }
 
     @Override
@@ -171,7 +190,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     }
 
     @Override
-    public void remove(RemovalReason p_276115_) {
+    public void remove(@NotNull RemovalReason p_276115_) {
     }
 
     @Override
