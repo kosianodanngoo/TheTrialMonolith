@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "MMM",
-    "BS",
+    "BES",
     "MMM"
   ],
   "key": {
@@ -17,6 +17,9 @@
     },
     "C": {
       "item": "the_trial_monolith:damage_cube_summoner"
+    },
+    "E": {
+      "item": "the_trial_monolith:trial_monolith_spawn_egg"
     }
   },
   "result": {
