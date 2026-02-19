@@ -95,7 +95,7 @@ public class TrialMonolithEntity extends Monster {
 
     @Override
     public void setHealth(float pHealth) {
-        pHealth = disableDamageCap ? pHealth : Math.max(pHealth, lastHealth - TrialMonolithConfig.trialMonolithDamageCap);
+        pHealth = disableDamageCap ? pHealth : Math.max(lastHealth - TrialMonolithConfig.trialMonolithDamageCap, pHealth);
 
         this.entityData.set(DATA_MONOLITH_HEALTH_ID, Mth.clamp(pHealth, 0, getMaxHealth()));
     }
