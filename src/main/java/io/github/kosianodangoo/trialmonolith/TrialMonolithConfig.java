@@ -16,6 +16,7 @@ public class TrialMonolithConfig {
 
     private static final ForgeConfigSpec.DoubleValue INVADER_MONOLITH_ATTACK_RANGE;
     public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_SHOULD_DIE_FROM_KILL;
+    public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_ATTACKS_CREATIVE;
 
     private static final ForgeConfigSpec.DoubleValue SMALL_BEAM_SOUL_DAMAGE;
     private static final ForgeConfigSpec.DoubleValue HUGE_BEAM_SOUL_DAMAGE;
@@ -36,6 +37,7 @@ public class TrialMonolithConfig {
 
         INVADER_MONOLITH_ATTACK_RANGE = BUILDER.comment("Attack Range of The Invader Monolith").defineInRange("invaderMonolithAttackRange", 128, 0, Double.POSITIVE_INFINITY);
         INVADER_MONOLITH_SHOULD_DIE_FROM_KILL = BUILDER.comment("Whether The Invader Monolith should die from /kill").define("invaderMonolithShouldDieFromKill", false);
+        INVADER_MONOLITH_ATTACKS_CREATIVE = BUILDER.comment("Whether The Invader Monolith attacks players in creative mode").define("invaderMonolithAttackCreative", true);
 
         BUILDER.pop();
 
@@ -55,6 +57,7 @@ public class TrialMonolithConfig {
     public static float trialMonolithDamageCap = 1000000;
 
     public static double invaderMonolithAttackRange = 128;
+    public static boolean invaderMonolithAttacksCreative = true;
 
     public static float smallBeamSoulDamage = 0.01f;
     public static float hugeBeamSoulDamage = 0.10f;
@@ -67,6 +70,7 @@ public class TrialMonolithConfig {
         trialMonolithDamageCap = TRIAL_MONOLITH_DAMAGE_CAP.get().floatValue();
 
         invaderMonolithAttackRange = INVADER_MONOLITH_ATTACK_RANGE.get();
+        invaderMonolithAttacksCreative = INVADER_MONOLITH_ATTACKS_CREATIVE.get();
 
         smallBeamSoulDamage = SMALL_BEAM_SOUL_DAMAGE.get().floatValue();
         hugeBeamSoulDamage = HUGE_BEAM_SOUL_DAMAGE.get().floatValue();

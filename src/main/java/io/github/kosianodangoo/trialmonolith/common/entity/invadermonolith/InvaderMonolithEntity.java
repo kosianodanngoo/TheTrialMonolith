@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -30,7 +31,7 @@ import static io.github.kosianodangoo.trialmonolith.TrialMonolithConfig.invaderM
 public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoulProtection {
     private boolean initialized = false;
 
-    public final Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this &&
+    public Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this &&
             !(entity instanceof AbstractDelayedTraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof Projectile projectile && this == projectile.getOwner()) &&
             !(entity instanceof ItemEntity) &&
@@ -39,6 +40,11 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
 
     public InvaderMonolithEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        if (!TrialMonolithConfig.invaderMonolithAttacksCreative) {
+            DEFAULT_PREDICATE = DEFAULT_PREDICATE.and(entity ->
+                    !(entity instanceof Player player && (player.isCreative() || player.isSpectator()))
+            );
+        }
     }
 
     @Override
