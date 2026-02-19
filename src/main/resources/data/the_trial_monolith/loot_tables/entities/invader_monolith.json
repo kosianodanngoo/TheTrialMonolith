@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 64,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_trial_monolith:monolith_fragment"
+        }
+      ]
+    }, {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_trial_monolith:over_clocker"
+        }
+      ]
+    }
+  ]
+}

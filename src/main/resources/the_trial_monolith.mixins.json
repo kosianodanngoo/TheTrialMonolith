@@ -9,6 +9,7 @@
     "LivingEntityInvoker",
     "LivingEntityMixin",
     "PersistentEntitySectionManager$CallbackMixin",
+    "PlayerMixin",
     "ServerLevelMixin",
     "client.ClientGamePacketListenerMixin"
   ],

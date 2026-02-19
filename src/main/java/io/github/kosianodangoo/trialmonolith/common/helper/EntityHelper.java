@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.helper;
 
 import com.google.common.base.Predicates;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
+import io.github.kosianodangoo.trialmonolith.api.mixin.IOverClocker;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulBypass;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
@@ -22,6 +23,7 @@ import java.util.function.Predicate;
 public class EntityHelper {
     public static final String SOUL_PROTECTION_TAG = TheTrialMonolith.MOD_ID + ":SoulProtection";
     public static final String SOUL_DAMAGE_TAG = TheTrialMonolith.MOD_ID + ":SoulDamage";
+    public static final String OVER_CLOCKED_TAG = TheTrialMonolith.MOD_ID + ":OverClocked";
 
     public static void rayTraceEntities(Entity sourceEntity, double reach, double width, Predicate<Entity> predicate, Consumer<Entity> consumer) {
         Vec3 view = sourceEntity.getViewVector(0);
@@ -137,6 +139,25 @@ public class EntityHelper {
                 return;
             }
             soulProtection.the_trial_monolith$setShouldBypass(shouldBypass);
+        }
+    }
+
+    public static boolean isOverClocked(Entity entity) {
+        if (entity instanceof IOverClocker overClocker) {
+            return overClocker.the_trial_monolith$isOverClocked();
+        }
+        return false;
+    }
+
+    public static void setOverClocked(Entity entity, boolean overClocked) {
+        if (entity instanceof IOverClocker overClocker) {
+            overClocker.the_trial_monolith$setOverClocked(overClocked);
+        }
+    }
+
+    public static void toggleOverClocked(Entity entity) {
+        if (entity instanceof IOverClocker overClocker) {
+            setOverClocked(entity, !overClocker.the_trial_monolith$isOverClocked());
         }
     }
 }

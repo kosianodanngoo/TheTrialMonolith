@@ -15,6 +15,9 @@ public class TTMForgeEventHandler {
         if (EntityHelper.isSoulProtected(event.getOriginal())) {
             EntityHelper.setSoulProtected(event.getEntity(), true);
         }
+        if (EntityHelper.isOverClocked(event.getOriginal())) {
+            EntityHelper.setOverClocked(event.getEntity(), true);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
