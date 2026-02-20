@@ -51,4 +51,18 @@ public abstract class PlayerMixin extends LivingEntity {
             cir.setReturnValue(the_trial_monolith$EMPTY_ITEM_COOLDOWNS);
         }
     }
+
+    @Inject(method = "getAttackStrengthScale", at = @At("HEAD"), cancellable = true)
+    public void getAttackStrengthScaleMixin(float partialTick, CallbackInfoReturnable<Float> cir) {
+        if (EntityHelper.isOverClocked(this)) {
+            cir.setReturnValue(1.0F);
+        }
+    }
+
+    @Inject(method = "getCurrentItemAttackStrengthDelay", at = @At("HEAD"), cancellable = true)
+    public void getCurrentItemAttackStrengthDelayMixin(CallbackInfoReturnable<Float> cir) {
+        if (EntityHelper.isOverClocked(this)) {
+            cir.setReturnValue(0.0F);
+        }
+    }
 }
