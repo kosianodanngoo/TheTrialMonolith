@@ -110,7 +110,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     protected void loadMixin(CompoundTag pCompound, CallbackInfo ci) {
         try {
             the_trial_monolith$setSoulProtected(pCompound.getBoolean(EntityHelper.SOUL_PROTECTION_TAG));
-            the_trial_monolith$setSoulDamage(pCompound.getFloat(EntityHelper.SOUL_DAMAGE_TAG));
+            EntityHelper.setSoulDamage((Entity)(Object)this, pCompound.getFloat(EntityHelper.SOUL_DAMAGE_TAG));
             the_trial_monolith$setOverClocked(pCompound.getBoolean(EntityHelper.OVER_CLOCKED_TAG));
         } catch (Exception ignored) {
         }
@@ -120,7 +120,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     protected void saveMixin(CompoundTag pCompound, CallbackInfoReturnable<CompoundTag> cir) {
         try {
             pCompound.putBoolean(EntityHelper.SOUL_PROTECTION_TAG, the_trial_monolith$isSoulProtected());
-            pCompound.putFloat(EntityHelper.SOUL_DAMAGE_TAG, the_trial_monolith$getSoulDamage());
+            pCompound.putFloat(EntityHelper.SOUL_DAMAGE_TAG, EntityHelper.getSoulDamage((Entity)(Object)this));
             pCompound.putBoolean(EntityHelper.OVER_CLOCKED_TAG, the_trial_monolith$isOverClocked());
         } catch (Exception ignored) {
         }
