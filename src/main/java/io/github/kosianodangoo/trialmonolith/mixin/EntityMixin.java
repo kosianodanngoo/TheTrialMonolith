@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Entity.class)
+@Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
 public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker {
     @Shadow
     public SynchedEntityData entityData;

@@ -19,7 +19,7 @@ public class GenericTransformer {
 
     @SuppressWarnings("unused")
     public enum Phase {
-        ITransformationService, ILaunchPluginServiceBefore, ILaunchPluginService, ClassFileTransformer
+        ITransformationService, ILaunchPluginServiceBefore, PostMixin ,ILaunchPluginService, ClassFileTransformer
     }
 
     static {

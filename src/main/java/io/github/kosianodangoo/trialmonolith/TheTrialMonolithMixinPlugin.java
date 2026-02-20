@@ -44,6 +44,6 @@ public class TheTrialMonolithMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {
-
+        GenericTransformer.transform(GenericTransformer.Phase.PostMixin, classNode);
     }
 }
