@@ -81,7 +81,13 @@ public class EntityHelper {
             }
             livingEntity.getBrain().clearMemories();
             if (entity instanceof Mob mob) {
-                Predicate<Goal> goalRemover = (goal -> {goal.stop();return true;});
+                Predicate<Goal> goalRemover = (goal -> {
+                    try {
+                        goal.stop();
+                    } catch (Exception ignored) {
+                    }
+                    return true;
+                });
                 mob.goalSelector.removeAllGoals(goalRemover);
                 mob.targetSelector.removeAllGoals(goalRemover);
             }
