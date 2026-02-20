@@ -1,6 +1,5 @@
 package io.github.kosianodangoo.trialmonolith.common.helper;
 
-import com.google.common.base.Predicates;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.api.mixin.IOverClocker;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulBypass;
@@ -8,10 +7,13 @@ import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
 import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -79,14 +81,22 @@ public class EntityHelper {
             }
             livingEntity.getBrain().clearMemories();
             if (entity instanceof Mob mob) {
-                mob.goalSelector.removeAllGoals(Predicates.alwaysTrue());
-                mob.targetSelector.removeAllGoals(Predicates.alwaysTrue());
+                Predicate<Goal> goalRemover = (goal -> {goal.stop();return true;});
+                mob.goalSelector.removeAllGoals(goalRemover);
+                mob.targetSelector.removeAllGoals(goalRemover);
             }
         }
         entity.kill();
     }
 
     public static void onSoulRemove(Entity entity) {
+        if (entity instanceof ServerPlayer player) {
+            MinecraftServer server = player.getServer();
+            if (server != null) {
+                player.connection.player = server.getPlayerList().respawn(player, false);
+            }
+            return;
+        }
         if (entity instanceof Player) {
             return;
         }
