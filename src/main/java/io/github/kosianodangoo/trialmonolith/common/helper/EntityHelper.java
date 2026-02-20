@@ -88,8 +88,13 @@ public class EntityHelper {
                     }
                     return true;
                 });
-                mob.goalSelector.removeAllGoals(goalRemover);
-                mob.targetSelector.removeAllGoals(goalRemover);
+                try {
+                    mob.goalSelector.removeAllGoals(goalRemover);
+                    mob.targetSelector.removeAllGoals(goalRemover);
+                    mob.setTarget(null);
+                    mob.setNoAi(true);
+                } catch (Exception ignored) {
+                }
             }
         }
         entity.kill();
