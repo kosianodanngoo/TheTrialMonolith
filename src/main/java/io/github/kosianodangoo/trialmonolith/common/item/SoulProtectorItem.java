@@ -28,6 +28,7 @@ public class SoulProtectorItem extends Item {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (pPlayer instanceof ISoulProtection && !pLevel.isClientSide()) {
             EntityHelper.setSoulDamage(pPlayer, 0);
+            pPlayer.setHealth(pPlayer.getMaxHealth());
             EntityHelper.toggleSoulProtected(pPlayer);
             boolean isSoulProtected = EntityHelper.isSoulProtected(pPlayer);
             pPlayer.sendSystemMessage(Component.translatable("item.the_trial_monolith.soul_protector.".concat(isSoulProtected ? "enabled" : "disabled")));
