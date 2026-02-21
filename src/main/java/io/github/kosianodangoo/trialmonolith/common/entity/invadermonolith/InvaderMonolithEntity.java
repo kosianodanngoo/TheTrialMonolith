@@ -56,6 +56,16 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
         this.goalSelector.addGoal(0, new OPShootSmallBeamGoal(this));
     }
 
+    @Override
+    public boolean isNoAi() {
+        return !TrialMonolithConfig.invaderMonolithBypassNoAI && super.isNoAi();
+    }
+
+    @Override
+    public void setNoAi(boolean p_21558_) {
+        super.setNoAi(!TrialMonolithConfig.invaderMonolithBypassNoAI && p_21558_);
+    }
+
     public static AttributeSupplier createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 1000)

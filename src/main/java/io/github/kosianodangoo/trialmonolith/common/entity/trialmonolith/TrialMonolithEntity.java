@@ -84,6 +84,16 @@ public class TrialMonolithEntity extends Monster {
     }
 
     @Override
+    public boolean isNoAi() {
+        return !TrialMonolithConfig.trialMonolithBypassNoAI && super.isNoAi();
+    }
+
+    @Override
+    public void setNoAi(boolean p_21558_) {
+        super.setNoAi(!TrialMonolithConfig.trialMonolithBypassNoAI && p_21558_);
+    }
+
+    @Override
     public void tick() {
         initialized = true;
         this.lastHealth = this.getHealth();
