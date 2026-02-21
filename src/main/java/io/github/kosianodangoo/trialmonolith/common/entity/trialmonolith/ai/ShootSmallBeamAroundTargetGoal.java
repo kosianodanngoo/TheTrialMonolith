@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.sounds.SoundEvents;
@@ -40,7 +41,7 @@ public class ShootSmallBeamAroundTargetGoal extends Goal {
         if (nextEnable == -1) {
             this.nextEnable = this.monolith.getMonolithActiveTime() + getInterval();
         }
-        if (target != null && target.isAlive() && attackCount < ATTACK_LIMIT && monolith.getMonolithActiveTime() > nextEnable) {
+        if (target != null && EntityHelper.getSoulDamage(target) < 10 && attackCount < ATTACK_LIMIT && monolith.getMonolithActiveTime() > nextEnable) {
             this.target = target;
             return true;
         } else return false;

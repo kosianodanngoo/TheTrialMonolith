@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.RandomSource;
@@ -30,7 +31,7 @@ public class ShootHugeBeamGoal extends Goal {
         if (nextEnable == -1) {
             this.nextEnable = this.monolith.getMonolithActiveTime() + getCoolTime();
         }
-        if (target != null && target.isAlive() && monolith.getMonolithActiveTime() > nextEnable) {
+        if (target != null && EntityHelper.getSoulDamage(target) < 10 && monolith.getMonolithActiveTime() > nextEnable) {
             this.nextEnable = this.monolith.getMonolithActiveTime() + getCoolTime();
             this.target = target;
             return true;

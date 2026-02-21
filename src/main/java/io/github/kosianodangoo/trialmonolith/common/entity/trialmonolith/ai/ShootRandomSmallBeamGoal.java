@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,7 +28,7 @@ public class ShootRandomSmallBeamGoal extends Goal {
     @Override
     public boolean canUse() {
         LivingEntity target = this.monolith.getTarget();
-        if (target != null && target.isAlive()) {
+        if (target != null && EntityHelper.getSoulDamage(target) < 10) {
             this.target = target;
             return true;
         } else return false;
