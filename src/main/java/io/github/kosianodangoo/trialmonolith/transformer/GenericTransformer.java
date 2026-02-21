@@ -218,8 +218,12 @@ public class GenericTransformer {
                 if (currentName.equals(superClass)) {
                     return true;
                 }
-                if (isInterface && isSubclass(currentName, superClass, true)) {
-                    return true;
+                if (isInterface) {
+                    for (String interfaceName : classReader.getInterfaces()) {
+                        if (isSubclass(interfaceName, superClass, true)) {
+                            return true;
+                        }
+                    }
                 }
             } catch (Throwable e) {
                 return false;
