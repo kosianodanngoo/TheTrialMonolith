@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.RandomSource;
@@ -50,6 +51,7 @@ public class OPShootHugeBeamGoal extends Goal {
                         .add(target.getDeltaMovement().multiply(deflection, deflection, deflection));
 
                 hugeBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
+                EntityHelper.setSoulProtected(hugeBeam, true);
                 monolith.level().addFreshEntity(hugeBeam);
             }
             attackTime = getCoolTime();

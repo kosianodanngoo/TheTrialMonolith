@@ -4,6 +4,7 @@ import io.github.kosianodangoo.trialmonolith.client.item.BeamSummonerItemRendere
 import io.github.kosianodangoo.trialmonolith.common.entity.AbstractDelayedTraceableEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -85,6 +86,11 @@ public class BeamSummonerItem extends Item {
 
         SmallBeamEntity smallBeam = new SmallBeamEntity(TrialMonolithEntities.SMALL_BEAM.get(), pLevel);
         smallBeam.setOwner(pLiving);
+
+        if(EntityHelper.isSoulProtected(pLiving)) {
+            EntityHelper.setSoulProtected(smallBeam, true);
+        }
+
         RandomSource randomSource = pLevel.getRandom();
         smallBeam.setPos(pLiving.getX() + randomSource.nextDouble() - 0.5,
                 pLiving.getY() + pLiving.getBbHeight() + 1.5 + randomSource.nextDouble(),
@@ -103,6 +109,10 @@ public class BeamSummonerItem extends Item {
 
         hugeBeam.setXRot(pLiving.getXRot());
         hugeBeam.setYRot(pLiving.getYRot());
+
+        if(EntityHelper.isSoulProtected(pLiving)) {
+            EntityHelper.setSoulProtected(hugeBeam, true);
+        }
 
         pLevel.addFreshEntity(hugeBeam);
     }

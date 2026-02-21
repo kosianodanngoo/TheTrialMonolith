@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.DamageCubeEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -43,11 +44,14 @@ public class OPSummonDamageCubeGoal extends Goal {
 
                 damageCube.setPos(targetPos);
 
+                EntityHelper.setSoulProtected(damageCube, true);
+
                 monolith.level().addFreshEntity(damageCube);
             }
             DamageCubeEntity damageCube = new DamageCubeEntity(TrialMonolithEntities.DAMAGE_CUBE.get(), this.monolith.level());
             damageCube.setOwner(monolith);
             damageCube.setPos(entity.getPosition(0));
+            EntityHelper.setSoulProtected(damageCube, true);
             monolith.level().addFreshEntity(damageCube);
         }
     }

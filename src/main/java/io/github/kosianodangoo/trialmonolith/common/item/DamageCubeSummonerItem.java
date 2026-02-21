@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.item;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.AbstractDelayedTraceableEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.DamageCubeEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -66,6 +67,11 @@ public class DamageCubeSummonerItem extends Item {
         DamageCubeEntity damageCube = new DamageCubeEntity(TrialMonolithEntities.DAMAGE_CUBE.get(), pLevel);
         damageCube.setOwner(pLiving);
         damageCube.setPos(target);
+
+        if(EntityHelper.isSoulProtected(pLiving)) {
+            EntityHelper.setSoulProtected(damageCube, true);
+        }
+
         pLevel.addFreshEntity(damageCube);
     }
 }

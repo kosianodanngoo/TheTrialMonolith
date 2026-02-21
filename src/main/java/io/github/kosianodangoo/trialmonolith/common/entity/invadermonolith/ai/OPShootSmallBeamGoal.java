@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.ai;
 
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.util.RandomSource;
@@ -41,6 +42,7 @@ public class OPShootSmallBeamGoal extends Goal {
                     .add(randomSource.nextDouble() * 2 - 1, randomSource.nextDouble() * 2 - 1, randomSource.nextDouble() * 2 - 1);
 
             smallBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
+            EntityHelper.setSoulProtected(smallBeam, true);
             monolith.level().addFreshEntity(smallBeam);
         }
     }
