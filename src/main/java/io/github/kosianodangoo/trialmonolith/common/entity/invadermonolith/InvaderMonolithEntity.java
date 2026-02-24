@@ -7,8 +7,11 @@ import io.github.kosianodangoo.trialmonolith.common.entity.AbstractDelayedTracea
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.ai.*;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -31,6 +34,8 @@ import static io.github.kosianodangoo.trialmonolith.TrialMonolithConfig.invaderM
 public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoulProtection {
     private boolean initialized = false;
 
+    private final ServerBossEvent bossEvent;
+
     public Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this &&
             !(entity instanceof AbstractDelayedTraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof Projectile projectile && this == projectile.getOwner()) &&
@@ -45,6 +50,20 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
                     !(entity instanceof Player player && (player.isCreative() || player.isSpectator()))
             );
         }
+
+        this.bossEvent = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+    }
+
+    @Override
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        this.bossEvent.addPlayer(player);
+    }
+
+    @Override
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        this.bossEvent.removePlayer(player);
     }
 
     @Override
