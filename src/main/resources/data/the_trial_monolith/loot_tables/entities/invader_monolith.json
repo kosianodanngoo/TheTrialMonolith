@@ -17,6 +17,15 @@
           "name": "the_trial_monolith:over_clocker"
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_trial_monolith:high_dimensional_barrier"
+        }
+      ]
     }
   ]
 }

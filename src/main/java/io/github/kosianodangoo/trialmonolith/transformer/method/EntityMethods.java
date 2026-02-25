@@ -95,6 +95,14 @@ public class EntityMethods {
         return removed;
     }
 
+    public static boolean shouldReplaceIsPickable(Entity entity) {
+        return EntityHelper.hasHighDimensionalBarrier(entity);
+    }
+
+    public static boolean replaceIsPickable(Entity entity) {
+        return false;
+    }
+
     public static void tickOverride(Consumer<Entity> consumer, Entity entity) {
         consumer.accept(entity);
     }

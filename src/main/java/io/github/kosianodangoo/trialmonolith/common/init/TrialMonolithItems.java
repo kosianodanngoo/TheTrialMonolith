@@ -34,6 +34,7 @@ public class TrialMonolithItems {
     public static final RegistryObject<DamageCubeSummonerItem> DAMAGE_CUBE_SUMMONER = register("damage_cube_summoner", DamageCubeSummonerItem::new, true);
     public static final RegistryObject<SoulProtectorItem> SOUL_PROTECTOR = register("soul_protector", SoulProtectorItem::new, true);
     public static final RegistryObject<OverClockerItem> OVER_CLOCKER = register("over_clocker", OverClockerItem::new, true);
+    public static final RegistryObject<HighDimensionalBarrierItem> HIGH_DIMENSIONAL_BARRIER = register("high_dimensional_barrier", HighDimensionalBarrierItem::new, true);
     public static final RegistryObject<BottleOfTheSoulItem> BOTTLE_OF_THE_SOUL = register("bottle_of_the_soul", BottleOfTheSoulItem::new, true);
 
     private static <T extends Item> RegistryObject<T> register(String name, Supplier<T> itemSupplier, boolean isCreativeTab) {

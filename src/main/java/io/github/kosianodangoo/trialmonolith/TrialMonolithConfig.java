@@ -19,6 +19,7 @@ public class TrialMonolithConfig {
     public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_SHOULD_DIE_FROM_KILL;
     public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_ATTACKS_CREATIVE;
     public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_BYPASS_NO_AI;
+    public static final ForgeConfigSpec.BooleanValue INVADER_MONOLITH_BYPASS_HAS_DIMENSIONAL_BARRIER;
 
     private static final ForgeConfigSpec.DoubleValue SMALL_BEAM_SOUL_DAMAGE;
     private static final ForgeConfigSpec.DoubleValue HUGE_BEAM_SOUL_DAMAGE;
@@ -42,6 +43,7 @@ public class TrialMonolithConfig {
         INVADER_MONOLITH_SHOULD_DIE_FROM_KILL = BUILDER.comment("Whether The Invader Monolith should die from /kill").define("invaderMonolithShouldDieFromKill", false);
         INVADER_MONOLITH_ATTACKS_CREATIVE = BUILDER.comment("Whether The Invader Monolith attacks players in creative mode").define("invaderMonolithAttackCreative", true);
         INVADER_MONOLITH_BYPASS_NO_AI = BUILDER.comment("Whether The Invader Monolith ignore NoAI frag").define("invaderMonolithBypassNoAI", true);
+        INVADER_MONOLITH_BYPASS_HAS_DIMENSIONAL_BARRIER = BUILDER.comment("Whether The Invader Monolith has High Dimentional Barrier").define("invaderMonolithHasDimensionalBarrier", true);
 
         BUILDER.pop();
 
@@ -64,6 +66,7 @@ public class TrialMonolithConfig {
     public static double invaderMonolithAttackRange = 128;
     public static boolean invaderMonolithAttacksCreative = true;
     public static boolean invaderMonolithBypassNoAI = true;
+    public static boolean invaderMonolithHasDimensionalBarrier = true;
 
     public static float smallBeamSoulDamage = 0.01f;
     public static float hugeBeamSoulDamage = 0.10f;
@@ -79,6 +82,7 @@ public class TrialMonolithConfig {
         invaderMonolithAttackRange = INVADER_MONOLITH_ATTACK_RANGE.get();
         invaderMonolithAttacksCreative = INVADER_MONOLITH_ATTACKS_CREATIVE.get();
         invaderMonolithBypassNoAI = INVADER_MONOLITH_BYPASS_NO_AI.get();
+        invaderMonolithHasDimensionalBarrier = INVADER_MONOLITH_BYPASS_HAS_DIMENSIONAL_BARRIER.get();
 
         smallBeamSoulDamage = SMALL_BEAM_SOUL_DAMAGE.get().floatValue();
         hugeBeamSoulDamage = HUGE_BEAM_SOUL_DAMAGE.get().floatValue();

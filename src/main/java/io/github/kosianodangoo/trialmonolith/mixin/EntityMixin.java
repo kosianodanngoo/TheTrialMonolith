@@ -1,9 +1,6 @@
 package io.github.kosianodangoo.trialmonolith.mixin;
 
-import io.github.kosianodangoo.trialmonolith.api.mixin.IOverClocker;
-import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulBypass;
-import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
-import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
+import io.github.kosianodangoo.trialmonolith.api.mixin.*;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
-public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker {
+public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker, IHighDimensionalBarrier {
     @Shadow
     public SynchedEntityData entityData;
 
@@ -38,6 +35,8 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_SOUL_PROTECTION_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
     @Unique
     private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_OVER_CLOCKER_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    @Unique
+    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
 
     @Unique
     private boolean the_trial_monolith$shouldBypass = false;
@@ -56,6 +55,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
         this.entityData.define(the_trial_monolith$DATA_SOUL_DAMAGE_ID, 0f);
         this.entityData.define(the_trial_monolith$DATA_SOUL_PROTECTION_ID, false);
         this.entityData.define(the_trial_monolith$DATA_OVER_CLOCKER_ID, false);
+        this.entityData.define(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER, false);
 
         the_trial_monolith$initialized = true;
     }
@@ -106,12 +106,29 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
         this.entityData.set(the_trial_monolith$DATA_SOUL_PROTECTION_ID, soulDamage);
     }
 
+    @Override
+    public boolean the_trial_monolith$hasHighDimensionalBarrier() {
+        if (!the_trial_monolith$initialized) {
+            return false;
+        }
+        return this.entityData.get(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER);
+    }
+
+    @Override
+    public void the_trial_monolith$setHighDimensionalBarrier(boolean highDimensionalBarrier) {
+        if (!the_trial_monolith$initialized) {
+            return;
+        }
+        this.entityData.set(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER, highDimensionalBarrier);
+    }
+
     @Inject(method = "load", at = @At("HEAD"))
     protected void loadMixin(CompoundTag pCompound, CallbackInfo ci) {
         try {
             the_trial_monolith$setSoulProtected(pCompound.getBoolean(EntityHelper.SOUL_PROTECTION_TAG));
             EntityHelper.setSoulDamage((Entity)(Object)this, pCompound.getFloat(EntityHelper.SOUL_DAMAGE_TAG));
             the_trial_monolith$setOverClocked(pCompound.getBoolean(EntityHelper.OVER_CLOCKED_TAG));
+            the_trial_monolith$setHighDimensionalBarrier(pCompound.getBoolean(EntityHelper.HIGH_DIMENSIONAL_BARRIER_TAG));
         } catch (Exception ignored) {
         }
     }
@@ -122,6 +139,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             pCompound.putBoolean(EntityHelper.SOUL_PROTECTION_TAG, the_trial_monolith$isSoulProtected());
             pCompound.putFloat(EntityHelper.SOUL_DAMAGE_TAG, EntityHelper.getSoulDamage((Entity)(Object)this));
             pCompound.putBoolean(EntityHelper.OVER_CLOCKED_TAG, the_trial_monolith$isOverClocked());
+            pCompound.putBoolean(EntityHelper.HIGH_DIMENSIONAL_BARRIER_TAG, the_trial_monolith$hasHighDimensionalBarrier());
         } catch (Exception ignored) {
         }
     }

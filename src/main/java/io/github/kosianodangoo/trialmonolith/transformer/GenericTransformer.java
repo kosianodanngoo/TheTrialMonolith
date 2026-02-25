@@ -9,8 +9,10 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.Objects;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
@@ -166,6 +168,13 @@ public class GenericTransformer {
                         new InsnNode(Opcodes.IRETURN));
                 method.maxStack += 1;
                 modified = true;
+            } else if (isSameMethod(classNode.name, method, "net/minecraft/world/entity/Entity", "m_6087_", "isPickable", "()Z", false)) {
+                injectHead(method,
+                        new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "shouldReplaceIsPickable", "(Lnet/minecraft/world/entity/Entity;)Z", false),
+                        new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "replaceIsPickable", "(Lnet/minecraft/world/entity/Entity;)Z", false),
+                        new InsnNode(Opcodes.IRETURN));
+                method.maxStack += 1;
+                modified = true;
             }
         }
         return modified;
@@ -211,9 +220,11 @@ public class GenericTransformer {
 
         String currentName = className;
 
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
         while (!currentName.equals("java/lang/Object")) {
-            try {
-                ClassReader classReader = new ClassReader(currentName);
+            try (InputStream is = classLoader.getResourceAsStream(currentName.concat(".class"))) {
+                ClassReader classReader = new ClassReader(Objects.requireNonNull(is));
                 currentName = classReader.getSuperName();
                 if (currentName.equals(superClass)) {
                     return true;
@@ -226,6 +237,7 @@ public class GenericTransformer {
                     }
                 }
             } catch (Throwable e) {
+                TheTrialMonolith.LOGGER.error("Failed to find super Class", e);
                 return false;
             }
         }

@@ -1,10 +1,7 @@
 package io.github.kosianodangoo.trialmonolith.common.helper;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
-import io.github.kosianodangoo.trialmonolith.api.mixin.IOverClocker;
-import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulBypass;
-import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
-import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
+import io.github.kosianodangoo.trialmonolith.api.mixin.*;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
 import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
 import net.minecraft.server.MinecraftServer;
@@ -26,6 +23,7 @@ public class EntityHelper {
     public static final String SOUL_PROTECTION_TAG = TheTrialMonolith.MOD_ID + ":SoulProtection";
     public static final String SOUL_DAMAGE_TAG = TheTrialMonolith.MOD_ID + ":SoulDamage";
     public static final String OVER_CLOCKED_TAG = TheTrialMonolith.MOD_ID + ":OverClocked";
+    public static final String HIGH_DIMENSIONAL_BARRIER_TAG = TheTrialMonolith.MOD_ID + ":HighDimensionalBarrier";
 
     public static void rayTraceEntities(Entity sourceEntity, double reach, double width, Predicate<Entity> predicate, Consumer<Entity> consumer) {
         Vec3 view = sourceEntity.getViewVector(0);
@@ -179,6 +177,25 @@ public class EntityHelper {
     public static void toggleOverClocked(Entity entity) {
         if (entity instanceof IOverClocker overClocker) {
             setOverClocked(entity, !overClocker.the_trial_monolith$isOverClocked());
+        }
+    }
+
+    public static boolean hasHighDimensionalBarrier(Entity entity) {
+        if (entity instanceof IHighDimensionalBarrier highDimensionalBarrier) {
+            return highDimensionalBarrier.the_trial_monolith$hasHighDimensionalBarrier();
+        }
+        return false;
+    }
+
+    public static void setHighDimensionalBarrier(Entity entity, boolean has) {
+        if (entity instanceof IHighDimensionalBarrier highDimensionalBarrier) {
+            highDimensionalBarrier.the_trial_monolith$setHighDimensionalBarrier(has);
+        }
+    }
+
+    public static void toggleHighDimensionalBarrier(Entity entity) {
+        if (entity instanceof IHighDimensionalBarrier highDimensionalBarrier) {
+            setHighDimensionalBarrier(entity, !highDimensionalBarrier.the_trial_monolith$hasHighDimensionalBarrier());
         }
     }
 }

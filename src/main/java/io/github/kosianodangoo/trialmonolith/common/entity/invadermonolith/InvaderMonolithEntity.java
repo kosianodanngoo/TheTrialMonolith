@@ -1,6 +1,7 @@
 package io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith;
 
 import io.github.kosianodangoo.trialmonolith.TrialMonolithConfig;
+import io.github.kosianodangoo.trialmonolith.api.mixin.IHighDimensionalBarrier;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
 import io.github.kosianodangoo.trialmonolith.common.entity.AbstractDelayedTraceableEntity;
@@ -31,7 +32,7 @@ import java.util.function.Predicate;
 
 import static io.github.kosianodangoo.trialmonolith.TrialMonolithConfig.invaderMonolithAttackRange;
 
-public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoulProtection {
+public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoulProtection, IHighDimensionalBarrier {
     private boolean initialized = false;
 
     private final ServerBossEvent bossEvent;
@@ -230,5 +231,15 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
 
     @Override
     public void onRemovedFromWorld() {
+    }
+
+    @Override
+    public boolean the_trial_monolith$hasHighDimensionalBarrier() {
+        return TrialMonolithConfig.invaderMonolithHasDimensionalBarrier;
+    }
+
+    @Override
+    public void the_trial_monolith$setHighDimensionalBarrier(boolean highDimensionalBarrier) {
+
     }
 }
