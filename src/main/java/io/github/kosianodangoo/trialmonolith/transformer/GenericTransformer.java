@@ -60,32 +60,27 @@ public class GenericTransformer {
                     if (insn.getOpcode() == Opcodes.INVOKEVIRTUAL || insn.getOpcode() == Opcodes.INVOKEINTERFACE) {
                         if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21223_", "getHealth", "()F", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
-                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getHealth", "(FLnet/minecraft/world/entity/LivingEntity;)F"));
-                            method.instructions.insert(methodInsn, new InsnNode(Opcodes.SWAP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getHealth", "(Lnet/minecraft/world/entity/LivingEntity;F)F"));
                             method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21224_", "isDeadOrDying", "()Z", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
-                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isDeadOrDying", "(ZLnet/minecraft/world/entity/LivingEntity;)Z"));
-                            method.instructions.insert(methodInsn, new InsnNode(Opcodes.SWAP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isDeadOrDying", "(Lnet/minecraft/world/entity/LivingEntity;Z)Z"));
                             method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_6084_", "isAlive", "()Z", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
-                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isAlive", "(ZLnet/minecraft/world/entity/Entity;)Z"));
-                            method.instructions.insert(methodInsn, new InsnNode(Opcodes.SWAP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isAlive", "(Lnet/minecraft/world/entity/Entity;Z)Z"));
                             method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_240725_", "isRemoved", "()Z", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
-                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isRemoved", "(ZLnet/minecraft/world/entity/Entity;)Z"));
-                            method.instructions.insert(methodInsn, new InsnNode(Opcodes.SWAP));
+                            method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "isRemoved", "(Lnet/minecraft/world/entity/Entity;Z)Z"));
                             method.maxStack += 1;
                             modified = true;
                         } else if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/Entity", "m_146911_", "getRemovalReason", "()Lnet/minecraft/world/entity/Entity$RemovalReason;", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             method.instructions.insert(methodInsn, new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "getRemovalReason", "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/world/entity/Entity$RemovalReason;"));
-                            method.instructions.insert(methodInsn, new InsnNode(Opcodes.SWAP));
                             method.maxStack += 1;
                             modified = true;
                         } else if (phase == Phase.ILaunchPluginServiceBefore &&
