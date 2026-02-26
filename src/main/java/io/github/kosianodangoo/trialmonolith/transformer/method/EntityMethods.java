@@ -23,8 +23,16 @@ public class EntityMethods {
         return 20;
     }
 
-    public static float getHealth(LivingEntity livingEntity, float health) {
-        return getHealth(health, livingEntity);
+    public static float getHealth(Object object1, Object object2) {
+        float health = 0;
+        if (object2 instanceof Float value) health = value;
+        else if (object1 instanceof Float value) health = value;
+
+        if (object1 instanceof LivingEntity livingEntity)
+            return getHealth(health, livingEntity);
+        else if (object2 instanceof LivingEntity livingEntity)
+            return getHealth(health, livingEntity);
+        return health;
     }
 
     public static float getHealth(float health, LivingEntity livingEntity) {
@@ -41,8 +49,16 @@ public class EntityMethods {
         return !EntityHelper.isSoulProtected(entity) && EntityHelper.getSoulDamage(entity) >= 1;
     }
 
-    public static boolean isDeadOrDying(LivingEntity livingEntity, boolean deadOrDying) {
-        return isDeadOrDying(deadOrDying, livingEntity);
+    public static boolean isDeadOrDying(Object object1, Object object2) {
+        boolean isDead = true;
+        if (object2 instanceof Boolean bool) isDead = bool;
+        else if (object1 instanceof Boolean bool) isDead = bool;
+
+        if (object1 instanceof LivingEntity livingEntity)
+            return isDeadOrDying(isDead, livingEntity);
+        else if (object2 instanceof LivingEntity livingEntity)
+            return isDeadOrDying(isDead, livingEntity);
+        return isDead;
     }
 
     public static boolean isDeadOrDying(boolean deadOrDying, LivingEntity livingEntity) {
@@ -53,16 +69,32 @@ public class EntityMethods {
         return !replaceIsDeadOrDying(entity);
     }
 
-    public static boolean isAlive(Entity entity, boolean alive) {
-        return isAlive(alive, entity);
+    public static boolean isAlive(Object object1, Object object2) {
+        boolean alive = false;
+        if (object2 instanceof Boolean bool) alive = bool;
+        else if (object1 instanceof Boolean bool) alive = bool;
+
+        if (object1 instanceof Entity entity)
+            return isAlive(alive, entity);
+        else if (object2 instanceof Entity entity)
+            return isAlive(alive, entity);
+        return alive;
     }
 
     public static boolean isAlive(boolean alive, Entity entity) {
         return EntityHelper.isSoulProtected(entity) || alive && EntityHelper.getSoulDamage(entity) < 1;
     }
 
-    public static Entity.RemovalReason getRemovalReason(Entity entity, Entity.RemovalReason removalReason) {
-        return getRemovalReason(removalReason, entity);
+    public static Entity.RemovalReason getRemovalReason(Object object1, Object object2) {
+        Entity.RemovalReason removalReason = null;
+        if (object2 instanceof Entity.RemovalReason value) removalReason = value;
+        else if (object1 instanceof Entity.RemovalReason value) removalReason = value;
+
+        if (object1 instanceof Entity entity)
+            return getRemovalReason(removalReason, entity);
+        else if (object2 instanceof Entity entity)
+            return getRemovalReason(removalReason, entity);
+        return removalReason;
     }
 
     public static Entity.RemovalReason getRemovalReason(Entity.RemovalReason removalReason, Entity entity) {
@@ -78,8 +110,16 @@ public class EntityMethods {
         return removalReason;
     }
 
-    public static boolean isRemoved(Entity entity, boolean removed) {
-        return isRemoved(removed, entity);
+    public static boolean isRemoved(Object object1, Object object2) {
+        boolean isRemoved = false;
+        if (object2 instanceof Boolean bool) isRemoved = bool;
+        else if (object1 instanceof Boolean bool) isRemoved = bool;
+
+        if (object1 instanceof Entity livingEntity)
+            return isRemoved(isRemoved, livingEntity);
+        else if (object2 instanceof Entity livingEntity)
+            return isRemoved(isRemoved, livingEntity);
+        return isRemoved;
     }
 
     public static boolean isRemoved(boolean removed, Entity entity) {
