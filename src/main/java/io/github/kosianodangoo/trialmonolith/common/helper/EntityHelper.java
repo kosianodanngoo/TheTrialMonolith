@@ -1,8 +1,10 @@
 package io.github.kosianodangoo.trialmonolith.common.helper;
 
+import com.google.common.collect.Lists;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.api.mixin.*;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
+import io.github.kosianodangoo.trialmonolith.mixin.LevelInvoker;
 import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,9 +14,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -24,6 +30,25 @@ public class EntityHelper {
     public static final String SOUL_DAMAGE_TAG = TheTrialMonolith.MOD_ID + ":SoulDamage";
     public static final String OVER_CLOCKED_TAG = TheTrialMonolith.MOD_ID + ":OverClocked";
     public static final String HIGH_DIMENSIONAL_BARRIER_TAG = TheTrialMonolith.MOD_ID + ":HighDimensionalBarrier";
+
+    public static void forEachEntities(Level level, AABB aabb, Consumer<Entity> consumer) {
+        if (level instanceof LevelInvoker levelInvoker) {
+            levelInvoker.the_trial_monolith$getEntities().get(aabb, consumer);
+            return;
+        }
+        level.getEntities(EntityTypeTest.forClass(Entity.class), aabb, (entity)->true).forEach(consumer);
+    }
+
+    public static Collection<Entity> getEntities(Level level, AABB aabb, Predicate<Entity> predicate) {
+        if (level instanceof LevelInvoker) {
+            List<Entity> entities = Lists.newArrayList();
+            forEachEntities(level, aabb, (entity -> {
+                if (predicate.test(entity)) entities.add(entity);
+            }));
+            return entities;
+        }
+        return level.getEntities(EntityTypeTest.forClass(Entity.class), aabb, predicate);
+    }
 
     public static void rayTraceEntities(Entity sourceEntity, double reach, double width, Predicate<Entity> predicate, Consumer<Entity> consumer) {
         Vec3 view = sourceEntity.getViewVector(0);
@@ -37,7 +62,8 @@ public class EntityHelper {
                 .inflate(width);
 
 
-        for (Entity entity : sourceEntity.level().getEntities(sourceEntity, area, predicate)) {
+        for (Entity entity : getEntities(sourceEntity.level(), area, predicate)) {
+            if (entity == sourceEntity) continue;
             AABB aabb = entity.getBoundingBox().inflate(entity.getPickRadius()).inflate(width);
             Optional<Vec3> optional = aabb.clip(start, end);
             optional.ifPresent(hit -> consumer.accept(entity));

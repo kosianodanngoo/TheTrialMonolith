@@ -6,6 +6,7 @@
   "refmap": "the_trial_monolith.refmap.json",
   "mixins": [
     "EntityMixin",
+    "LevelInvoker",
     "LivingEntityInvoker",
     "LivingEntityMixin",
     "PersistentEntitySectionManager$CallbackMixin",

@@ -6,10 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TraceableEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -28,7 +25,8 @@ public abstract class AbstractDelayedTraceableEntity extends Entity implements T
     public final Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this.getOwner() &&
             !(entity instanceof AbstractDelayedTraceableEntity traceable && this.getOwner() == traceable.getOwner()) &&
             !(entity instanceof Projectile projectile && this.getOwner() == projectile.getOwner()) &&
-            !(entity instanceof ItemEntity)
+            !(entity instanceof ItemEntity) &&
+            !(entity instanceof ExperienceOrb)
     );
 
     private static final EntityDataAccessor<Integer> DATA_PAST_TICKS_ID = SynchedEntityData.defineId(AbstractDelayedTraceableEntity.class, EntityDataSerializers.INT);

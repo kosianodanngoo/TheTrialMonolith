@@ -16,6 +16,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -41,6 +42,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
             !(entity instanceof AbstractDelayedTraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof Projectile projectile && this == projectile.getOwner()) &&
             !(entity instanceof ItemEntity) &&
+            !(entity instanceof ExperienceOrb) &&
             entity.tickCount >= 100
     );
 
@@ -222,7 +224,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     }
 
     public Collection<Entity> getTargets() {
-        return level.getEntities(this, AABB.ofSize(this.getPosition(0), invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2), DEFAULT_PREDICATE);
+        return EntityHelper.getEntities(level(), AABB.ofSize(this.getPosition(0), invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2), DEFAULT_PREDICATE);
     }
 
     @Override
