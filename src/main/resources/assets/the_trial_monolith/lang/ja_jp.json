@@ -1,0 +1,49 @@
+{
+  "entity.the_trial_monolith.trial_monolith": "試練のモノリス",
+  "entity.the_trial_monolith.invader_monolith": "侵略者のモノリス",
+  "entity.the_trial_monolith.small_beam": "小さなビーム",
+  "entity.the_trial_monolith.huge_beam": "巨大なビーム",
+  "entity.the_trial_monolith.damage_cube": "ダメージキューブ",
+
+  "death.attack.the_trial_monolith.laser": "%sはレーザーに蒸発させられた。",
+  "death.attack.the_trial_monolith.laser.player": "%1$sは%2$sのレーザーに蒸発させられた。",
+  "death.attack.the_trial_monolith.laser.item": "%1$sは%2$sのレーザーに%3$sを使って蒸発させられた。",
+
+  "death.attack.the_trial_monolith.cube": "%sはキューブに蒸発させられた。",
+  "death.attack.the_trial_monolith.cube.player": "%1$sは%2$sのキューブに蒸発させられた。",
+  "death.attack.the_trial_monolith.cube.item": "%1$sは%2$sのキューブに%3$sを使って蒸発させられた。",
+
+  "death.attack.the_trial_monolith.soul_damage": "%sは過度な魂の損傷によって死んだ。",
+  "death.attack.the_trial_monolith.soul_damage.player": "%1$sは%2$sからの過度な魂の損傷によって死んだ。",
+  "death.attack.the_trial_monolith.soul_damage.item": "%1$sは%2$sの%3$sからの過度な魂の損傷によって死んだ。",
+
+  "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
+
+
+  "item.the_trial_monolith.monolith_fragment": "モノリスの破片",
+
+  "item.the_trial_monolith.trial_monolith_spawn_egg": "試練のモノリスのスポーンエッグ",
+  "item.the_trial_monolith.invader_monolith_spawn_egg": "侵略者のモノリスのスポーンエッグ",
+  "tooltip.the_trial_monolith.invader_monolith_spawn_egg": "これはあなたのワールドを台無しにするかもしれません。\n拠点の遠くで召喚してください。",
+
+  "item.the_trial_monolith.damage_cube_summoner": "ダメージキューブサモナー",
+
+  "item.the_trial_monolith.beam_summoner": "ビームサモナー",
+
+  "item.the_trial_monolith.soul_protector": "魂保護装置",
+  "item.the_trial_monolith.soul_protector.enabled": "魂の保護は有効化されました。",
+  "item.the_trial_monolith.soul_protector.disabled": "魂の保護は無効化されました。",
+
+  "item.the_trial_monolith.over_clocker": "オーバークロッカー",
+  "item.the_trial_monolith.over_clocker.enabled": "オーバークロッカーは有効化されました",
+  "item.the_trial_monolith.over_clocker.disabled": "オーバークロッカーは無効化されました",
+  "item.the_trial_monolith.high_dimensional_barrier": "高次元バリア",
+  "item.the_trial_monolith.high_dimensional_barrier.enabled": "高次元バリアは有効化されました",
+  "item.the_trial_monolith.high_dimensional_barrier.disabled": "高次元バリアは無効化されました",
+
+  "item.the_trial_monolith.bottle_of_the_soul": "魂入りの瓶",
+
+  "modifier.the_trial_monolith.soul_slayer": "Soul Slayer",
+  "modifier.the_trial_monolith.soul_slayer.flavor": "Slay the soul.",
+  "modifier.the_trial_monolith.soul_slayer.description": "魂に損傷を与える。"
+}

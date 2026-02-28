@@ -15,7 +15,7 @@
 
   "death.attack.the_trial_monolith.soul_damage": "%s died from excessive soul damage.",
   "death.attack.the_trial_monolith.soul_damage.player": "%1$s died from excessive soul damage from %2$s.",
-  "death.attack.the_trial_monolith.soul_damage.item": "%1$s died from excessive soul damage from %2$s laser using %3$s",
+  "death.attack.the_trial_monolith.soul_damage.item": "%1$s died from excessive soul damage from %2$s with %3$s",
 
   "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
 
