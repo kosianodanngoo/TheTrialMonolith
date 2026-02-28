@@ -16,7 +16,6 @@ import java.util.Objects;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
-    static String ENTITY_HELPER = "io/github/kosianodangoo/trialmonolith/common/helper/EntityHelper";
     static boolean initialized = false;
 
     @SuppressWarnings("unused")
@@ -105,7 +104,7 @@ public class GenericTransformer {
                             LabelNode endLabelNode = new LabelNode(new Label());
                             InsnList insnListB = new InsnList();
                             insnListB.add(new InsnNode(Opcodes.DUP));
-                            insnListB.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_HELPER, "isSoulProtected", "(Lnet/minecraft/world/entity/Entity;)Z"));
+                            insnListB.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "shouldOverrideTick", "(Lnet/minecraft/world/entity/Entity;)Z"));
                             insnListB.add(new JumpInsnNode(Opcodes.IFGT, skipLabelNode));
                             InsnList insnListA = new InsnList();
                             insnListA.add(new JumpInsnNode(Opcodes.GOTO, endLabelNode));

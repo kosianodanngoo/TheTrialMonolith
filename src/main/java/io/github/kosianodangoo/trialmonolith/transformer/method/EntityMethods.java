@@ -1,5 +1,6 @@
 package io.github.kosianodangoo.trialmonolith.transformer.method;
 
+import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -81,6 +82,10 @@ public class EntityMethods {
 
     public static boolean replaceIsPickable(Entity entity) {
         return false;
+    }
+
+    public static boolean shouldOverrideTick(Entity entity) {
+        return EntityHelper.isSoulProtected(entity) || entity instanceof TrialMonolithEntity;
     }
 
     public static void tickOverride(Consumer<Entity> consumer, Entity entity) {
