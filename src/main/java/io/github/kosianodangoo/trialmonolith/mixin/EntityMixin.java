@@ -25,10 +25,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
-public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker, IHighDimensionalBarrier {
+public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker, IHighDimensionalBarrier, ITickTracker {
     @Shadow
     public SynchedEntityData entityData;
 
+    @Shadow
+    public int tickCount;
     @Unique
     private static final EntityDataAccessor<Float> the_trial_monolith$DATA_SOUL_DAMAGE_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.FLOAT);
     @Unique
@@ -45,6 +47,8 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
 
     @Unique
     private boolean the_trial_monolith$initialized = false;
+    @Unique
+    private int the_trial_monolith$lastTickCount = 0;
 
     protected EntityMixin(Class<Entity> baseClass) {
         super(baseClass);
@@ -120,6 +124,16 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             return;
         }
         this.entityData.set(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER, highDimensionalBarrier);
+    }
+
+    @Override
+    public int the_trial_monolith$getLastTickCount() {
+        return this.the_trial_monolith$lastTickCount;
+    }
+
+    @Override
+    public void the_trial_monolith$updateLastTickCount() {
+        this.the_trial_monolith$lastTickCount = this.tickCount;
     }
 
     @Inject(method = "load", at = @At("HEAD"))

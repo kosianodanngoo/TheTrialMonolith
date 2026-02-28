@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ServerLevel.class)
-public class ServerLevelMixin {
+@Mixin(value = ServerLevel.class, priority = Integer.MAX_VALUE)
+public abstract class ServerLevelMixin {
     @Inject(method = "removePlayerImmediately", at = @At("HEAD"))
     public void removePlayerImmediatelyBeforeMixin(ServerPlayer pPlayer, Entity.RemovalReason pRemovalReason, CallbackInfo ci) {
         EntityHelper.setBypassProtection(pPlayer, true);

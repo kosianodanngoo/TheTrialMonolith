@@ -17,10 +17,11 @@ import java.util.Objects;
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
     static boolean initialized = false;
+    static boolean tickInjected = false;
 
     @SuppressWarnings("unused")
     public enum Phase {
-        ITransformationService, ILaunchPluginServiceBefore, PostMixin ,ILaunchPluginService, ClassFileTransformer
+        ILaunchPluginServiceBefore, ITransformationService, PostMixin, ILaunchPluginService, ClassFileTransformer
     }
 
     static {
@@ -188,6 +189,14 @@ public class GenericTransformer {
                         new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "replaceIsPickable", "(Lnet/minecraft/world/entity/Entity;)Z", false),
                         new InsnNode(Opcodes.IRETURN));
                 method.maxStack += 1;
+                modified = true;
+            } else if (!tickInjected && phase.ordinal() >= 2 && isSameMethod(classNode.name, method, "net/minecraft/server/level/ServerLevel", "m_8793_", "tick", "(Ljava/util/function/BooleanSupplier;)V", false)) {
+                InsnList insnList = new InsnList();
+                insnList.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ENTITY_METHODS, "updateLastTicks", "(Lnet/minecraft/server/level/ServerLevel;)V"));
+                method.instructions.insert(insnList);
+                method.maxStack += 1;
+                tickInjected = true;
                 modified = true;
             }
         }

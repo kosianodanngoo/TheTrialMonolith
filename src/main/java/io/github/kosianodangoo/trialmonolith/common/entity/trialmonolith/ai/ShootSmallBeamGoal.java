@@ -54,6 +54,7 @@ public class ShootSmallBeamGoal extends Goal {
                     .add(randomSource.nextDouble() * 2 - 1, randomSource.nextDouble() * 2 - 1, randomSource.nextDouble() * 2 - 1);
 
             smallBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
+            EntityHelper.setSoulProtected(smallBeam, true);
             monolith.level().addFreshEntity(smallBeam);
             attackTime = getCoolTime();
         }

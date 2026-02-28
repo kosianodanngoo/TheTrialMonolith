@@ -56,6 +56,7 @@ public class ShootHugeBeamGoal extends Goal {
                 .add(target.getDeltaMovement().multiply(deflection, deflection, deflection));
 
         hugeBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
+        EntityHelper.setSoulProtected(hugeBeam, true);
         monolith.level().addFreshEntity(hugeBeam);
     }
 

@@ -63,11 +63,13 @@ public class SummonDamageCubeGoal extends Goal {
 
                 damageCube.setPos(targetPos);
 
+                EntityHelper.setSoulProtected(damageCube, true);
                 monolith.level().addFreshEntity(damageCube);
             }
             DamageCubeEntity damageCube = new DamageCubeEntity(TrialMonolithEntities.DAMAGE_CUBE.get(), this.monolith.level());
             damageCube.setOwner(monolith);
             damageCube.setPos(target.getPosition(0));
+            EntityHelper.setSoulProtected(damageCube, true);
             monolith.level().addFreshEntity(damageCube);
 
             attackCount++;

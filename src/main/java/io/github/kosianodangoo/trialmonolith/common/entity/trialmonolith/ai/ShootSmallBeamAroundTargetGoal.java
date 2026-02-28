@@ -68,6 +68,7 @@ public class ShootSmallBeamAroundTargetGoal extends Goal {
                     .add(target.getDeltaMovement().multiply(deflection, deflection, deflection));
 
             smallBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
+            EntityHelper.setSoulProtected(smallBeam, true);
             monolith.level().addFreshEntity(smallBeam);
 
             attackCount++;

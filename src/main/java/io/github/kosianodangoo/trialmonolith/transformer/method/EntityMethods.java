@@ -1,10 +1,19 @@
 package io.github.kosianodangoo.trialmonolith.transformer.method;
 
+import com.mojang.logging.LogUtils;
+import io.github.kosianodangoo.trialmonolith.api.mixin.ITickTracker;
 import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.ForgeConfig;
+import net.minecraftforge.server.timings.TimeTracker;
 
 import java.util.function.Consumer;
 
@@ -88,7 +97,50 @@ public class EntityMethods {
         return EntityHelper.isSoulProtected(entity) || entity instanceof TrialMonolithEntity;
     }
 
+    public static void updateLastTicks(ServerLevel serverLevel) {
+        serverLevel.entityTickList.forEach(entity -> {
+            if (entity instanceof ITickTracker tickTracker) {
+                tickTracker.the_trial_monolith$updateLastTickCount();
+            }
+        });
+    }
+
+    public static boolean shouldForceTick(Entity entity) {
+        return entity instanceof ITickTracker tickTracker && tickTracker.the_trial_monolith$getLastTickCount() == entity.tickCount;
+    }
+
     public static void tickOverride(Consumer<Entity> consumer, Entity entity) {
+        int lastTickCount = 0;
+        if (entity instanceof ITickTracker tickTracker) {
+            lastTickCount = tickTracker.the_trial_monolith$getLastTickCount();
+        }
         consumer.accept(entity);
+        if (!(entity instanceof Player) && !entity.isPassenger() && entity instanceof ITickTracker tickTracker && lastTickCount == tickTracker.the_trial_monolith$getLastTickCount() && shouldForceTick(entity)) {
+            if (entity.level() instanceof ServerLevel serverLevel) {
+                newGuardEntityTick(serverLevel::tickNonPassenger, entity);
+            } else if (entity.level() instanceof ClientLevel clientLevel) {
+                newGuardEntityTick(clientLevel::tickNonPassenger, entity);
+            }
+        }
+    }
+
+    public static void newGuardEntityTick(Consumer<Entity> consumer, Entity entity) {
+        try {
+            TimeTracker.ENTITY_UPDATE.trackStart(entity);
+            consumer.accept(entity);
+        } catch (Throwable throwable) {
+            CrashReport crashreport = CrashReport.forThrowable(throwable, "Ticking entity");
+            CrashReportCategory crashreportcategory = crashreport.addCategory("Entity being ticked");
+            entity.fillCrashReportCategory(crashreportcategory);
+            if (!(Boolean) ForgeConfig.SERVER.removeErroringEntities.get()) {
+                throw new ReportedException(crashreport);
+            }
+
+            LogUtils.getLogger().error("{}", crashreport.getFriendlyReport());
+            EntityHelper.setBypassProtection(entity, true);
+            entity.discard();
+        } finally {
+            TimeTracker.ENTITY_UPDATE.trackEnd(entity);
+        }
     }
 }

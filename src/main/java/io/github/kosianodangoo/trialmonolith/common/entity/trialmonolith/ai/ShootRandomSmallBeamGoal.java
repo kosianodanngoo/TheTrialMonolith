@@ -49,6 +49,7 @@ public class ShootRandomSmallBeamGoal extends Goal {
                 smallBeam.setXRot(randomSource.nextFloat() * 180 - 90);
                 smallBeam.setYRot(randomSource.nextFloat() * 360);
 
+                EntityHelper.setSoulProtected(smallBeam, true);
                 monolith.level().addFreshEntity(smallBeam);
             }
             attackTime = getCoolTime();
