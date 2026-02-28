@@ -23,7 +23,7 @@ public class DamageCubeEntity extends AbstractDelayedTraceableEntity {
     }
 
     @Override
-    public AABB getBoundingBoxForCulling() {
+    public @NotNull AABB getBoundingBoxForCulling() {
         return super.getBoundingBoxForCulling().inflate(4);
     }
 
@@ -42,7 +42,7 @@ public class DamageCubeEntity extends AbstractDelayedTraceableEntity {
 
         level.playSound(null, this.blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.HOSTILE, 1, 1);
 
-        this.level().getEntities(this, AABB.ofSize(this.getPosition(0), 4, 4, 4), DEFAULT_PREDICATE).forEach(entity -> {
+        EntityHelper.getEntities(level(), AABB.ofSize(this.getPosition(0), 4, 4, 4), DEFAULT_PREDICATE).forEach(entity -> {
             float damage = 3f;
 
             EntityHelper.addSoulDamage(entity, TrialMonolithConfig.damageCubeSoulDamage);
