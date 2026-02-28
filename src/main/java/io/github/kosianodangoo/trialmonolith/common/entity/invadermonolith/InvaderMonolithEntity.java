@@ -140,7 +140,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
 
     @Override
     protected void dropAllDeathLoot(@NotNull DamageSource pDamageSource) {
-        if (super.isDeadOrDying()) {
+        if (this.isDeadOrDying()) {
             super.dropAllDeathLoot(pDamageSource);
         }
     }
@@ -154,7 +154,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
 
     @Override
     protected boolean shouldDropLoot() {
-        return super.isDeadOrDying() && super.shouldDropLoot();
+        return this.isDeadOrDying() && super.shouldDropLoot();
     }
 
     @Override
