@@ -45,8 +45,7 @@ public class OPShootSmallBeamAroundTargetGoal extends Goal {
 
             float deflection = randomSource.nextFloat() * 15;
 
-            Vec3 targetPos = target.getPosition(0)
-                    .add(0, target.getBbHeight() / 2, 0)
+            Vec3 targetPos = target.getBoundingBox().getCenter()
                     .add(target.getDeltaMovement().multiply(deflection, deflection, deflection));
 
             smallBeam.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);

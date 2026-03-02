@@ -48,8 +48,7 @@ public class ShootSmallBeamGoal extends Goal {
 
             float deflection = randomSource.nextFloat() * 15;
 
-            Vec3 targetPos = target.getPosition(0)
-                    .add(0, target.getBbHeight() / 2, 0)
+            Vec3 targetPos = target.getBoundingBox().getCenter()
                     .add(target.getDeltaMovement().multiply(deflection, deflection, deflection))
                     .add(randomSource.nextDouble() * 2 - 1, randomSource.nextDouble() * 2 - 1, randomSource.nextDouble() * 2 - 1);
 

@@ -37,8 +37,7 @@ public class OPSummonDamageCubeGoal extends Goal {
 
                 float deflection = randomSource.nextFloat() * 15;
 
-                Vec3 targetPos = entity.getPosition(0)
-                        .add(0, entity.getBbHeight() / 2, 0)
+                Vec3 targetPos = entity.getBoundingBox().getCenter()
                         .add(entity.getDeltaMovement().multiply(deflection, deflection, deflection))
                         .add(randomSource.nextDouble() * 32 - 16, randomSource.nextDouble() * 32 - 16, randomSource.nextDouble() * 32 - 16);
 
@@ -50,7 +49,7 @@ public class OPSummonDamageCubeGoal extends Goal {
             }
             DamageCubeEntity damageCube = new DamageCubeEntity(TrialMonolithEntities.DAMAGE_CUBE.get(), this.monolith.level());
             damageCube.setOwner(monolith);
-            damageCube.setPos(entity.getPosition(0));
+            damageCube.setPos(entity.getBoundingBox().getCenter());
             EntityHelper.setSoulProtected(damageCube, true);
             monolith.level().addFreshEntity(damageCube);
         }
