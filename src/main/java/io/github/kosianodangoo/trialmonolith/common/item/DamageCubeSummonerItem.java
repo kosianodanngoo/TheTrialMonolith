@@ -61,7 +61,7 @@ public class DamageCubeSummonerItem extends Item {
                         !(entity instanceof Projectile projectile && pLiving == projectile.getOwner()) &&
                         !(entity instanceof ItemEntity)));
         if (entityHitResult != null) {
-            target = entityHitResult.getLocation().add(0, entityHitResult.getEntity().getBbHeight() / 2, 0);
+            target = entityHitResult.getEntity().getBoundingBox().getCenter();
         }
 
         DamageCubeEntity damageCube = new DamageCubeEntity(TrialMonolithEntities.DAMAGE_CUBE.get(), pLevel);
