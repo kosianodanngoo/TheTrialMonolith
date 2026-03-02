@@ -6,7 +6,10 @@ import io.github.kosianodangoo.trialmonolith.api.mixin.*;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
 import io.github.kosianodangoo.trialmonolith.mixin.LevelInvoker;
 import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
+import net.minecraft.core.SectionPos;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -15,9 +18,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.entity.*;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.Collection;
 import java.util.List;
@@ -141,11 +145,28 @@ public class EntityHelper {
         entity.stopRiding();
 
         entity.getPassengers().forEach(Entity::stopRiding);
+        entity.onRemovedFromWorld();
         entity.levelCallback.onRemove(Entity.RemovalReason.KILLED);
+
+        if (entity.level() instanceof ServerLevel serverLevel) {
+            PersistentEntitySectionManager<Entity> entityManager = serverLevel.entityManager;
+            EntitySectionStorage<Entity> sectionStorage = entityManager.sectionStorage;
+            long index = SectionPos.of(entity.blockPosition()).asLong();
+            EntitySection<Entity> tSection = sectionStorage.getSection(index);
+            if (tSection != null) {
+                tSection.remove(entity);
+            }
+            serverLevel.getChunkSource().removeEntity(entity);
+            serverLevel.entityTickList.remove(entity);
+            EntityLookup<Entity> entityLookup = entityManager.visibleEntityStorage;
+            entityLookup.remove(entity);
+            if (serverLevel.getEntity(entity.getUUID()) == null) {
+                PacketDistributor.DIMENSION.with(serverLevel::dimension).send(new ClientboundRemoveEntitiesPacket(entity.getId()));
+            }
+        }
 
         entity.invalidateCaps();
     }
-
     public static void addSoulDamage(Entity entity, float damage) {
         if (entity instanceof ISoulDamage soulDamage) {
             setSoulDamage(entity, damage + soulDamage.the_trial_monolith$getSoulDamage());
