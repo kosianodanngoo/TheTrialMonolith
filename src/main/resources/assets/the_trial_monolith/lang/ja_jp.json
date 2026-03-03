@@ -20,6 +20,28 @@
   "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
 
 
+  "commands.the_trial_monolith.enabled": "有効",
+  "commands.the_trial_monolith.disabled": "無効",
+
+  "commands.the_trial_monolith.soul_protection.success.multiple": "%s体のエンティティの魂の保護を%sにしました",
+  "commands.the_trial_monolith.soul_protection.success.single": "%sの魂の保護を%sにしました",
+  "commands.the_trial_monolith.soul_protection.success.get": "%sの魂の保護: %s",
+
+  "commands.the_trial_monolith.overclock.success.multiple": "%s体のエンティティのオーバークロックを%sにしました",
+  "commands.the_trial_monolith.overclock.success.single": "%sのオーバークロックを%sにしました",
+  "commands.the_trial_monolith.overclock.success.get": "%sのオーバークロック: %s",
+
+  "commands.the_trial_monolith.high_dimensional_barrier.success.multiple": "%s体のエンティティの高次元バリアを%sにしました",
+  "commands.the_trial_monolith.high_dimensional_barrier.success.single": "%sの高次元バリアを%sにしました",
+  "commands.the_trial_monolith.high_dimensional_barrier.success.get": "%s体の高次元バリア: %s",
+
+  "commands.the_trial_monolith.soul_damage.success.multiple": "%s体のエンティティの魂のダメージを%sにしました",
+  "commands.the_trial_monolith.soul_damage.success.single": "%s体のエンティティの魂のダメージを%sにしました",
+  "commands.the_trial_monolith.soul_damage.success.get": "%sの魂のダメージ: %s",
+
+  "commands.the_trial_monolith.failure.target_must_be_single": "対象のエンティティは単数である必要があります",
+
+
   "item.the_trial_monolith.monolith_fragment": "モノリスの破片",
 
   "item.the_trial_monolith.trial_monolith_spawn_egg": "試練のモノリスのスポーンエッグ",

@@ -20,6 +20,28 @@
   "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
 
 
+  "commands.the_trial_monolith.enabled": "Enabled",
+  "commands.the_trial_monolith.disabled": "Disabled",
+
+  "commands.the_trial_monolith.soul_protection.success.multiple": "Set SoulProtection to %2$s for %1$s entities.",
+  "commands.the_trial_monolith.soul_protection.success.single": "Set %s's SoulProtection to %s",
+  "commands.the_trial_monolith.soul_protection.success.get": "%s's SoulProtection: %s",
+
+  "commands.the_trial_monolith.overclock.success.multiple": "Set OverClocking to %2$s for %1$s entities.",
+  "commands.the_trial_monolith.overclock.success.single": "Set %s's OverClocking to %s",
+  "commands.the_trial_monolith.overclock.success.get": "%s's OverClocking: %s",
+
+  "commands.the_trial_monolith.high_dimensional_barrier.success.multiple": "Set High Dimensional Barrier to %2$s for %1$s entities.",
+  "commands.the_trial_monolith.high_dimensional_barrier.success.single": "Set %s's High Dimensional Barrier to %s",
+  "commands.the_trial_monolith.high_dimensional_barrier.success.get": "%s's High Dimensional Barrier: %s",
+
+  "commands.the_trial_monolith.soul_damage.success.multiple": "Set Soul Damage to %2$s for %1$s entities.",
+  "commands.the_trial_monolith.soul_damage.success.single": "Set %s's Soul Damage to %s",
+  "commands.the_trial_monolith.soul_damage.success.get": "%s's Soul Damage: %s",
+
+  "commands.the_trial_monolith.failure.target_must_be_single": "Target entity must be a single.",
+
+
   "item.the_trial_monolith.monolith_fragment": "Monolith Fragment",
 
   "item.the_trial_monolith.trial_monolith_spawn_egg": "Trial Monolith Spawn Egg",
