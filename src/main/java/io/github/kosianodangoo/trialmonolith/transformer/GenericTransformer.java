@@ -18,8 +18,8 @@ import java.util.Objects;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
-    static List<String> exclusivePackages = new ArrayList<>();
-    static List<String> exclusiveInstructionWrappingPackages = new ArrayList<>();
+    public static List<String> exclusivePackages = new ArrayList<>();
+    public static List<String> exclusiveInstructionWrappingPackages = new ArrayList<>();
     static boolean initialized = false;
     static boolean tickInjected = false;
 
