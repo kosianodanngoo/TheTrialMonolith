@@ -11,11 +11,15 @@ import org.objectweb.asm.tree.*;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
+    static List<String> exclusivePackages = new ArrayList<>();
+    static List<String> exclusiveInstructionWrappingPackages = new ArrayList<>();
     static boolean initialized = false;
     static boolean tickInjected = false;
 
@@ -32,6 +36,7 @@ public class GenericTransformer {
         if (initialized) {
             return;
         }
+        exclusivePackages.add("io/github/kosianodangoo/trialmonolith/transformer");
         try {
             ILaunchPluginService plugin = new TheTrialMonolithPlugin();
 
@@ -50,14 +55,14 @@ public class GenericTransformer {
     }
 
     public static boolean transform(Phase phase, ClassNode classNode) {
-        if (classNode.name.startsWith("io/github/kosianodangoo/trialmonolith/transformer"))
+        if (exclusivePackages.stream().anyMatch(packageName -> classNode.name.startsWith(packageName)))
             return false;
         boolean modified = false;
 
         for (MethodNode method : classNode.methods) {
             for (AbstractInsnNode insn : method.instructions) {
                 if (insn instanceof MethodInsnNode methodInsn) {
-                    if (insn.getOpcode() == Opcodes.INVOKEVIRTUAL || insn.getOpcode() == Opcodes.INVOKEINTERFACE) {
+                    if ((insn.getOpcode() == Opcodes.INVOKEVIRTUAL || insn.getOpcode() == Opcodes.INVOKEINTERFACE) && exclusiveInstructionWrappingPackages.stream().noneMatch(packageName -> classNode.name.startsWith(packageName))) {
                         if (isSameMethod(methodInsn.owner, methodInsn, "net/minecraft/world/entity/LivingEntity", "m_21223_", "getHealth", "()F", false)) {
                             method.instructions.insertBefore(methodInsn, new InsnNode(Opcodes.DUP));
                             InsnList insnList = new InsnList();
