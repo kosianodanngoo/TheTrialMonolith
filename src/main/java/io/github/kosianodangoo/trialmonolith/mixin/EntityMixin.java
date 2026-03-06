@@ -41,6 +41,9 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
 
     @Unique
+    private boolean the_trial_monolith$isUpdating = false;
+
+    @Unique
     private boolean the_trial_monolith$shouldBypass = false;
     @Unique
     private boolean the_trial_monolith$removed = false;
@@ -134,6 +137,16 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     @Override
     public void the_trial_monolith$updateLastTickCount() {
         this.the_trial_monolith$lastTickCount = this.tickCount;
+    }
+
+    @Override
+    public void the_trial_monolith$markUpdating(boolean isUpdating) {
+        this.the_trial_monolith$isUpdating = isUpdating;
+    }
+
+    @Override
+    public boolean the_trial_monolith$isUpdating() {
+        return the_trial_monolith$isUpdating;
     }
 
     @Inject(method = "load", at = @At("HEAD"))

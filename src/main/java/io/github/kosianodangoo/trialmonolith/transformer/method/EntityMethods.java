@@ -100,27 +100,27 @@ public class EntityMethods {
     public static void updateLastTicks(ServerLevel serverLevel) {
         serverLevel.entityTickList.forEach(entity -> {
             if (entity instanceof ITickTracker tickTracker) {
+                tickTracker.the_trial_monolith$markUpdating(true);
                 tickTracker.the_trial_monolith$updateLastTickCount();
             }
         });
     }
 
     public static boolean shouldForceTick(Entity entity) {
-        return entity instanceof ITickTracker tickTracker && tickTracker.the_trial_monolith$getLastTickCount() == entity.tickCount;
+        return entity instanceof ITickTracker tickTracker && tickTracker.the_trial_monolith$getLastTickCount() == entity.tickCount && !tickTracker.the_trial_monolith$isUpdating();
     }
 
     public static void tickOverride(Consumer<Entity> consumer, Entity entity) {
-        int lastTickCount = 0;
-        if (entity instanceof ITickTracker tickTracker) {
-            lastTickCount = tickTracker.the_trial_monolith$getLastTickCount();
-        }
         consumer.accept(entity);
-        if (!(entity instanceof Player) && !entity.isPassenger() && entity instanceof ITickTracker tickTracker && lastTickCount == tickTracker.the_trial_monolith$getLastTickCount() && shouldForceTick(entity)) {
+        if (!entity.isPassenger() && shouldForceTick(entity)) {
             if (entity.level() instanceof ServerLevel serverLevel) {
                 newGuardEntityTick(serverLevel::tickNonPassenger, entity);
             } else if (entity.level() instanceof ClientLevel clientLevel) {
                 newGuardEntityTick(clientLevel::tickNonPassenger, entity);
             }
+        }
+        if (entity instanceof ITickTracker tickTracker) {
+            tickTracker.the_trial_monolith$markUpdating(false);
         }
     }
 

@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.mixin.client;
 
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ITickTracker;
+import io.github.kosianodangoo.trialmonolith.client.helper.ClientTimer;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
@@ -45,6 +46,24 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         if (level != null && !pause) {
             level.tickingEntities.forEach(entity -> {
                 if (entity instanceof ITickTracker tickTracker) {
+                    tickTracker.the_trial_monolith$markUpdating(true);
+                    tickTracker.the_trial_monolith$updateLastTickCount();
+                }
+            });
+        }
+    }
+
+    @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Timer;advanceTime(J)I"))
+    public void runTickMixin(boolean renderLevel, CallbackInfo ci) {
+        if (level != null && !pause) {
+            long millis = System.nanoTime() / 1000000L;
+            long l = ClientTimer.timer.advanceTime(millis);
+            if (l <= 0) {
+                return;
+            }
+            level.tickingEntities.forEach(entity -> {
+                if (entity instanceof ITickTracker tickTracker) {
+                    tickTracker.the_trial_monolith$markUpdating(true);
                     tickTracker.the_trial_monolith$updateLastTickCount();
                 }
             });
