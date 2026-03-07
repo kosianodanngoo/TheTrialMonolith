@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -79,6 +80,20 @@ public class TTMForgeEventHandler {
                     leftClickBlock.setUseBlock(Event.Result.DEFAULT);
                 }
             }
+            event.setCanceled(false);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+    public static void bypassBreakCancelling(BlockEvent.BreakEvent event) {
+        if (event.isCancelable() && EntityHelper.isOverClocked(event.getPlayer())) {
+            event.setCanceled(false);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+    public static void bypassBuildCancelling(BlockEvent.EntityPlaceEvent event) {
+        if (event.isCancelable() && EntityHelper.isOverClocked(event.getEntity())) {
             event.setCanceled(false);
         }
     }
