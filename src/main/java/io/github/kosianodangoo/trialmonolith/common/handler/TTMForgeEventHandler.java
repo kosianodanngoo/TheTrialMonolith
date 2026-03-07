@@ -37,6 +37,13 @@ public class TTMForgeEventHandler {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+    public static void bypassLivingDeathCancelling(LivingDeathEvent event) {
+        if (EntityHelper.getSoulDamage(event.getEntity()) >= 1) {
+            event.setCanceled(false);
+        }
+    }
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLivingAttack(LivingAttackEvent event) {
         if (EntityHelper.hasHighDimensionalBarrier(event.getEntity())) {
@@ -61,6 +68,13 @@ public class TTMForgeEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerInteractedToEntity(PlayerInteractEvent.EntityInteract event) {
         if (EntityHelper.hasHighDimensionalBarrier(event.getTarget())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onLivingDamage(AttackEntityEvent event) {
+        if (EntityHelper.hasHighDimensionalBarrier(event.getEntity())) {
             event.setCanceled(true);
         }
     }
