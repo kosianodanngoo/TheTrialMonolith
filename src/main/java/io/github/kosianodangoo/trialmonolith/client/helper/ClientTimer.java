@@ -7,5 +7,5 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientTimer {
-    public static Timer timer = new Timer(20f, 0);
+    public static Timer timer = new Timer(40f, 0);
 }
