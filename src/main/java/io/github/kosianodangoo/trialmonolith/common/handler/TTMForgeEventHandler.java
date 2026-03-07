@@ -73,7 +73,7 @@ public class TTMForgeEventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onLivingDamage(AttackEntityEvent event) {
+    public static void onAttackEntity(AttackEntityEvent event) {
         if (EntityHelper.hasHighDimensionalBarrier(event.getEntity())) {
             event.setCanceled(true);
         }
