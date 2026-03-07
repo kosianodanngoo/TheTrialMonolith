@@ -41,7 +41,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         }
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onPreClientTick()V", shift = At.Shift.AFTER, remap = false))
     public void tickMixin(CallbackInfo ci) {
         if (level != null && !pause) {
             level.tickingEntities.forEach(entity -> {
