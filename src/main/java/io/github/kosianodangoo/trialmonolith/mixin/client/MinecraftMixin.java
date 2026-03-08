@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.WindowEventHandler;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ITickTracker;
 import io.github.kosianodangoo.trialmonolith.client.helper.ClientTimer;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
+import io.github.kosianodangoo.trialmonolith.common.helper.MixinMethodHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -36,7 +37,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     public void setScreenMixin(Screen pScreen, CallbackInfo ci) {
-        if (pScreen instanceof DeathScreen && this.player != null && !this.player.isDeadOrDying() && EntityHelper.isSoulProtected(this.player)) {
+        if (pScreen instanceof DeathScreen && this.player != null && !MixinMethodHelper.isDeadOrDying(this.player) && EntityHelper.isSoulProtected(this.player)) {
             ci.cancel();
         }
     }
