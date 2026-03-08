@@ -23,7 +23,7 @@ public class SmallBeamRenderer extends EntityRenderer<SmallBeamEntity> {
     }
 
     @Override
-    public void render(SmallBeamEntity pEntity, float pEntityYaw, float pPartialTick, PoseStack pPose, MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(@NotNull SmallBeamEntity pEntity, float pEntityYaw, float pPartialTick, @NotNull PoseStack pPose, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
         super.render(pEntity, pEntityYaw, pPartialTick, pPose, pBuffer, pPackedLight);
 
         int pastTicks = pEntity.getPastTicks();
@@ -35,7 +35,7 @@ public class SmallBeamRenderer extends EntityRenderer<SmallBeamEntity> {
         pPose.mulPose(Axis.XP.rotationDegrees(pEntity.getXRot()));
 
         float portalProgress = Mth.clamp((pastTicks + pPartialTick) / pEntity.getDelay(), 0, 1);
-        portalProgress = Math.min(portalProgress, Mth.lerp((pastTicks - pEntity.getLifeTime() + PORTAL_END + pPartialTick) / (PORTAL_END), 1, 0));
+        portalProgress = Math.max(0, Math.min(portalProgress, Mth.lerp((pastTicks - pEntity.getLifeTime() + PORTAL_END + pPartialTick) / (PORTAL_END), 1, 0)));
 
         float portalSize = portalProgress * portalProgress * 1.5f;
 
