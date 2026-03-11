@@ -252,6 +252,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public @NotNull Vec3 position() {
         if (initialized) {
+            position = spawnPoint;
             return spawnPoint;
         }
         return super.position();
@@ -260,6 +261,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public void setPosRaw(double x, double y, double z) {
         if (initialized) {
+            position = spawnPoint;
             return;
         }
         super.setPosRaw(x, y, z);
@@ -269,6 +271,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public @NotNull Vec3 getPosition(float partialTick) {
         if (initialized && spawnPoint != null) {
+            position = spawnPoint;
             return spawnPoint;
         }
         return super.getPosition(partialTick);
@@ -277,6 +280,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public double getX() {
         if (initialized && spawnPoint != null) {
+            position = spawnPoint;
             return spawnPoint.x();
         }
         return super.getX();
@@ -285,6 +289,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public double getY() {
         if (initialized && spawnPoint != null) {
+            position = spawnPoint;
             return spawnPoint.y();
         }
         return super.getY();
@@ -293,6 +298,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public double getZ() {
         if (initialized && spawnPoint != null) {
+            position = spawnPoint;
             return spawnPoint.z();
         }
         return super.getZ();
