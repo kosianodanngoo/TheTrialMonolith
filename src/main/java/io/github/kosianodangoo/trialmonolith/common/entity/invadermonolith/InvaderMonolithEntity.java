@@ -28,6 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Predicate;
 
 import static io.github.kosianodangoo.trialmonolith.TrialMonolithConfig.invaderMonolithAttackRange;
@@ -36,6 +37,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     private boolean initialized = false;
 
     private final ServerBossEvent bossEvent;
+    private Collection<Entity> targets = List.of();
 
     public Vec3 spawnPoint;
 
@@ -121,6 +123,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
         if (level != null && !level.isClientSide && goalSelector.getAvailableGoals().isEmpty()) {
             this.registerGoals();
         }
+        this.targets = EntityHelper.getEntities(level, AABB.ofSize(this.getPosition(0), invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2), DEFAULT_PREDICATE);
         super.tick();
         getTargets().forEach(entity -> EntityHelper.setSoulProtected(entity, false));
     }
@@ -227,7 +230,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     }
 
     public Collection<Entity> getTargets() {
-        return EntityHelper.getEntities(level(), AABB.ofSize(this.getPosition(0), invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2), DEFAULT_PREDICATE);
+        return targets;
     }
 
     @Override
