@@ -8,7 +8,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,8 +22,7 @@ public abstract class AbstractDelayedTraceableEntity extends Entity implements T
     private UUID ownerUUID;
 
     public final Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this.getOwner() &&
-            !(entity instanceof AbstractDelayedTraceableEntity traceable && this.getOwner() == traceable.getOwner()) &&
-            !(entity instanceof Projectile projectile && this.getOwner() == projectile.getOwner()) &&
+            !(entity instanceof TraceableEntity traceable && this.getOwner() == traceable.getOwner()) &&
             !(entity instanceof ItemEntity) &&
             !(entity instanceof ExperienceOrb)
     );

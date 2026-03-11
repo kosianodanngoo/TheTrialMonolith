@@ -4,7 +4,6 @@ import io.github.kosianodangoo.trialmonolith.TrialMonolithConfig;
 import io.github.kosianodangoo.trialmonolith.api.mixin.IHighDimensionalBarrier;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulDamage;
 import io.github.kosianodangoo.trialmonolith.api.mixin.ISoulProtection;
-import io.github.kosianodangoo.trialmonolith.common.entity.AbstractDelayedTraceableEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.ai.*;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -17,12 +16,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -41,8 +40,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     public Vec3 spawnPoint;
 
     public Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this &&
-            !(entity instanceof AbstractDelayedTraceableEntity traceable && this == traceable.getOwner()) &&
-            !(entity instanceof Projectile projectile && this == projectile.getOwner()) &&
+            !(entity instanceof TraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof ItemEntity) &&
             !(entity instanceof ExperienceOrb) &&
             entity.tickCount >= 100
