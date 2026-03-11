@@ -32,7 +32,7 @@ public class TTMForgeEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLivingDeath(LivingDeathEvent event) {
-        if (EntityHelper.isSoulProtected(event.getEntity())) {
+        if (event.getEntity().isAlive() && EntityHelper.isSoulProtected(event.getEntity())) {
             event.setCanceled(true);
         }
     }
