@@ -38,6 +38,8 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
 
     private final ServerBossEvent bossEvent;
 
+    public Vec3 spawnPoint;
+
     public Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this &&
             !(entity instanceof AbstractDelayedTraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof Projectile projectile && this == projectile.getOwner()) &&
@@ -118,6 +120,9 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     @Override
     public void tick() {
         initialized = true;
+        if (level != null && !level.isClientSide && goalSelector.getAvailableGoals().isEmpty()) {
+            this.registerGoals();
+        }
         super.tick();
         getTargets().forEach(entity -> EntityHelper.setSoulProtected(entity, false));
     }
@@ -242,6 +247,54 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
 
     @Override
     public void the_trial_monolith$setHighDimensionalBarrier(boolean highDimensionalBarrier) {
+    }
 
+    @Override
+    public @NotNull Vec3 position() {
+        if (initialized) {
+            return spawnPoint;
+        }
+        return super.position();
+    }
+
+    @Override
+    public void setPosRaw(double x, double y, double z) {
+        if (initialized) {
+            return;
+        }
+        super.setPosRaw(x, y, z);
+        spawnPoint = this.position();
+    }
+
+    @Override
+    public @NotNull Vec3 getPosition(float partialTick) {
+        if (initialized && spawnPoint != null) {
+            return spawnPoint;
+        }
+        return super.getPosition(partialTick);
+    }
+
+    @Override
+    public double getX() {
+        if (initialized && spawnPoint != null) {
+            return spawnPoint.x();
+        }
+        return super.getX();
+    }
+
+    @Override
+    public double getY() {
+        if (initialized && spawnPoint != null) {
+            return spawnPoint.y();
+        }
+        return super.getY();
+    }
+
+    @Override
+    public double getZ() {
+        if (initialized && spawnPoint != null) {
+            return spawnPoint.z();
+        }
+        return super.getZ();
     }
 }
