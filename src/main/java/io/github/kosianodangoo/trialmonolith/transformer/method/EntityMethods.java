@@ -100,7 +100,7 @@ public class EntityMethods {
     public static void updateLastTicks(ServerLevel serverLevel) {
         serverLevel.entityTickList.forEach(entity -> {
             if (entity instanceof ITickTracker tickTracker) {
-                if (!entity.isPassenger() && EntityHelper.isSoulProtected(entity) && shouldForceTick(entity)) {
+                if (!entity.isPassenger() && shouldOverrideTick(entity) && shouldForceTick(entity)) {
                     newGuardEntityTick(serverLevel::tickNonPassenger, entity);
                 }
                 tickTracker.the_trial_monolith$markUpdating(true);
