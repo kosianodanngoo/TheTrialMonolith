@@ -16,7 +16,7 @@ public class TheTrialMonolithPlugin implements ILaunchPluginService {
 
     @Override
     public EnumSet<Phase> handlesClass(Type type, boolean b) {
-        if (type.getClassName().startsWith("io/github/kosianodangoo/trialmonolith/transformer"))
+        if (type.getClassName().startsWith("io.github.kosianodangoo.trialmonolith.transformer"))
             return EnumSet.noneOf(Phase.class);
         return EnumSet.of(Phase.AFTER, Phase.BEFORE);
     }
