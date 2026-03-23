@@ -45,6 +45,7 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
             !(entity instanceof TraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof ItemEntity) &&
             !(entity instanceof ExperienceOrb) &&
+            !(entity instanceof  InvaderMonolithEntity) &&
             entity.tickCount >= 100
     );
 
