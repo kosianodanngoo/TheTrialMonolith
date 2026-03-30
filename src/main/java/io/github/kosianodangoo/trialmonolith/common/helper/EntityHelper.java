@@ -83,10 +83,14 @@ public class EntityHelper {
     }
 
     public static void setSoulDamage(Entity entity, float damage) {
+        if (isSoulProtected(entity)) {
+            return;
+        }
+        setSoulDamageForce(entity, damage);
+    }
+
+    public static void setSoulDamageForce(Entity entity, float damage) {
         if (entity instanceof ISoulDamage soulDamage) {
-            if (isSoulProtected(entity)) {
-                return;
-            }
             float currentDamage = soulDamage.the_trial_monolith$getSoulDamage();
             soulDamage.the_trial_monolith$setSoulDamage(damage);
             if (currentDamage < 1 && soulDamage.the_trial_monolith$getSoulDamage() >= 1) {
@@ -167,9 +171,16 @@ public class EntityHelper {
 
         entity.invalidateCaps();
     }
+
     public static void addSoulDamage(Entity entity, float damage) {
         if (entity instanceof ISoulDamage soulDamage) {
             setSoulDamage(entity, damage + soulDamage.the_trial_monolith$getSoulDamage());
+        }
+    }
+
+    public static void addSoulDamageForce(Entity entity, float damage) {
+        if (entity instanceof ISoulDamage soulDamage) {
+            setSoulDamageForce(entity, damage + soulDamage.the_trial_monolith$getSoulDamage());
         }
     }
 

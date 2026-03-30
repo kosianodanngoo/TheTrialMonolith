@@ -24,18 +24,18 @@ public class EntityMethods {
     }
 
     public static float replaceGetHealth(LivingEntity livingEntity) {
-        if (EntityHelper.isSoulProtected(livingEntity)) {
-            return Math.max(livingEntity.getMaxHealth(), 1);
-        }
         if (EntityHelper.getSoulDamage(livingEntity) >= 1) {
             return 0;
+        }
+        if (EntityHelper.isSoulProtected(livingEntity)) {
+            return Math.max(livingEntity.getMaxHealth(), 1);
         }
         return 20;
     }
 
     public static float getHealth(float health, LivingEntity livingEntity) {
         if (EntityHelper.isSoulProtected(livingEntity)) {
-            return Math.max(livingEntity.getMaxHealth(), 1);
+            health = Math.max(livingEntity.getMaxHealth(), 1);
         }
         if (EntityHelper.getSoulDamage(livingEntity) > 0) {
             return Math.min(health, livingEntity.getMaxHealth() * (1 - EntityHelper.getSoulDamage(livingEntity)));
@@ -44,11 +44,11 @@ public class EntityMethods {
     }
 
     public static boolean replaceIsDeadOrDying(Entity entity) {
-        return !EntityHelper.isSoulProtected(entity) && EntityHelper.getSoulDamage(entity) >= 1;
+        return EntityHelper.getSoulDamage(entity) >= 1;
     }
 
     public static boolean isDeadOrDying(boolean deadOrDying, LivingEntity livingEntity) {
-        return (!EntityHelper.isSoulProtected(livingEntity)) && (deadOrDying || EntityHelper.getSoulDamage(livingEntity) >= 1);
+        return ((!EntityHelper.isSoulProtected(livingEntity)) && deadOrDying) || EntityHelper.getSoulDamage(livingEntity) >= 1;
     }
 
     public static boolean replaceIsAlive(Entity entity) {
@@ -56,31 +56,25 @@ public class EntityMethods {
     }
 
     public static boolean isAlive(boolean alive, Entity entity) {
-        return EntityHelper.isSoulProtected(entity) || alive && EntityHelper.getSoulDamage(entity) < 1;
+        return (EntityHelper.isSoulProtected(entity) || alive) && EntityHelper.getSoulDamage(entity) < 1;
     }
 
     public static Entity.RemovalReason getRemovalReason(Entity.RemovalReason removalReason, Entity entity) {
+        if (EntityHelper.getSoulDamage(entity) >= 10 && !(entity instanceof Player)) {
+            return Entity.RemovalReason.KILLED;
+        }
         if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
             return null;
-        }
-        if (entity instanceof Player) {
-            return removalReason;
-        }
-        if (EntityHelper.getSoulDamage(entity) >= 10) {
-            return Entity.RemovalReason.KILLED;
         }
         return removalReason;
     }
 
     public static boolean isRemoved(boolean removed, Entity entity) {
+        if (EntityHelper.getSoulDamage(entity) >= 10 && !(entity instanceof Player)) {
+            return true;
+        }
         if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
             return false;
-        }
-        if (entity instanceof Player) {
-            return removed;
-        }
-        if (EntityHelper.getSoulDamage(entity) >= 10) {
-            return true;
         }
         return removed;
     }

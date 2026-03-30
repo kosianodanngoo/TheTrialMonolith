@@ -153,7 +153,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     protected void loadMixin(CompoundTag pCompound, CallbackInfo ci) {
         try {
             the_trial_monolith$setSoulProtected(pCompound.getBoolean(EntityHelper.SOUL_PROTECTION_TAG));
-            EntityHelper.setSoulDamage((Entity)(Object)this, pCompound.getFloat(EntityHelper.SOUL_DAMAGE_TAG));
+            EntityHelper.setSoulDamageForce((Entity)(Object)this, pCompound.getFloat(EntityHelper.SOUL_DAMAGE_TAG));
             the_trial_monolith$setOverClocked(pCompound.getBoolean(EntityHelper.OVER_CLOCKED_TAG));
             the_trial_monolith$setHighDimensionalBarrier(pCompound.getBoolean(EntityHelper.HIGH_DIMENSIONAL_BARRIER_TAG));
         } catch (Exception ignored) {
