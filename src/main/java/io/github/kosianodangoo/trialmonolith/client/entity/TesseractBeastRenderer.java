@@ -35,7 +35,7 @@ public class TesseractBeastRenderer extends EntityRenderer<TesseractBeastProxyEn
             // XY plane
             TesseractHelper.rotate4d(rotated, time, 0, 1);
             // XW plane
-            TesseractHelper.rotate4d(rotated, time * 0.5, 0, 3);
+            TesseractHelper.rotate4d(rotated, time * 1.2, 0, 3);
             // ZW plane
             TesseractHelper.rotate4d(rotated, time * 0.7, 2, 3);
             rotatedVertices.add(rotated);
