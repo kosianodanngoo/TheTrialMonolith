@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.util.Mth;
+import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.util.function.Function;
@@ -100,6 +101,44 @@ public class RenderHelper {
         }
 
         poseStack.popPose();
+    }
+
+    public static void renderSphere(PoseStack poseStack, VertexConsumer consumer, float radius, int slices, int stacks, int r, int g, int b, int a) {
+        Matrix4f poseMatrix = poseStack.last().pose();
+        Matrix3f normalMatrix = poseStack.last().normal();
+
+        for (int i = 0; i < stacks; i++) {
+            double lat0 = Math.PI * (-0.5 + (double) (i) / stacks);
+            double z0 = Math.sin(lat0);
+            double zr0 = Math.cos(lat0);
+
+            double lat1 = Math.PI * (-0.5 + (double) (i + 1) / stacks);
+            double z1 = Math.sin(lat1);
+            double zr1 = Math.cos(lat1);
+
+            for (int j = 0; j <= slices; j++) {
+                double lng = 2.0 * Math.PI * (double) (j - 1) / slices;
+                double x = Math.cos(lng);
+                double y = Math.sin(lng);
+
+                addSphereVertex(consumer, poseMatrix, normalMatrix,
+                        (float) (x * zr0 * radius), (float) (y * zr0 * radius), (float) (z0 * radius),
+                        (float) (x * zr0), (float) (y * zr0), (float) z0, r, g, b, a);
+
+                addSphereVertex(consumer, poseMatrix, normalMatrix,
+                        (float) (x * zr1 * radius), (float) (y * zr1 * radius), (float) (z1 * radius),
+                        (float) (x * zr1), (float) (y * zr1), (float) z1, r, g, b, a);
+            }
+        }
+    }
+
+    private static void addSphereVertex(VertexConsumer consumer, Matrix4f poseMatrix, Matrix3f normalMatrix,
+                                        float x, float y, float z, float nx, float ny, float nz, int r, int g, int b, int a) {
+        consumer.vertex(poseMatrix, x, y, z)
+                .color(r, g, b, a)
+                .uv2(15728880)
+                .normal(normalMatrix, nx, ny, nz)
+                .endVertex();
     }
 
     public static void quad(Matrix4f matrix4f, VertexConsumer vertexConsumer, float x0, float y0, float z0, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, Function<VertexConsumer, VertexConsumer> extraElementFiller) {

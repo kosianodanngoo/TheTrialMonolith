@@ -22,7 +22,7 @@ public class HugeBeamEntity extends AbstractDelayedTraceableEntity {
     }
 
     @Override
-    public AABB getBoundingBoxForCulling() {
+    public @NotNull AABB getBoundingBoxForCulling() {
         return super.getBoundingBoxForCulling().inflate(128);
     }
 
@@ -47,7 +47,11 @@ public class HugeBeamEntity extends AbstractDelayedTraceableEntity {
         }
 
         EntityHelper.rayTraceEntities(this, 128, 8, DEFAULT_PREDICATE, (entity) -> {
-            EntityHelper.addSoulDamage(entity, TrialMonolithConfig.hugeBeamSoulDamage);
+            if (isHighDimensional() && EntityHelper.isImmuneToSoulDamage(entity)) {
+                EntityHelper.addSoulDamageForce(entity, TrialMonolithConfig.hugeBeamSoulDamage / 10);
+            } else {
+                EntityHelper.addSoulDamage(entity, TrialMonolithConfig.hugeBeamSoulDamage);
+            }
 
             entity.hurt(TrialMonolithDamageTypes.laserAttack(level, this.getOwner()), Float.MAX_VALUE);
 
@@ -57,7 +61,7 @@ public class HugeBeamEntity extends AbstractDelayedTraceableEntity {
 
     @Override
     public int getDelay() {
-        return 100;
+        return isHighDimensional() ? 20 : 100;
     }
 
     @Override

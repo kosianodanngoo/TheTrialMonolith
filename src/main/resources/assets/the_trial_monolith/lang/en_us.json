@@ -4,6 +4,7 @@
   "entity.the_trial_monolith.small_beam": "Small Beam",
   "entity.the_trial_monolith.huge_beam": "Huge Beam",
   "entity.the_trial_monolith.damage_cube": "Damage Cube",
+  "entity.the_trial_monolith.tesseract_beast":  "Tesseract Beast",
 
   "death.attack.the_trial_monolith.laser": "%s was vaporized by the laser.",
   "death.attack.the_trial_monolith.laser.player": "%1$s was vaporized by %2$s's laser.",
@@ -16,6 +17,10 @@
   "death.attack.the_trial_monolith.soul_damage": "%s died from excessive soul damage.",
   "death.attack.the_trial_monolith.soul_damage.player": "%1$s died from excessive soul damage from %2$s.",
   "death.attack.the_trial_monolith.soul_damage.item": "%1$s died from excessive soul damage from %2$s with %3$s",
+
+  "death.attack.the_trial_monolith.dimensional": "%s died from dimensional attack.",
+  "death.attack.the_trial_monolith.dimensional.player": "%1$s died from dimensional attack by %2$s.",
+  "death.attack.the_trial_monolith.dimensional.item": "%1$s died from dimensional attack by %2$s with %3$s",
 
   "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
 
@@ -47,10 +52,13 @@
   "item.the_trial_monolith.trial_monolith_spawn_egg": "Trial Monolith Spawn Egg",
   "item.the_trial_monolith.invader_monolith_spawn_egg": "Invader Monolith Spawn Egg",
   "tooltip.the_trial_monolith.invader_monolith_spawn_egg": "This may ruin your world\nSummon far away from your base",
+  "item.the_trial_monolith.tesseract_beast_spawn_egg": "Tesseract Beast Spawn Egg",
 
   "item.the_trial_monolith.damage_cube_summoner": "Damage Cube Summoner",
 
   "item.the_trial_monolith.beam_summoner": "Beam Summoner",
+
+  "item.the_trial_monolith.area_attacker": "Area Attacker",
 
   "item.the_trial_monolith.soul_protector": "Soul Protector",
   "item.the_trial_monolith.soul_protector.enabled": "Soul Protection is Enabled",
@@ -59,9 +67,14 @@
   "item.the_trial_monolith.over_clocker": "Over Clocker",
   "item.the_trial_monolith.over_clocker.enabled": "Over Clocker is Enabled",
   "item.the_trial_monolith.over_clocker.disabled": "Over Clocker is Disabled",
+
   "item.the_trial_monolith.high_dimensional_barrier": "High Dimensional Barrier",
   "item.the_trial_monolith.high_dimensional_barrier.enabled": "High Dimensional Barrier is Enabled",
   "item.the_trial_monolith.high_dimensional_barrier.disabled": "High Dimensional Barrier is Disabled",
+
+  "item.the_trial_monolith.dimensional_core": "Dimensional Core",
+  "item.the_trial_monolith.dimensional_core.enabled": "Equipped Dimensional Core",
+  "item.the_trial_monolith.dimensional_core.disabled": "Unequipped Dimensional Core",
 
   "item.the_trial_monolith.bottle_of_the_soul": "Bottle of The Soul",
 

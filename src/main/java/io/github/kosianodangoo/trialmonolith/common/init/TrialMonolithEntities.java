@@ -1,10 +1,12 @@
 package io.github.kosianodangoo.trialmonolith.common.init;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
+import io.github.kosianodangoo.trialmonolith.common.entity.AreaAttackerEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.DamageCubeEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.HugeBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.SmallBeamEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.tesseractbeast.TesseractBeastProxyEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -33,6 +35,13 @@ public class TrialMonolithEntities {
                     .canSpawnFarFromPlayer()
     );
 
+    public static final RegistryObject<EntityType<TesseractBeastProxyEntity>> TESSERACT_BEAST = register("tesseract_beast", () ->
+            EntityType.Builder.of(TesseractBeastProxyEntity::of, MobCategory.MONSTER)
+                    .sized(5F, 5F)
+                    .clientTrackingRange(10)
+                    .canSpawnFarFromPlayer()
+    );
+
     public static final RegistryObject<EntityType<SmallBeamEntity>> SMALL_BEAM = register("small_beam", () ->
             EntityType.Builder.of(SmallBeamEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
@@ -47,6 +56,12 @@ public class TrialMonolithEntities {
 
     public static final RegistryObject<EntityType<DamageCubeEntity>> DAMAGE_CUBE = register("damage_cube", () ->
             EntityType.Builder.of(DamageCubeEntity::new, MobCategory.MISC)
+                    .sized(1F, 1F)
+                    .clientTrackingRange(10)
+    );
+
+    public static final RegistryObject<EntityType<AreaAttackerEntity>> AREA_ATTACKER = register("area_attacker", () ->
+            EntityType.Builder.of(AreaAttackerEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
                     .clientTrackingRange(10)
     );

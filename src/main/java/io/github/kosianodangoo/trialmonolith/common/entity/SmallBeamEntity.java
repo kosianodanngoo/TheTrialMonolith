@@ -40,7 +40,11 @@ public class SmallBeamEntity extends AbstractDelayedTraceableEntity {
         EntityHelper.rayTraceEntities(this, 128, 1, DEFAULT_PREDICATE, (entity) -> {
             float damage = 1.5f;
 
-            EntityHelper.addSoulDamage(entity, TrialMonolithConfig.smallBeamSoulDamage);
+            if (isHighDimensional() && EntityHelper.isImmuneToSoulDamage(entity)) {
+                EntityHelper.addSoulDamageForce(entity, TrialMonolithConfig.smallBeamSoulDamage / 10);
+            } else {
+                EntityHelper.addSoulDamage(entity, TrialMonolithConfig.smallBeamSoulDamage);
+            }
 
             if (entity instanceof LivingEntity livingEntity) {
                 damage = Math.max(damage, livingEntity.getMaxHealth() * 0.05f);
@@ -54,7 +58,7 @@ public class SmallBeamEntity extends AbstractDelayedTraceableEntity {
 
     @Override
     public int getDelay() {
-        return 10;
+        return isHighDimensional() ? 2 : 10;
     }
 
     @Override

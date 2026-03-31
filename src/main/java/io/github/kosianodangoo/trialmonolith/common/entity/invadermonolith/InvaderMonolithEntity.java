@@ -126,7 +126,11 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
         }
         this.targets = EntityHelper.getEntities(level, AABB.ofSize(this.getPosition(0), invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2, invaderMonolithAttackRange * 2), DEFAULT_PREDICATE);
         super.tick();
-        getTargets().forEach(entity -> EntityHelper.setSoulProtected(entity, false));
+        getTargets().forEach(entity -> {
+            if (!EntityHelper.hasDimensionalCore(entity)) {
+                EntityHelper.setSoulProtected(entity, false);
+            }
+        });
     }
 
     @Override

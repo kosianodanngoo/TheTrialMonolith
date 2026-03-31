@@ -25,15 +25,23 @@ public class SoulSlayerModifier extends Modifier implements ProjectileHitModifie
     }
 
     @Override
-    public void afterMeleeHit(@NotNull IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageDealt){
+    public void afterMeleeHit(@NotNull IToolStackView tool, @NotNull ModifierEntry modifier, ToolAttackContext context, float damageDealt){
         Entity entity = context.getTarget();
 
-        EntityHelper.addSoulDamage(entity, 0.01f * modifier.getEffectiveLevel());
+        if (EntityHelper.hasDimensionalCore(context.getAttacker()) && EntityHelper.isImmuneToSoulDamage(entity)) {
+            EntityHelper.addSoulDamageForce(entity, 0.001f * modifier.getEffectiveLevel());
+        } else {
+            EntityHelper.addSoulDamage(entity, 0.01f * modifier.getEffectiveLevel());
+        }
     }
 
     @Override
-    public boolean onProjectileHitEntity(@NotNull ModifierNBT modifiers, @NotNull ModDataNBT persistentData, ModifierEntry modifier, @NotNull Projectile projectile, @NotNull EntityHitResult hit, LivingEntity attacker, LivingEntity target, boolean notBlocked) {
-        EntityHelper.addSoulDamage(target, 0.01f * modifier.getEffectiveLevel());
+    public boolean onProjectileHitEntity(@NotNull ModifierNBT modifiers, @NotNull ModDataNBT persistentData, @NotNull ModifierEntry modifier, @NotNull Projectile projectile, @NotNull EntityHitResult hit, LivingEntity attacker, LivingEntity target, boolean notBlocked) {
+        if (EntityHelper.hasDimensionalCore(attacker) && EntityHelper.isImmuneToSoulDamage(target)) {
+            EntityHelper.addSoulDamageForce(target, 0.001f * modifier.getEffectiveLevel());
+        } else {
+            EntityHelper.addSoulDamage(target, 0.01f * modifier.getEffectiveLevel());
+        }
         return false;
     }
 }

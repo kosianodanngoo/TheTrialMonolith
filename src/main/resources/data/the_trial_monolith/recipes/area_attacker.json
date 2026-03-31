@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MTM",
+    "TCT",
+    "MTM"
+  ],
+  "key": {
+    "C": {
+      "item": "the_trial_monolith:dimensional_core"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    },
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:area_attacker"
+  }
+}

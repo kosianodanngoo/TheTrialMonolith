@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MPM",
+    "EBE",
+    "MPM"
+  ],
+  "key": {
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "B": {
+      "item": "the_trial_monolith:high_dimensional_barrier"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:tesseract_beast_spawn_egg"
+  }
+}

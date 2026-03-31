@@ -3,11 +3,15 @@ package io.github.kosianodangoo.trialmonolith.common.helper;
 import com.google.common.collect.Lists;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.api.mixin.*;
+import io.github.kosianodangoo.trialmonolith.common.entity.tesseractbeast.TesseractBeastProxyEntity;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithDamageTypes;
 import io.github.kosianodangoo.trialmonolith.mixin.LevelInvoker;
 import io.github.kosianodangoo.trialmonolith.mixin.LivingEntityInvoker;
 import net.minecraft.core.SectionPos;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,6 +38,13 @@ public class EntityHelper {
     public static final String SOUL_DAMAGE_TAG = TheTrialMonolith.MOD_ID + ":SoulDamage";
     public static final String OVER_CLOCKED_TAG = TheTrialMonolith.MOD_ID + ":OverClocked";
     public static final String HIGH_DIMENSIONAL_BARRIER_TAG = TheTrialMonolith.MOD_ID + ":HighDimensionalBarrier";
+    public static final String DIMENSIONAL_CORE_TAG = TheTrialMonolith.MOD_ID + ":DimensionalCore";
+
+    public static final EntityDataAccessor<Float> DATA_SOUL_DAMAGE_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Boolean> DATA_SOUL_PROTECTION_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> DATA_OVER_CLOCKER_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> DATA_HIGH_DIMENSIONAL_BARRIER = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> DATA_DIMENSIONAL_CORE = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
 
     public static void forEachEntities(Level level, AABB aabb, Consumer<Entity> consumer) {
         if (level instanceof LevelInvoker levelInvoker) {
@@ -83,10 +94,14 @@ public class EntityHelper {
     }
 
     public static void setSoulDamage(Entity entity, float damage) {
-        if (isSoulProtected(entity)) {
+        if (isImmuneToSoulDamage(entity)) {
             return;
         }
         setSoulDamageForce(entity, damage);
+    }
+
+    public static boolean isImmuneToSoulDamage(Entity entity) {
+        return isSoulProtected(entity) && !(entity instanceof TesseractBeastProxyEntity);
     }
 
     public static void setSoulDamageForce(Entity entity, float damage) {
@@ -254,6 +269,32 @@ public class EntityHelper {
     public static void toggleHighDimensionalBarrier(Entity entity) {
         if (entity instanceof IHighDimensionalBarrier highDimensionalBarrier) {
             setHighDimensionalBarrier(entity, !highDimensionalBarrier.the_trial_monolith$hasHighDimensionalBarrier());
+        }
+    }
+
+    public static boolean isInitialized(Entity entity) {
+        if (entity instanceof IInitializable initializable) {
+            return initializable.the_trial_monolith$isInitialized();
+        }
+        return false;
+    }
+
+    public static boolean hasDimensionalCore(Entity entity) {
+        if (entity instanceof IDimensionalCore dimensionalCore) {
+            return dimensionalCore.the_trial_monolith$hasDimensionalCore();
+        }
+        return false;
+    }
+
+    public static void setDimensionalCore(Entity entity, boolean has) {
+        if (entity instanceof IDimensionalCore dimensionalCore) {
+            dimensionalCore.the_trial_monolith$setDimensionalCore(has);
+        }
+    }
+
+    public static void toggleDimensionalCore(Entity entity) {
+        if (entity instanceof IDimensionalCore dimensionalCore) {
+            setDimensionalCore(entity, !dimensionalCore.the_trial_monolith$hasDimensionalCore());
         }
     }
 }

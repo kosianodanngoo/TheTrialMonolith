@@ -45,7 +45,11 @@ public class DamageCubeEntity extends AbstractDelayedTraceableEntity {
         EntityHelper.getEntities(level(), AABB.ofSize(this.getPosition(0), 4, 4, 4), DEFAULT_PREDICATE).forEach(entity -> {
             float damage = 3f;
 
-            EntityHelper.addSoulDamage(entity, TrialMonolithConfig.damageCubeSoulDamage);
+            if (isHighDimensional() && EntityHelper.isImmuneToSoulDamage(entity)) {
+                EntityHelper.addSoulDamageForce(entity, TrialMonolithConfig.damageCubeSoulDamage / 10);
+            } else {
+                EntityHelper.addSoulDamage(entity, TrialMonolithConfig.damageCubeSoulDamage);
+            }
 
             if (entity instanceof LivingEntity livingEntity) {
                 damage = Math.max(damage, livingEntity.getMaxHealth() * 0.05f);
@@ -59,7 +63,7 @@ public class DamageCubeEntity extends AbstractDelayedTraceableEntity {
 
     @Override
     public int getDelay() {
-        return 7;
+        return isHighDimensional() ? 2 : 7;
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.common.handler;
 
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
 import io.github.kosianodangoo.trialmonolith.common.entity.invadermonolith.InvaderMonolithEntity;
+import io.github.kosianodangoo.trialmonolith.common.entity.tesseractbeast.TesseractBeastProxyEntity;
 import io.github.kosianodangoo.trialmonolith.common.entity.trialmonolith.TrialMonolithEntity;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithItems;
@@ -17,6 +18,7 @@ public class TTMModEventHandler {
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(TrialMonolithEntities.TRIAL_MONOLITH.get(), TrialMonolithEntity.createAttributes());
         event.put(TrialMonolithEntities.INVADER_MONOLITH.get(), InvaderMonolithEntity.createAttributes());
+        event.put(TrialMonolithEntities.TESSERACT_BEAST.get(), TesseractBeastProxyEntity.createAttributes());
     }
 
     @SubscribeEvent

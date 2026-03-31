@@ -12,6 +12,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -25,17 +26,20 @@ public class TrialMonolithItems {
     public static final RegistryObject<Item> MONOLITH_SPAWN_EGG = register("trial_monolith_spawn_egg", () -> new ForgeSpawnEggItem(TrialMonolithEntities.TRIAL_MONOLITH, 0x000000, 0x440044, new Item.Properties()), true);
     public static final RegistryObject<Item> INVADER_MONOLITH_SPAWN_EGG = register("invader_monolith_spawn_egg", () -> new ForgeSpawnEggItem(TrialMonolithEntities.INVADER_MONOLITH, 0x660000, 0x992222, new Item.Properties()) {
         @Override
-        public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
             super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
             pTooltipComponents.add(Component.translatable("tooltip.the_trial_monolith.invader_monolith_spawn_egg"));
         }
     }, true);
+    public static final RegistryObject<Item> TESSERACT_BEAST_SPAWN_EGG = register("tesseract_beast_spawn_egg", () -> new ForgeSpawnEggItem(TrialMonolithEntities.TESSERACT_BEAST, 0xFFFFFF, 0x64C8FF, new Item.Properties()), true);
     public static final RegistryObject<BeamSummonerItem> BEAM_SUMMONER = register("beam_summoner", BeamSummonerItem::new, true);
     public static final RegistryObject<DamageCubeSummonerItem> DAMAGE_CUBE_SUMMONER = register("damage_cube_summoner", DamageCubeSummonerItem::new, true);
+    public static final RegistryObject<AreaAttackerItem> AREA_ATTACKER = register("area_attacker", AreaAttackerItem::new, true);
     public static final RegistryObject<SoulProtectorItem> SOUL_PROTECTOR = register("soul_protector", SoulProtectorItem::new, true);
     public static final RegistryObject<OverClockerItem> OVER_CLOCKER = register("over_clocker", OverClockerItem::new, true);
     public static final RegistryObject<HighDimensionalBarrierItem> HIGH_DIMENSIONAL_BARRIER = register("high_dimensional_barrier", HighDimensionalBarrierItem::new, true);
     public static final RegistryObject<BottleOfTheSoulItem> BOTTLE_OF_THE_SOUL = register("bottle_of_the_soul", BottleOfTheSoulItem::new, true);
+    public static final RegistryObject<DimensionalCoreItem> DIMENSIONAL_CORE = register("dimensional_core", DimensionalCoreItem::new, true);
 
     private static <T extends Item> RegistryObject<T> register(String name, Supplier<T> itemSupplier, boolean isCreativeTab) {
         RegistryObject<T> registryObject = ITEMS.register(name, itemSupplier);

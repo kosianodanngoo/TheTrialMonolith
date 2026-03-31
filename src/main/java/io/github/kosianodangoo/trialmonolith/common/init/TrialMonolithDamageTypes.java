@@ -13,6 +13,8 @@ public class TrialMonolithDamageTypes {
             (Registries.DAMAGE_TYPE, TheTrialMonolith.getResourceLocation("laser_attack"));
     public static final ResourceKey<DamageType> CUBE_ATTACK = ResourceKey.create
             (Registries.DAMAGE_TYPE, TheTrialMonolith.getResourceLocation("cube_attack"));
+    public static final ResourceKey<DamageType> DIMENSIONAL_ATTACK = ResourceKey.create
+            (Registries.DAMAGE_TYPE, TheTrialMonolith.getResourceLocation("dimensional_attack"));
 
     public static final ResourceKey<DamageType> SOUL_DAMAGE = ResourceKey.create
             (Registries.DAMAGE_TYPE, TheTrialMonolith.getResourceLocation("soul_damage")); // This Damage Type Do not anything special. Registered to show custom death message.
@@ -30,6 +32,14 @@ public class TrialMonolithDamageTypes {
             return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(CUBE_ATTACK), entity);
         } catch (Exception e) {
             return entity.damageSources().lightningBolt();
+        }
+    }
+
+    public static DamageSource dimensionalAttack(Level level, Entity entity) {
+        try {
+            return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DIMENSIONAL_ATTACK), entity);
+        } catch (Exception e) {
+            return entity.damageSources().genericKill();
         }
     }
 

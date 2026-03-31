@@ -91,6 +91,10 @@ public class BeamSummonerItem extends Item {
             EntityHelper.setSoulProtected(smallBeam, true);
         }
 
+        if (EntityHelper.hasDimensionalCore(pLiving)) {
+            smallBeam.setHighDimensional(true);
+        }
+
         RandomSource randomSource = pLevel.getRandom();
         smallBeam.setPos(pLiving.getX() + randomSource.nextDouble() - 0.5,
                 pLiving.getY() + pLiving.getBbHeight() + 1.5 + randomSource.nextDouble(),
@@ -112,6 +116,9 @@ public class BeamSummonerItem extends Item {
 
         if(EntityHelper.isSoulProtected(pLiving)) {
             EntityHelper.setSoulProtected(hugeBeam, true);
+        }
+        if (EntityHelper.hasDimensionalCore(pLiving)) {
+            hugeBeam.setHighDimensional(true);
         }
 
         pLevel.addFreshEntity(hugeBeam);

@@ -44,7 +44,7 @@ public class DamageCubeSummonerItem extends Item {
 
     @Override
     public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLiving, @NotNull ItemStack pStack, int pTick) {
-        if (pTick % 2 == 0) {
+        if (pTick % 2 == 0 || EntityHelper.hasDimensionalCore(pLiving)) {
             this.summonDamageCube(pLevel, pLiving);
         }
     }
@@ -70,6 +70,9 @@ public class DamageCubeSummonerItem extends Item {
 
         if(EntityHelper.isSoulProtected(pLiving)) {
             EntityHelper.setSoulProtected(damageCube, true);
+        }
+        if (EntityHelper.hasDimensionalCore(pLiving)) {
+            damageCube.setHighDimensional(true);
         }
 
         pLevel.addFreshEntity(damageCube);

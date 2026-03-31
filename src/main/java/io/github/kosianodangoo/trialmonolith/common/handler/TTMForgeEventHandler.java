@@ -28,6 +28,9 @@ public class TTMForgeEventHandler {
         if (EntityHelper.hasHighDimensionalBarrier(event.getOriginal())) {
             EntityHelper.setHighDimensionalBarrier(event.getEntity(), true);
         }
+        if (EntityHelper.hasDimensionalCore(event.getOriginal())) {
+            EntityHelper.setDimensionalCore(event.getEntity(), true);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

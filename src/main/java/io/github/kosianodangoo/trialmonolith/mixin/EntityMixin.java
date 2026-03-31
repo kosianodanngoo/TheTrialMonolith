@@ -5,7 +5,6 @@ import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Nameable;
@@ -25,20 +24,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
-public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker, IHighDimensionalBarrier, ITickTracker {
+public abstract class EntityMixin extends CapabilityProvider<Entity> implements Nameable, EntityAccess, CommandSource, IForgeEntity, ISoulDamage, ISoulProtection, ISoulBypass, IOverClocker, IHighDimensionalBarrier, ITickTracker, IInitializable, IDimensionalCore {
     @Shadow
     public SynchedEntityData entityData;
 
     @Shadow
     public int tickCount;
     @Unique
-    private static final EntityDataAccessor<Float> the_trial_monolith$DATA_SOUL_DAMAGE_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> the_trial_monolith$DATA_SOUL_DAMAGE_ID = EntityHelper.DATA_SOUL_DAMAGE_ID;
     @Unique
-    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_SOUL_PROTECTION_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_SOUL_PROTECTION_ID = EntityHelper.DATA_SOUL_PROTECTION_ID;
     @Unique
-    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_OVER_CLOCKER_ID = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_OVER_CLOCKER_ID = EntityHelper.DATA_OVER_CLOCKER_ID;
     @Unique
-    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER = EntityHelper.DATA_HIGH_DIMENSIONAL_BARRIER;
+    @Unique
+    private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_DIMENSIONAL_CORE = EntityHelper.DATA_DIMENSIONAL_CORE;
 
     @Unique
     private boolean the_trial_monolith$isUpdating = false;
@@ -63,6 +64,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
         this.entityData.define(the_trial_monolith$DATA_SOUL_PROTECTION_ID, false);
         this.entityData.define(the_trial_monolith$DATA_OVER_CLOCKER_ID, false);
         this.entityData.define(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER, false);
+        this.entityData.define(the_trial_monolith$DATA_DIMENSIONAL_CORE, false);
 
         the_trial_monolith$initialized = true;
     }
@@ -130,6 +132,22 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     }
 
     @Override
+    public boolean the_trial_monolith$hasDimensionalCore() {
+        if (!the_trial_monolith$initialized) {
+            return false;
+        }
+        return this.entityData.get(the_trial_monolith$DATA_DIMENSIONAL_CORE);
+    }
+
+    @Override
+    public void the_trial_monolith$setDimensionalCore(boolean dimensionalCore) {
+        if (!the_trial_monolith$initialized) {
+            return;
+        }
+        this.entityData.set(the_trial_monolith$DATA_DIMENSIONAL_CORE, dimensionalCore);
+    }
+
+    @Override
     public int the_trial_monolith$getLastTickCount() {
         return this.the_trial_monolith$lastTickCount;
     }
@@ -156,6 +174,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             EntityHelper.setSoulDamageForce((Entity)(Object)this, pCompound.getFloat(EntityHelper.SOUL_DAMAGE_TAG));
             the_trial_monolith$setOverClocked(pCompound.getBoolean(EntityHelper.OVER_CLOCKED_TAG));
             the_trial_monolith$setHighDimensionalBarrier(pCompound.getBoolean(EntityHelper.HIGH_DIMENSIONAL_BARRIER_TAG));
+            the_trial_monolith$setDimensionalCore(pCompound.getBoolean(EntityHelper.DIMENSIONAL_CORE_TAG));
         } catch (Exception ignored) {
         }
     }
@@ -167,6 +186,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             pCompound.putFloat(EntityHelper.SOUL_DAMAGE_TAG, EntityHelper.getSoulDamage((Entity)(Object)this));
             pCompound.putBoolean(EntityHelper.OVER_CLOCKED_TAG, the_trial_monolith$isOverClocked());
             pCompound.putBoolean(EntityHelper.HIGH_DIMENSIONAL_BARRIER_TAG, the_trial_monolith$hasHighDimensionalBarrier());
+            pCompound.putBoolean(EntityHelper.DIMENSIONAL_CORE_TAG, the_trial_monolith$hasDimensionalCore());
         } catch (Exception ignored) {
         }
     }
@@ -223,5 +243,15 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
         if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
             ci.cancel();
         }
+    }
+
+    @Override
+    public boolean the_trial_monolith$isInitialized() {
+        return the_trial_monolith$initialized;
+    }
+
+    @Override
+    public void the_trial_monolith$markInitialized() {
+        the_trial_monolith$initialized = true;
     }
 }

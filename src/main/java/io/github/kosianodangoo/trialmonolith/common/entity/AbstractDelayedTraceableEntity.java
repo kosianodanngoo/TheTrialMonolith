@@ -1,5 +1,6 @@
 package io.github.kosianodangoo.trialmonolith.common.entity;
 
+import io.github.kosianodangoo.trialmonolith.api.IController;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -20,14 +21,17 @@ public abstract class AbstractDelayedTraceableEntity extends Entity implements T
     private LivingEntity owner;
     @Nullable
     private UUID ownerUUID;
+    public IController ownerController;
 
     public final Predicate<Entity> DEFAULT_PREDICATE = (entity -> entity != this.getOwner() &&
             !(entity instanceof TraceableEntity traceable && this.getOwner() == traceable.getOwner()) &&
             !(entity instanceof ItemEntity) &&
-            !(entity instanceof ExperienceOrb)
+            !(entity instanceof ExperienceOrb) &&
+            !(ownerController != null && entity == ownerController.getProxyEntity())
     );
 
     private static final EntityDataAccessor<Integer> DATA_PAST_TICKS_ID = SynchedEntityData.defineId(AbstractDelayedTraceableEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_HIGH_DIMENSIONAL = SynchedEntityData.defineId(AbstractDelayedTraceableEntity.class, EntityDataSerializers.BOOLEAN);
 
     public AbstractDelayedTraceableEntity(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -36,6 +40,7 @@ public abstract class AbstractDelayedTraceableEntity extends Entity implements T
     @Override
     protected void defineSynchedData() {
         this.entityData.define(DATA_PAST_TICKS_ID, 0);
+        this.entityData.define(DATA_HIGH_DIMENSIONAL, false);
     }
 
     @Override
@@ -106,5 +111,17 @@ public abstract class AbstractDelayedTraceableEntity extends Entity implements T
 
     public boolean shouldContinue() {
         return false;
+    }
+
+    public void setOwnerController(IController controller) {
+        ownerController = controller;
+    }
+
+    public boolean isHighDimensional() {
+        return entityData.get(DATA_HIGH_DIMENSIONAL);
+    }
+
+    public void setHighDimensional(boolean highDimensional) {
+        entityData.set(DATA_HIGH_DIMENSIONAL, highDimensional);
     }
 }
