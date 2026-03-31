@@ -70,7 +70,7 @@ public class AreaAttackerItem extends Item {
 
     public void removeArea(Level level, LivingEntity livingEntity) {
         level.getEntities(EntityTypeTest.forClass(AreaAttackerEntity.class), livingEntity.getBoundingBox().inflate(10), (areaAttackerEntity -> areaAttackerEntity.getOwner() == livingEntity)).forEach((areaAttackerEntity ->
-            areaAttackerEntity.setPastTicks(areaAttackerEntity.getLifeTime() - 20);
+            areaAttackerEntity.setPastTicks(areaAttackerEntity.getLifeTime() - 20)
         ));
     }
 
