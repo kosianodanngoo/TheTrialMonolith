@@ -10,8 +10,25 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class AreaAttackerEntity extends AbstractDelayedTraceableEntity {
+    private Entity internalOwner;
+
     public AreaAttackerEntity(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        internalOwner = getOwner();
+        if (internalOwner != null && internalOwner.isAlive() && !internalOwner.isRemoved()) {
+            this.moveTo(internalOwner.position);
+        } else if (this.ownerController != null) {
+            this.moveTo(ownerController.getPosition());
+            internalOwner = ownerController.getProxyEntity();
+        } else if (this.getPastTicks() + 20 <= this.getLifeTime()) {
+            this.setPastTicks(this.getLifeTime() - 20);
+        }
     }
 
     @Override
@@ -21,24 +38,13 @@ public class AreaAttackerEntity extends AbstractDelayedTraceableEntity {
         if (level.isClientSide()) {
             return;
         }
-
-        Entity owner = getOwner();
-        if (owner != null && owner.isAlive() && !owner.isRemoved()) {
-            this.moveTo(owner.position);
-        } else if (this.ownerController != null) {
-            this.moveTo(ownerController.getPosition());
-            owner = ownerController.getProxyEntity();
-        } else if (this.getPastTicks() + 20 <= this.getLifeTime()) {
-            this.setPastTicks(this.getLifeTime() - 20);
-        }
-        Entity finalOwner = owner;
         EntityHelper.getEntities(level(), AABB.ofSize(this.getPosition(0), 96, 96, 96), DEFAULT_PREDICATE.and(entity -> entity.getBoundingBox().distanceToSqr(getPosition(0)) <= 2304)).forEach(entity -> {
             if (isHighDimensional() && EntityHelper.isImmuneToSoulDamage(entity)) {
                 EntityHelper.addSoulDamageForce(entity, 0.02f);
             } else {
                 EntityHelper.addSoulDamage(entity, 0.05f);
             }
-            entity.hurt(TrialMonolithDamageTypes.dimensionalAttack(level, finalOwner), 100);
+            entity.hurt(TrialMonolithDamageTypes.dimensionalAttack(level, internalOwner), 100);
             entity.setDeltaMovement(Vec3.ZERO);
         });
     }

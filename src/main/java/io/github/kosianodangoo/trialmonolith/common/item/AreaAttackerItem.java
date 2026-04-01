@@ -68,6 +68,12 @@ public class AreaAttackerItem extends Item {
         super.onStopUsing(stack, entity, count);
     }
 
+    @Override
+    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLiving) {
+        removeArea(pLevel, pLiving);
+        return super.finishUsingItem(pStack, pLevel, pLiving);
+    }
+
     public void removeArea(Level level, LivingEntity livingEntity) {
         level.getEntities(EntityTypeTest.forClass(AreaAttackerEntity.class), livingEntity.getBoundingBox().inflate(10), (areaAttackerEntity -> areaAttackerEntity.getOwner() == livingEntity)).forEach((areaAttackerEntity ->
             areaAttackerEntity.setPastTicks(areaAttackerEntity.getLifeTime() - 20)
