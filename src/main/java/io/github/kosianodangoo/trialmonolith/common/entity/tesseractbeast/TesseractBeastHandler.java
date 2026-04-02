@@ -5,7 +5,9 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +44,20 @@ public class TesseractBeastHandler {
     @SubscribeEvent
     public static void onServerStopped(ServerStoppedEvent event) {
         tesseractBeastHandlers.forEach(((levelResourceKey, tesseractBeastHandler) -> tesseractBeastHandler.remove()));
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
+    public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof TesseractBeastProxyEntity tesseractBeast)) return;
+        Level level = event.getLevel();
+        if (tesseractBeast.controller == null && !level.isClientSide) {
+            float soulDamage = tesseractBeast.the_trial_monolith$getSoulDamage();
+            tesseractBeast.controller = new TesseractBeastController(level, tesseractBeast);
+            TesseractBeastHandler.getTesseractBeastHandler(level).addTesseractBeast(tesseractBeast.controller);
+            tesseractBeast.controller.position = tesseractBeast.getPosition(0);
+            tesseractBeast.controller.soulDamage = soulDamage;
+            tesseractBeast.initialized = true;
+        }
     }
 
     public void remove() {

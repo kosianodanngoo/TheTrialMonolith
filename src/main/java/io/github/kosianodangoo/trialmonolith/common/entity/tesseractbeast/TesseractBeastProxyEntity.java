@@ -20,10 +20,7 @@ public class TesseractBeastProxyEntity extends Monster implements ISoulProtectio
 
     public TesseractBeastProxyEntity(EntityType<? extends Monster> pEntityType, Level pLevel, TesseractBeastController controller) {
         super(pEntityType, pLevel);
-        if (controller == null && !pLevel.isClientSide) {
-            controller = new TesseractBeastController(pLevel, this);
-            TesseractBeastHandler.getTesseractBeastHandler(pLevel).addTesseractBeast(controller);
-            controller.position = this.getPosition(0);
+        if (controller == null) {
             initialized = false;
         }
         this.controller = controller;
@@ -44,15 +41,6 @@ public class TesseractBeastProxyEntity extends Monster implements ISoulProtectio
     @Override
     public boolean isNoAi() {
         return true;
-    }
-
-    @Override
-    public void tick() {
-        if (!initialized) {
-            this.controller.position = this.getPosition(0);
-            initialized = true;
-        }
-        super.tick();
     }
 
     @Override
@@ -78,6 +66,8 @@ public class TesseractBeastProxyEntity extends Monster implements ISoulProtectio
         float newDamage = oldDamage + (soulDamage - oldDamage) / 10;
         if (initialized) {
             soulDamage = newDamage;
+        } else {
+            initialized = true;
         }
         if (controller != null) {
             controller.soulDamage = soulDamage;

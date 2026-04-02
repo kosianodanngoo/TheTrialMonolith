@@ -70,7 +70,7 @@ public class TesseractBeastController implements IController {
                 serverLevel.addFreshEntity(proxyEntity);
             }
             if (!proxyEntity.initialized) {
-                return;
+                proxyEntity.initialized = true;
             }
             proxyEntity.tickCount = tickCount;
             if ((target == null || target.isRemoved() || target.isDeadOrDying()) && (tickCount & 7) == 0) {
