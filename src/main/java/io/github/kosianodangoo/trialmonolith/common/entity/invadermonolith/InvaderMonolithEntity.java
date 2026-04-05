@@ -119,6 +119,10 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
     }
 
     @Override
+    protected void actuallyHurt(DamageSource p_21240_, float p_21241_) {
+    }
+
+    @Override
     public void tick() {
         initialized = true;
         if (level != null && !level.isClientSide && goalSelector.getAvailableGoals().isEmpty()) {
