@@ -84,6 +84,9 @@ repositories {
     maven{
         url = "https://cursemaven.com"
     }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
 }
 
 dependencies {
@@ -91,6 +94,9 @@ dependencies {
 
     implementation fg.deobf("curse.maven:mantle-74924:7563777")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:7449219")
+
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.4.0+1.20.1:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.4.0+1.20.1")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

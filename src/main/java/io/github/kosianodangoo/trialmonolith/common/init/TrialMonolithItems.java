@@ -40,6 +40,7 @@ public class TrialMonolithItems {
     public static final RegistryObject<HighDimensionalBarrierItem> HIGH_DIMENSIONAL_BARRIER = register("high_dimensional_barrier", HighDimensionalBarrierItem::new, true);
     public static final RegistryObject<BottleOfTheSoulItem> BOTTLE_OF_THE_SOUL = register("bottle_of_the_soul", BottleOfTheSoulItem::new, true);
     public static final RegistryObject<DimensionalCoreItem> DIMENSIONAL_CORE = register("dimensional_core", DimensionalCoreItem::new, true);
+    public static final RegistryObject<DimensionalTeleporterItem> DIMENSIONAL_TELEPORTER = register("dimensional_teleporter", DimensionalTeleporterItem::new, true);
 
     private static <T extends Item> RegistryObject<T> register(String name, Supplier<T> itemSupplier, boolean isCreativeTab) {
         RegistryObject<T> registryObject = ITEMS.register(name, itemSupplier);

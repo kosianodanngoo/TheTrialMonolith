@@ -19,6 +19,17 @@
 
   "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
 
+  "gui.the_trial_monolith.dimensional_teleporter.name": "名前",
+  "gui.the_trial_monolith.dimensional_teleporter.x": "X",
+  "gui.the_trial_monolith.dimensional_teleporter.y": "Y",
+  "gui.the_trial_monolith.dimensional_teleporter.z": "Z",
+  "gui.the_trial_monolith.dimensional_teleporter.dimension": "ディメンション",
+  "gui.the_trial_monolith.dimensional_teleporter.use_here": "この場所をセット",
+  "gui.the_trial_monolith.dimensional_teleporter.add": "追加",
+  "gui.the_trial_monolith.dimensional_teleporter.update": "上書き",
+  "gui.the_trial_monolith.dimensional_teleporter.delete": "削除",
+  "gui.the_trial_monolith.dimensional_teleporter.teleport": "テレポート",
+
 
   "commands.the_trial_monolith.enabled": "有効",
   "commands.the_trial_monolith.disabled": "無効",
@@ -64,6 +75,11 @@
   "item.the_trial_monolith.high_dimensional_barrier.disabled": "高次元バリアは無効化されました",
 
   "item.the_trial_monolith.bottle_of_the_soul": "魂入りの瓶",
+
+  "item.the_trial_monolith.dimensional_teleporter": "ディメンショナルテレポーター",
+
+  "key.categories.the_trial_monolith": "The Trial Monolith",
+  "key.the_trial_monolith.open_dimensional_teleporter": "ディメンショナルテレポーターを開く",
 
   "modifier.the_trial_monolith.soul_slayer": "Soul Slayer",
   "modifier.the_trial_monolith.soul_slayer.flavor": "Slay the soul.",

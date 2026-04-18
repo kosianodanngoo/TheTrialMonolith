@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithCreativeTabs;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithEntities;
 import io.github.kosianodangoo.trialmonolith.common.init.TrialMonolithItems;
+import io.github.kosianodangoo.trialmonolith.common.network.TrialMonolithNetwork;
 import io.github.kosianodangoo.trialmonolith.compat.tinker.TheTrialMonolithTinkersCompat;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,6 +35,7 @@ public class TheTrialMonolith {
         TrialMonolithEntities.register(modEventBus);
         TrialMonolithItems.register(modEventBus);
         TrialMonolithCreativeTabs.register(modEventBus);
+        TrialMonolithNetwork.register();
 
         ModList modList = ModList.get();
         if (modList.isLoaded("tconstruct")) {
