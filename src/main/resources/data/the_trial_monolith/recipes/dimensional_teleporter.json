@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MPM",
+    "PCP",
+    "MPM"
+  ],
+  "key": {
+    "M": {
+      "item": "the_trial_monolith:monolith_fragment"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "C": {
+      "item": "the_trial_monolith:dimensional_core"
+    }
+  },
+  "result": {
+    "item": "the_trial_monolith:dimensional_teleporter"
+  }
+}
