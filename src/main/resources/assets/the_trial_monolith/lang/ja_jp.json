@@ -4,6 +4,7 @@
   "entity.the_trial_monolith.small_beam": "小さなビーム",
   "entity.the_trial_monolith.huge_beam": "巨大なビーム",
   "entity.the_trial_monolith.damage_cube": "ダメージキューブ",
+  "entity.the_trial_monolith.tesseract_beast":  "テッセラクトビースト",
 
   "death.attack.the_trial_monolith.laser": "%sはレーザーに蒸発させられた。",
   "death.attack.the_trial_monolith.laser.player": "%1$sは%2$sのレーザーに蒸発させられた。",
@@ -16,6 +17,10 @@
   "death.attack.the_trial_monolith.soul_damage": "%sは過度な魂の損傷によって死んだ。",
   "death.attack.the_trial_monolith.soul_damage.player": "%1$sは%2$sからの過度な魂の損傷によって死んだ。",
   "death.attack.the_trial_monolith.soul_damage.item": "%1$sは%2$sの%3$sからの過度な魂の損傷によって死んだ。",
+
+  "death.attack.the_trial_monolith.dimensional": "%sは次元攻撃によって死んだ。",
+  "death.attack.the_trial_monolith.dimensional.player": "%1$sは%2$sの次元攻撃によって死んだ。",
+  "death.attack.the_trial_monolith.dimensional.item": "%1$sは%2$sの%3$sによる次元攻撃によって死んだ。",
 
   "itemGroup.tab.the_trial_monolith": "The Trial Monolith",
 
@@ -58,10 +63,13 @@
   "item.the_trial_monolith.trial_monolith_spawn_egg": "試練のモノリスのスポーンエッグ",
   "item.the_trial_monolith.invader_monolith_spawn_egg": "侵略者のモノリスのスポーンエッグ",
   "tooltip.the_trial_monolith.invader_monolith_spawn_egg": "これはあなたのワールドを台無しにするかもしれません。\n拠点の遠くで召喚してください。",
+  "item.the_trial_monolith.tesseract_beast_spawn_egg": "テッセラクトビーストのスポーンエッグ",
 
   "item.the_trial_monolith.damage_cube_summoner": "ダメージキューブサモナー",
 
   "item.the_trial_monolith.beam_summoner": "ビームサモナー",
+
+  "item.the_trial_monolith.area_attacker": "エリアアタッカー",
 
   "item.the_trial_monolith.soul_protector": "魂保護装置",
   "item.the_trial_monolith.soul_protector.enabled": "魂の保護は有効化されました。",
@@ -74,9 +82,14 @@
   "item.the_trial_monolith.high_dimensional_barrier.enabled": "高次元バリアは有効化されました",
   "item.the_trial_monolith.high_dimensional_barrier.disabled": "高次元バリアは無効化されました",
 
+  "item.the_trial_monolith.dimensional_core": "ディメンショナルコア",
+  "item.the_trial_monolith.dimensional_core.enabled": "ディメンショナルコアを装備しました",
+  "item.the_trial_monolith.dimensional_core.disabled": "ディメンショナルコアを外しました",
+
   "item.the_trial_monolith.bottle_of_the_soul": "魂入りの瓶",
 
   "item.the_trial_monolith.dimensional_teleporter": "ディメンショナルテレポーター",
+  "item.the_trial_monolith.dimensional_teleporter.open": "%sを押して開く",
 
   "key.categories.the_trial_monolith": "The Trial Monolith",
   "key.the_trial_monolith.open_dimensional_teleporter": "ディメンショナルテレポーターを開く",

@@ -35,6 +35,8 @@ public class DimensionalTeleporterItem extends Item {
     public static final String TARGETS_TAG = "Targets";
     public static final String SELECTED_TAG = "Selected";
 
+    public static final Component OPEN_WITH_KEY_MESSAGE = Component.translatable("item.the_trial_monolith.dimensional_teleporter.open", Component.keybind("key.the_trial_monolith.open_dimensional_teleporter").withStyle(ChatFormatting.AQUA));
+
     public DimensionalTeleporterItem(Item.Properties properties) {
         super(properties);
     }
@@ -129,6 +131,7 @@ public class DimensionalTeleporterItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(OPEN_WITH_KEY_MESSAGE);
         DimensionalTeleportTarget target = this.getTarget(pStack);
         if (target == null) return;
         pTooltipComponents.add(Component.literal(target.name).withStyle(ChatFormatting.AQUA));

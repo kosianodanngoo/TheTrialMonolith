@@ -89,6 +89,7 @@
   "item.the_trial_monolith.bottle_of_the_soul": "Bottle of The Soul",
 
   "item.the_trial_monolith.dimensional_teleporter": "Dimensional Teleporter",
+  "item.the_trial_monolith.dimensional_teleporter.open": "Press %s to open",
 
   "key.categories.the_trial_monolith": "The Trial Monolith",
   "key.the_trial_monolith.open_dimensional_teleporter": "Open Dimensional Teleporter",
