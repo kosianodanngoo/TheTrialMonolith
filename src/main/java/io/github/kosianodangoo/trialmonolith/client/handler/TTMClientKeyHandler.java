@@ -52,6 +52,14 @@ public class TTMClientKeyHandler {
 
     private static void tryOpenTeleporter(LocalPlayer player) {
         DimensionalTeleporterItem target = TrialMonolithItems.DIMENSIONAL_TELEPORTER.get();
+
+        var curiosRef = CuriosCompat.findStackSlot(player, target);
+        if (curiosRef.isPresent()) {
+            CuriosCompat.SlotRef ref = curiosRef.get();
+            openScreen(ref.stack(), new TeleporterSlot.Curios(ref.identifier(), ref.index()));
+            return;
+        }
+
         net.minecraft.world.entity.player.Inventory inv = player.getInventory();
         int selectedIdx = inv.selected;
 
@@ -73,9 +81,6 @@ public class TTMClientKeyHandler {
                 return;
             }
         }
-        CuriosCompat.findStackSlot(player, target).ifPresent(ref ->
-                openScreen(ref.stack(), new TeleporterSlot.Curios(ref.identifier(), ref.index()))
-        );
     }
 
     private static void openScreen(ItemStack stack, TeleporterSlot slot) {
