@@ -25,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -45,7 +46,8 @@ public class InvaderMonolithEntity extends Monster implements ISoulDamage, ISoul
             !(entity instanceof TraceableEntity traceable && this == traceable.getOwner()) &&
             !(entity instanceof ItemEntity) &&
             !(entity instanceof ExperienceOrb) &&
-            !(entity instanceof  InvaderMonolithEntity) &&
+            !(entity instanceof InvaderMonolithEntity) &&
+            !(entity instanceof PartEntity<?>) &&
             entity.tickCount >= 100
     );
 
