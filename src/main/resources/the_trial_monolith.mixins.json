@@ -12,11 +12,11 @@
     "LivingEntityMixin",
     "PersistentEntitySectionManager$CallbackMixin",
     "PlayerMixin",
-    "ServerLevelMixin",
-    "client.ClientGamePacketListenerMixin"
+    "ServerLevelMixin"
   ],
   "client": [
-    "client.MinecraftMixin"
+    "client.MinecraftMixin",
+    "client.ClientGamePacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

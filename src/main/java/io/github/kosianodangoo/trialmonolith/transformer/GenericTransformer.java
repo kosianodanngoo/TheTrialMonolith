@@ -4,22 +4,24 @@ import cpw.mods.modlauncher.LaunchPluginHandler;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
 import io.github.kosianodangoo.trialmonolith.TheTrialMonolith;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
     public static List<String> exclusivePackages = new ArrayList<>();
     public static List<String> exclusiveInstructionWrappingPackages = new ArrayList<>();
+    static final String ONLYIN_DESC = Type.getDescriptor(OnlyIn.class);
+    static final String FML_DIST = FMLEnvironment.dist.toString();
     static boolean initialized = false;
     static boolean tickInjected = false;
 
@@ -255,6 +257,11 @@ public class GenericTransformer {
         while (!currentName.equals("java/lang/Object")) {
             try (InputStream is = classLoader.getResourceAsStream(currentName.concat(".class"))) {
                 ClassReader classReader = new ClassReader(Objects.requireNonNull(is));
+                ClassNode classNode = new ClassNode(Opcodes.ASM9);
+                classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
+                if (classNode.visibleAnnotations != null && classNode.visibleAnnotations.stream().anyMatch(annotationNode -> annotationNode.desc.equals(ONLYIN_DESC) && !((String[]) annotationNode.values.get(annotationNode.values.indexOf("value") + 1))[1].equals(FML_DIST))) {
+                    return false;
+                }
                 currentName = classReader.getSuperName();
                 if (currentName.equals(superClass)) {
                     return true;
