@@ -32,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tickDeath", at = @At("HEAD"), cancellable = true)
     public void tickDeathMixin(CallbackInfo ci) {
-        if (EntityHelper.isSoulProtected(this) && !EntityHelper.shouldBypassProtection(this) && MixinMethodHelper.isDeadOrDying((LivingEntity)(Object) this)) {
+        if (EntityHelper.isSoulProtected(this) && !EntityHelper.shouldBypassProtection(this) && !MixinMethodHelper.isDeadOrDying((LivingEntity)(Object) this)) {
             ci.cancel();
         }
     }
