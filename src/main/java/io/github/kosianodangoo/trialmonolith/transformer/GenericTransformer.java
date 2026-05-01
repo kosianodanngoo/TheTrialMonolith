@@ -15,11 +15,18 @@ import org.objectweb.asm.tree.*;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GenericTransformer {
     static String ENTITY_METHODS = "io/github/kosianodangoo/trialmonolith/transformer/method/EntityMethods";
     public static List<String> exclusivePackages = new ArrayList<>();
     public static List<String> exclusiveInstructionWrappingPackages = new ArrayList<>();
+    private static final Map<String, Boolean> distMismatchCache = new ConcurrentHashMap<>();
+    private static final List<String> VANILLA_DIST_RESTRICTED_CLIENT_PREFIXES = List.of(
+            "net/minecraft/client/",
+            "com/mojang/blaze3d/",
+            "net/minecraftforge/client/"
+    );
     static final String ONLYIN_DESC = Type.getDescriptor(OnlyIn.class);
     static final String FML_DIST = FMLEnvironment.dist.toString();
     static boolean initialized = false;
@@ -209,6 +216,14 @@ public class GenericTransformer {
                 modified = true;
             }
         }
+
+        if (modified &&
+                phase == Phase.ILaunchPluginServiceBefore
+                && !classNode.name.startsWith("net/minecraft/")
+                && !classNode.name.startsWith("net/minecraftforge/")) {
+            stripDistMismatchedReferences(classNode);
+        }
+
         return modified;
     }
 
@@ -223,6 +238,176 @@ public class GenericTransformer {
         insnList.add(returnInsn);
         insnList.add(skipLabelNode);
         method.instructions.insertBefore(method.instructions.getFirst(), insnList);
+    }
+
+    public static boolean stripDistMismatchedReferences(ClassNode classNode) {
+        boolean classModified = false;
+        for (MethodNode method : classNode.methods) {
+            if ((method.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE)) != 0) {
+                continue;
+            }
+            String descClient = scanMethodDesc(method.desc);
+            if (descClient != null) {
+                replaceMethodWithThrow(method, descClient);
+                classModified = true;
+                TheTrialMonolith.LOGGER.debug("Replaced method body of {}.{}{} (descriptor references {})", classNode.name, method.name, method.desc, descClient);
+                continue;
+            }
+
+            boolean methodModified = false;
+            AbstractInsnNode insn = method.instructions.getFirst();
+            while (insn != null) {
+                AbstractInsnNode next = insn.getNext();
+                String mismatched = findDistMismatchedType(insn);
+                if (mismatched != null) {
+                    method.instructions.insertBefore(insn, buildThrowSequence(mismatched));
+                    method.maxStack += 3;
+                    methodModified = true;
+                }
+                insn = next;
+            }
+            if (methodModified) {
+                classModified = true;
+            }
+        }
+        return classModified;
+    }
+
+    private static String findDistMismatchedType(AbstractInsnNode insn) {
+        if (insn instanceof TypeInsnNode ti) return scanInternalNameOrDesc(ti.desc);
+        if (insn instanceof MethodInsnNode mi) {
+            String r = scanInternalNameOrDesc(mi.owner);
+            return r != null ? r : scanMethodDesc(mi.desc);
+        }
+        if (insn instanceof FieldInsnNode fi) {
+            String r = scanInternalNameOrDesc(fi.owner);
+            return r != null ? r : scanFieldDesc(fi.desc);
+        }
+        if (insn instanceof MultiANewArrayInsnNode mn) return scanFieldDesc(mn.desc);
+        // LDC of class literal puts java/lang/Class<X> on the stack — the frame type is Class, not X,
+        // so frame computation never walks X's hierarchy. Stripping LDC sites would unnecessarily
+        // fire throws in static initializers that happen to capture Class<X> for metadata.
+        return null;
+    }
+
+    private static String scanInternalNameOrDesc(String name) {
+        if (name == null || name.isEmpty()) return null;
+        char c = name.charAt(0);
+        if (c == '[' || c == 'L') return scanType(Type.getType(name));
+        if (c == '(') return scanMethodDesc(name);
+        return matchDist(name);
+    }
+
+    private static String scanFieldDesc(String desc) {
+        if (desc == null || desc.isEmpty()) return null;
+        return scanType(Type.getType(desc));
+    }
+
+    private static String scanMethodDesc(String desc) {
+        if (desc == null || desc.isEmpty()) return null;
+        Type m = Type.getMethodType(desc);
+        for (Type arg : m.getArgumentTypes()) {
+            String r = scanType(arg);
+            if (r != null) return r;
+        }
+        return scanType(m.getReturnType());
+    }
+
+    private static String scanType(Type t) {
+        if (t == null) return null;
+        int sort = t.getSort();
+        if (sort == Type.OBJECT) return matchDist(t.getInternalName());
+        if (sort == Type.ARRAY) return scanType(t.getElementType());
+        if (sort == Type.METHOD) {
+            for (Type arg : t.getArgumentTypes()) {
+                String r = scanType(arg);
+                if (r != null) return r;
+            }
+            return scanType(t.getReturnType());
+        }
+        return null;
+    }
+
+    private static String matchDist(String name) {
+        if (name == null) return null;
+        if (isDistMismatchedHierarchy(name)) return name;
+        return null;
+    }
+
+    private static boolean isDistMismatchedHierarchy(String internalName) {
+        if (internalName == null || internalName.isEmpty()) return false;
+        if (internalName.charAt(0) == '[') return false;
+        if (internalName.startsWith("java/")) return false;
+        // Forge "extension interfaces" are dist-restricted Forge interfaces added to common-side
+        // Mojang types (e.g. IForgeBlockAndTintGetter on BlockAndTintGetter). Treating them as
+        // dist-mismatched would propagate the flag up to ServerLevel etc. and cause false positives.
+        if (internalName.startsWith("net/minecraftforge/client/extensions/")) return false;
+        // Vanilla / Forge client packages: physically removed from the production server jar
+        // (forge-universal.jar), so getResourceAsStream returns null and @OnlyIn detection
+        // can't see them. Catch them via prefix on the dedicated server side.
+        if ("DEDICATED_SERVER".equals(FML_DIST)) {
+            for (String prefix : VANILLA_DIST_RESTRICTED_CLIENT_PREFIXES) {
+                if (internalName.startsWith(prefix)) return true;
+            }
+        }
+        Boolean cached = distMismatchCache.get(internalName);
+        if (cached != null) return cached;
+        distMismatchCache.put(internalName, false);
+        boolean result = computeDistMismatchedHierarchy(internalName);
+        distMismatchCache.put(internalName, result);
+        return result;
+    }
+
+    private static boolean computeDistMismatchedHierarchy(String internalName) {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        try (InputStream is = cl.getResourceAsStream(internalName + ".class")) {
+            if (is == null) return false;
+            ClassReader reader = new ClassReader(is);
+            ClassNode node = new ClassNode(Opcodes.ASM9);
+            reader.accept(node, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG);
+            if (hasOtherDistOnlyIn(node.visibleAnnotations)) return true;
+            if (hasOtherDistOnlyIn(node.invisibleAnnotations)) return true;
+            if (node.superName != null && isDistMismatchedHierarchy(node.superName)) return true;
+            if (node.interfaces != null) {
+                for (String iface : node.interfaces) {
+                    if (isDistMismatchedHierarchy(iface)) return true;
+                }
+            }
+            return false;
+        } catch (Throwable e) {
+            return false;
+        }
+    }
+
+    private static boolean hasOtherDistOnlyIn(List<AnnotationNode> annotations) {
+        if (annotations == null) return false;
+        for (AnnotationNode an : annotations) {
+            if (!ONLYIN_DESC.equals(an.desc) || an.values == null) continue;
+            for (int i = 0; i + 1 < an.values.size(); i += 2) {
+                if (!"value".equals(an.values.get(i))) continue;
+                Object v = an.values.get(i + 1);
+                if (v instanceof String[] arr && arr.length >= 2 && !FML_DIST.equals(arr[1])) return true;
+            }
+        }
+        return false;
+    }
+
+    private static InsnList buildThrowSequence(String internalName) {
+        InsnList list = new InsnList();
+        list.add(new TypeInsnNode(Opcodes.NEW, "java/lang/RuntimeException"));
+        list.add(new InsnNode(Opcodes.DUP));
+        list.add(new LdcInsnNode("Attempted to load class " + internalName + " for invalid dist " + FML_DIST));
+        list.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/lang/RuntimeException", "<init>", "(Ljava/lang/String;)V", false));
+        list.add(new InsnNode(Opcodes.ATHROW));
+        return list;
+    }
+
+    private static void replaceMethodWithThrow(MethodNode method, String internalName) {
+        method.instructions.clear();
+        method.tryCatchBlocks.clear();
+        if (method.localVariables != null) method.localVariables.clear();
+        method.instructions.add(buildThrowSequence(internalName));
+        method.maxStack = Math.max(method.maxStack, 3);
     }
 
     public static boolean isSameMethod(String owner, MethodInsnNode methodInsn, String superClass, String obfName, String name, String desc, boolean isInterface) {
@@ -258,7 +443,7 @@ public class GenericTransformer {
             try (InputStream is = classLoader.getResourceAsStream(currentName.concat(".class"))) {
                 ClassReader classReader = new ClassReader(Objects.requireNonNull(is));
                 ClassNode classNode = new ClassNode(Opcodes.ASM9);
-                classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
+                classReader.accept(classNode, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG);
                 if (classNode.visibleAnnotations != null && classNode.visibleAnnotations.stream().anyMatch(annotationNode -> annotationNode.desc.equals(ONLYIN_DESC) && !((String[]) annotationNode.values.get(annotationNode.values.indexOf("value") + 1))[1].equals(FML_DIST))) {
                     return false;
                 }
