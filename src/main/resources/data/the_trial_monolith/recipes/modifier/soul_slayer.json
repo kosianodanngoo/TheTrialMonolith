@@ -1,29 +1,46 @@
 {
-  "type": "tconstruct:modifier",
-  "tools": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "tag": "tconstruct:modifiable/melee/primary"
-    },
-    {
-      "tag": "tconstruct:modifiable/ranged"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "tconstruct"
+        }
+      ],
+      "recipe": {
+        "type": "tconstruct:modifier",
+        "tools": [
+          {
+            "tag": "tconstruct:modifiable/melee/primary"
+          },
+          {
+            "tag": "tconstruct:modifiable/ranged"
+          }
+        ],
+        "inputs": [
+          {
+            "item": "the_trial_monolith:monolith_fragment"
+          },
+          {
+            "item": "the_trial_monolith:monolith_fragment"
+          },
+          {
+            "item": "the_trial_monolith:monolith_fragment"
+          },
+          {
+            "item": "the_trial_monolith:monolith_fragment"
+          },
+          {
+            "item": "the_trial_monolith:monolith_fragment"
+          }
+        ],
+        "slots": {
+          "abilities": 1
+        },
+        "result": "the_trial_monolith:soul_slayer",
+        "level": 1
+      }
     }
-  ],
-  "inputs": [
-    {
-      "item": "the_trial_monolith:monolith_fragment"
-    }, {
-      "item": "the_trial_monolith:monolith_fragment"
-    }, {
-      "item": "the_trial_monolith:monolith_fragment"
-    }, {
-      "item": "the_trial_monolith:monolith_fragment"
-    }, {
-      "item": "the_trial_monolith:monolith_fragment"
-    }
-  ],
-  "slots": {
-    "abilities": 1
-  },
-  "result": "the_trial_monolith:soul_slayer",
-  "level": 1
+  ]
 }
