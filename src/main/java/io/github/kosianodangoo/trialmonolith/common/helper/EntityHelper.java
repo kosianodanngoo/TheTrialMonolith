@@ -234,8 +234,8 @@ public class EntityHelper {
         }
     }
 
-    public static boolean canBeRemoved(Entity entity) {
-        return EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity) && (!(entity instanceof LivingEntity livingEntity) || livingEntity.isDeadOrDying());
+    public static boolean cannotBeRemoved(Entity entity) {
+        return EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity) && entity.isAlive();
     }
 
     public static boolean isOverClocked(Entity entity) {

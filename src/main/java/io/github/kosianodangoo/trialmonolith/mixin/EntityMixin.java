@@ -224,7 +224,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             this.the_trial_monolith$removed = true;
             return;
         }
-        if (EntityHelper.canBeRemoved(entity)) {
+        if (EntityHelper.cannotBeRemoved(entity)) {
             ci.cancel();
         }
     }
@@ -238,7 +238,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             this.the_trial_monolith$removed = true;
             return;
         }
-        if (EntityHelper.canBeRemoved(entity)) {
+        if (EntityHelper.cannotBeRemoved(entity)) {
             ci.cancel();
         }
     }

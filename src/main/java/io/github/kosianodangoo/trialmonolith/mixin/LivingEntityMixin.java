@@ -32,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "tickDeath", at = @At("HEAD"), cancellable = true)
     public void tickDeathMixin(CallbackInfo ci) {
-        if (EntityHelper.canBeRemoved(this)) {
+        if (EntityHelper.cannotBeRemoved(this)) {
             ci.cancel();
         }
     }
