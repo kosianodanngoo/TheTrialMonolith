@@ -42,6 +42,17 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     private static final EntityDataAccessor<Boolean> the_trial_monolith$DATA_DIMENSIONAL_CORE = EntityHelper.DATA_DIMENSIONAL_CORE;
 
     @Unique
+    private float the_trial_monolith$internalSoulDamage = 0;
+    @Unique
+    private boolean the_trial_monolith$internalSoulProtection = false;
+    @Unique
+    private boolean the_trial_monolith$internalOverclocked = false;
+    @Unique
+    private boolean the_trial_monolith$internalHighDimensionalBarrier = false;
+    @Unique
+    private boolean the_trial_monolith$internalDimensionalCore = false;
+
+    @Unique
     private boolean the_trial_monolith$isUpdating = false;
 
     @Unique
@@ -70,10 +81,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
     }
 
     public boolean the_trial_monolith$isOverClocked() {
-        if (!the_trial_monolith$initialized) {
-            return false;
-        }
-        return this.entityData.get(the_trial_monolith$DATA_OVER_CLOCKER_ID);
+        return the_trial_monolith$internalOverclocked;
     }
 
     public void the_trial_monolith$setOverClocked(boolean overClocked) {
@@ -85,10 +93,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
 
     @Override
     public float the_trial_monolith$getSoulDamage() {
-        if (!the_trial_monolith$initialized) {
-            return 0;
-        }
-        return this.entityData.get(the_trial_monolith$DATA_SOUL_DAMAGE_ID);
+        return the_trial_monolith$internalSoulDamage;
     }
 
     @Override
@@ -101,10 +106,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
 
     @Override
     public boolean the_trial_monolith$isSoulProtected() {
-        if (!the_trial_monolith$initialized) {
-            return false;
-        }
-        return this.entityData.get(the_trial_monolith$DATA_SOUL_PROTECTION_ID);
+        return the_trial_monolith$internalSoulProtection;
     }
 
     @Override
@@ -117,10 +119,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
 
     @Override
     public boolean the_trial_monolith$hasHighDimensionalBarrier() {
-        if (!the_trial_monolith$initialized) {
-            return false;
-        }
-        return this.entityData.get(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER);
+        return the_trial_monolith$internalHighDimensionalBarrier;
     }
 
     @Override
@@ -133,10 +132,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
 
     @Override
     public boolean the_trial_monolith$hasDimensionalCore() {
-        if (!the_trial_monolith$initialized) {
-            return false;
-        }
-        return this.entityData.get(the_trial_monolith$DATA_DIMENSIONAL_CORE);
+        return the_trial_monolith$internalDimensionalCore;
     }
 
     @Override
@@ -242,6 +238,24 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
         }
         if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "onSyncedDataUpdated(Lnet/minecraft/network/syncher/EntityDataAccessor;)V", at=@At("HEAD"))
+    public void onSyncedDataUpdatedMixin(EntityDataAccessor<?> dataAccessor, CallbackInfo ci) {
+        if (!the_trial_monolith$initialized) {
+            return;
+        }
+        if (the_trial_monolith$DATA_SOUL_DAMAGE_ID.equals(dataAccessor)) {
+            the_trial_monolith$internalSoulDamage = this.entityData.get(the_trial_monolith$DATA_SOUL_DAMAGE_ID);
+        } else if (the_trial_monolith$DATA_SOUL_PROTECTION_ID.equals(dataAccessor)) {
+            the_trial_monolith$internalSoulProtection = this.entityData.get(the_trial_monolith$DATA_SOUL_PROTECTION_ID);
+        } else if (the_trial_monolith$DATA_OVER_CLOCKER_ID.equals(dataAccessor)) {
+            the_trial_monolith$internalOverclocked = this.entityData.get(the_trial_monolith$DATA_OVER_CLOCKER_ID);
+        } else if (the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER.equals(dataAccessor)) {
+            the_trial_monolith$internalHighDimensionalBarrier = this.entityData.get(the_trial_monolith$DATA_HIGH_DIMENSIONAL_BARRIER);
+        } else if (the_trial_monolith$DATA_DIMENSIONAL_CORE.equals(dataAccessor)) {
+            the_trial_monolith$internalDimensionalCore = this.entityData.get(the_trial_monolith$DATA_DIMENSIONAL_CORE);
         }
     }
 
