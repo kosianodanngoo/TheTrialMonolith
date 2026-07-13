@@ -2,6 +2,7 @@ package io.github.kosianodangoo.trialmonolith.mixin;
 
 import io.github.kosianodangoo.trialmonolith.api.mixin.*;
 import io.github.kosianodangoo.trialmonolith.common.helper.EntityHelper;
+import io.github.kosianodangoo.trialmonolith.common.helper.MixinMethodHelper;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -10,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityAccess;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
@@ -222,7 +224,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             this.the_trial_monolith$removed = true;
             return;
         }
-        if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
+        if (EntityHelper.canBeRemoved(entity)) {
             ci.cancel();
         }
     }
@@ -236,7 +238,7 @@ public abstract class EntityMixin extends CapabilityProvider<Entity> implements 
             this.the_trial_monolith$removed = true;
             return;
         }
-        if (EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity)) {
+        if (EntityHelper.canBeRemoved(entity)) {
             ci.cancel();
         }
     }

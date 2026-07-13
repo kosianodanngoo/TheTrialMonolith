@@ -234,6 +234,10 @@ public class EntityHelper {
         }
     }
 
+    public static boolean canBeRemoved(Entity entity) {
+        return EntityHelper.isSoulProtected(entity) && !EntityHelper.shouldBypassProtection(entity) && (!(entity instanceof LivingEntity livingEntity) || livingEntity.isDeadOrDying());
+    }
+
     public static boolean isOverClocked(Entity entity) {
         if (entity instanceof IOverClocker overClocker) {
             return overClocker.the_trial_monolith$isOverClocked();
