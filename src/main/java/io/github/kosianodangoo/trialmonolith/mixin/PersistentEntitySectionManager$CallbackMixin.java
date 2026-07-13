@@ -16,7 +16,7 @@ public class PersistentEntitySectionManager$CallbackMixin<T extends EntityAccess
 
     @Inject(method = "onRemove", at = @At("HEAD"), cancellable = true)
     public void onRemoveMixin(Entity.RemovalReason removalReason, CallbackInfo ci) {
-        if (this.entity instanceof Entity target && EntityHelper.isSoulProtected(target) && !EntityHelper.shouldBypassProtection(target)) {
+        if (this.entity instanceof Entity target && EntityHelper.cannotBeRemoved(target)) {
             ci.cancel();
         }
     }
